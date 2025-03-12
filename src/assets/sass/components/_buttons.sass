@@ -1,0 +1,93 @@
+// .btn
+// 	+reg
+// 	display: inline-block
+// 	+br(5px)
+// 	cursor: pointer
+// 	padding: 16px 32px
+// 	color: $w
+// 	+trans(background)
+// 	background: $gd
+// 	position: relative
+// 	&::before
+// 		content: ''
+// 		position: absolute
+// 		top: 0
+// 		left: 0
+// 		width: 100%
+// 		height: 100%
+// 		display: block
+// 		opacity: 1
+// 		background: $gradient
+// 		+br(5px)
+// 		z-index: 1
+// 		+trans(opacity)
+// 	&:hover::before
+// 		opacity: 0
+// 	&:hover
+// 		svg
+// 			transform: translateX(0px)
+// 	span
+// 		position: relative
+// 		z-index: 2
+
+// 	svg
+// 		transform: translateX(10px)
+// 		+trans(transform)
+// 		position: relative
+// 		z-index: 2
+
+// .btn-ghost
+// 	border-radius: 5px
+// 	border: 1px solid $b3
+// 	padding: 16px 32px
+// 	+trans(border-color)
+// 	&:hover
+// 		border-color: $gr
+// 		svg
+// 			transform: translateX(0px)
+// 	span
+// 		color: $gr
+// 		text-align: center
+// 		+med
+// 		font-size: 15px
+// 		font-style: normal
+// 		font-weight: 500
+// 		line-height: 18px
+
+// 	svg
+// 		transform: translateX(10px)
+// 		+trans(transform)
+
+// 	path
+// 		fill: $gr
+
+// 	+r(768)
+// 		text-align: center
+
+// .link
+// 	display: flex
+// 	grid-gap: 6px
+// 	align-items: center
+// 	&:hover
+// 		span
+// 			color: $b9
+// 		svg
+// 			transform: translateX(-6px)
+// 		path
+// 			fill: $b9
+// 	span
+// 		+med
+// 		color: $gr
+// 		font-size: 15px
+// 		font-weight: 500
+// 		line-height: 18px
+// 		letter-spacing: 0.3px
+// 		+trans(color)
+// 	svg
+// 		transform: translateX(0)
+// 		+trans(transform)
+
+// .no-transform
+// 	svg
+// 		transform: none
+// 		margin-right: 10px

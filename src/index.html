@@ -1,0 +1,106 @@
+---
+layout: default
+title: Project name - Preview page
+pagename: index
+---
+
+    <style>
+        .devpage {
+            padding: 60px 0;
+        }
+
+        .devpages {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 15px;
+            margin-top: 80px;
+        }
+
+        @media only screen and (max-width: 1024px) {
+            .devpages {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 30px;
+            }
+        }
+        .devpage h2 {
+            margin-bottom: 20px !important;
+        }
+
+        .devpage a {
+            display: table;
+            text-decoration: underline !important;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .devpage a::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -30px;
+        }
+
+        .devpage a.none {
+            color: #B2B0BB;
+            cursor: not-allowed;
+        }
+
+        .devpage a.none::after {
+            content: "🔒";
+        }
+
+        .devpage a.process {
+            color: #EE9A6B;
+        }
+
+        .devpage a.process::after {
+            content: "⚔️";
+        }
+
+        .devpage a.done {
+            color: #27C062;
+        }
+
+        .devpage a.done::after {
+            content: "✅";
+        }
+    </style>
+
+    <div class="container">
+        <div class="devpage">
+            <h1>Project name - Pages</h1>
+            <hr>
+            <div class="devpages">
+                <div class="dev__group">
+                    <h2>Basic pages</h2>
+                    <a class="done" href="home.html">Home</a>
+                    <a class="process" href="contact-us.html">Contact Us</a>
+                    <a class="none" href="accessibility-statement.html">Accessibility Statement</a>
+                    <a class="none" href="privacy.html">Privacy Policy</a>
+                    <a class="none" href="terms.html">Terms & Conditions</a>
+                    <a class="none" href="404.html">404</a>
+                </div>
+                <div class="dev__group">
+                    <h2>About pages</h2>
+                    <a class="none" href="about.html">About</a>
+                    <a class="none" href="about-practice.html">About Practice</a>
+                    <a class="none" href="team.html">Team</a>
+                    <a class="none" href="team-single.html">Team - Single</a>
+                </div>
+                <div class="dev__group">
+                    <h2>Services pages</h2>
+                    <a class="none" href="services.html">Services</a>
+                    <a class="none" href="services-single.html">Services - Single</a>
+                </div>
+                <div class="dev__group">
+                    <h2>Other pages</h2>
+                    <a class="none" href="smile-gallery.html">Smile Gallery</a>
+                    <a class="none" href="testimonials.html">Testimonials</a>
+                    <a class="none" href="patient-info.html">Patient Information</a>
+                    <a class="none" href="blog.html">Blog</a>
+                    <a class="none" href="blog-single.html">Blog - Single</a>
+                </div>
+            </div>
+        </div>    
+    </div>

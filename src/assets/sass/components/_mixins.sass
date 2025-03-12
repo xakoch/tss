@@ -1,0 +1,78 @@
+/*Mixins*/
+
+// width
+=r($width)
+	@media only screen and (max-width: $width + "px")
+		@content
+
+=rmin($width)
+	@media only screen and (min-width: $width + "px")
+		@content
+
+// height
+=rh($height)
+	@media only screen and (max-height: $height + "px")
+		@content
+
+=rhmin($height)
+	@media only screen and (min-height: $height + "px")
+		@content
+
+// font-family
+=font($alias, $name)
+	@font-face
+		font-family: $alias
+		src: url("../fonts/" + $name + ".woff2") format("woff2")
+		font-weight: normal
+		font-style: normal
+		font-display: block
+
+=hover
+	.no-touch &:hover
+		@content
+
+=hide-text
+	font: 0/0 a
+	text-shadow: none
+	color: transparent
+
+=hidetext
+	+hide-text
+
+//simple gradient
+=g($color1, $color2)
+	background-image: linear-gradient($color1, $color2)
+
+=gh($color1, $color2)
+	background-image: linear-gradient(left, $color1, $color2)
+
+// TRANSITION
+=tr($what)
+	transition: $what
+
+=trans($what: all, $dur: 0.35s, $easing: ease-out)
+	transition: $what $dur $easing
+
+=placeholder
+	&::placeholder
+		@content
+
+// @include transition(all .2s ease-in-out);
+=br($radius)
+	-webkit-border-radius: $radius
+	-moz-border-radius: $radius
+	-ms-border-radius: $radius
+	-o-border-radius: $radius
+	border-radius: $radius
+
+=bb
+	border: 1px solid red
+
+=flex
+	display: flex
+	align-items: center
+	justify-content: center
+
+=an
+	opacity: 0
+	transform: translateY(30px)
