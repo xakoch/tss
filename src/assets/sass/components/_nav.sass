@@ -1,81 +1,32 @@
-// .header
-// 	&__menu
-// 		display: flex
-// 		align-items: center
-// 		justify-content: space-between
-// 		+r(991)
-// 			justify-content: flex-start
-// 		li
-// 			position: relative
-// 			transition: background 0.15s linear
-// 			background: transparent
-// 			padding: 0 20px
-// 			height: 44px
-// 			&:hover
-// 				background: $gr
-// 				.sub-menu
-// 					transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.1s
-// 					transform: translateY(0)
-// 					visibility: visible
-// 				.sub-item > span::before
-// 					-webkit-transform: rotate(45deg)
-// 					-moz-transform: rotate(45deg)
-// 					-ms-transform: rotate(45deg)
-// 					transform: rotate(45deg)
-// 				.sub-item > span::after
-// 					-webkit-transform: rotate(-45deg)
-// 					-moz-transform: rotate(-45deg)
-// 					-ms-transform: rotate(-45deg)
-// 					transform: rotate(-45deg)
-// 			.sub-item
-// 				& > a
-// 					+r(991)
-// 						padding: 0
-// 			.sub-item span
-// 				display: inline-block
-// 				width: 20px
-// 				height: 30px
-// 				position: relative
-// 				margin-left: 4px
-// 			.sub-item > span::before,
-// 			.sub-item > span::after
-// 				content: ''
-// 				width: 7px
-// 				height: 1px
-// 				position: absolute
-// 				transition: background 0.3s linear, transform 0.3s linear
-// 				background-color: $w
-// 				top: 50%
-// 				box-sizing: inherit
-// 				left: auto
-// 			.sub-item > span::before
-// 				right: 5px
-// 				left: auto
-// 				-webkit-transform: rotate(-45deg)
-// 				-moz-transform: rotate(-45deg)
-// 				-ms-transform: rotate(-45deg)
-// 			.sub-item > span::after
-// 				-webkit-transform: rotate(45deg)
-// 				-moz-transform: rotate(45deg)
-// 				-ms-transform: rotate(45deg)
-// 				transform: rotate(45deg)
-// 				right: 10px
-// 			&.current_page_item,
-// 			&.current-menu-item
-// 				background: $gradient2
-// 		a
-// 			display: block
-// 			+reg
-// 			text-align: center
-// 			font-size: 15px
-// 			font-style: normal
-// 			font-weight: 400
-// 			line-height: 43px
-// 			color: $w
-// 			height: 100%
-// 			+r(991)
-// 				color: $gr
-// 				text-align: left
+.header
+	&__menu
+		display: flex
+		align-items: center
+		justify-content: space-between
+		grid-gap: 40px
+		+r(991)
+			justify-content: flex-start
+		// li
+		// 	position: relative
+		// 	transition: background 0.15s linear
+		// 	background: transparent
+		// 	padding: 0 20px
+		// 	height: 44px
+		// 	&.current_page_item,
+		// 	&.current-menu-item
+		// 		background: $red
+		a
+			display: block
+			+reg
+			text-align: center
+			font-size: 17px
+			font-style: normal
+			font-weight: 400
+			color: $gray
+			height: 100%
+			transition: color .25s ease
+			&:hover
+				color: $red
 
 // .sub-menu
 // 	position: absolute

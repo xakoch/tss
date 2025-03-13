@@ -1,0 +1,40 @@
+.header
+	padding-top: 40px
+
+	.container
+		display: flex
+		align-items: center
+		justify-content: space-between
+
+	&__left
+		display: flex
+		align-items: center
+		grid-gap: 64px
+
+	&__logo
+		img
+			max-width: 110px
+
+	&__right
+		display: flex
+		grid-gap: 12px
+
+	&__lang
+		border-radius: 18px
+		padding: 26px
+		background: $w
+		color: $red
+		font-size: 15px
+
+		& > a
+			display: flex
+			align-items: center
+			grid-gap: 3px
+
+	&__cta
+		background: linear-gradient(to left, #8E1636, #660224)
+		font-size: 18px
+		+med
+		color: $w
+		padding: 24px 56px
+		border-radius: 18px
