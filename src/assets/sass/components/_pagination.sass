@@ -1,42 +1,51 @@
-// .pagination
-// 	display: flex
-// 	width: 100%
-// 	&.pagination-dark
-// 		justify-content: flex-end
-// 		margin-top: 26px
-// 		.page-numbers
-// 			border: 1px solid $b3
-// 		.page-numbers.current
-// 			background: $b8
-// 			&:hover
-// 				border-color: $b8
+.pagination
+	display: flex
+	width: 100%
+	grid-gap: 8px
+	justify-content: center
+	&.pagination-dark
+		justify-content: flex-end
+		margin-top: 26px
+		.page-numbers
+			border: 1px solid $red
+		.page-numbers.current
+			background: $b8
+			&:hover
+				border-color: $b8
 
-// .nav-links
-// 	grid-gap: 10px
-// 	display: flex
-// 	flex-flow: row wrap
+.nav-links
+	grid-gap: 10px
+	display: flex
+	flex-flow: row wrap
 
-// .page-numbers
-// 	padding: 20px 25px
-// 	+br(5px)
-// 	background: transparent
-// 	color: $gr
-// 	font-size: 15px
-// 	font-style: normal
-// 	font-weight: 500
-// 	line-height: 18px
-// 	letter-spacing: 0.6px
-// 	text-transform: uppercase
-// 	transition: color .35s ease-out, background .35s ease-out, border-color .35s ease-out
-// 	border: 1px solid $b7
-// 	&.current
-// 		background: $b7
-// 		color: $w
-// 		&:hover
-// 			background: $b7
-// 			color: $w
-// 			border-color: $b7
-// 	&:hover
-// 		background: $gr
-// 		color: $w
-// 		border-color: $gr
+.page-numbers
+	padding: 10px 13px
+	+br(5px)
+	background: transparent
+	color: $red
+	font-size: 15px
+	font-style: normal
+	font-weight: 500
+	line-height: 18px
+	letter-spacing: 0.6px
+	text-transform: uppercase
+	transition: color .35s ease-out, background .35s ease-out, border-color .35s ease-out
+	border: 1px solid $red
+	svg
+		fill: $red
+	&.prev
+		svg
+			transform: rotate(180deg)
+	&.current
+		background: $red
+		color: $w
+		&:hover
+			background: $red3
+			color: $w
+			border-color: $red3
+	&:hover
+		background: $red
+		color: $w
+		border-color: $red
+		svg
+			fill: $w

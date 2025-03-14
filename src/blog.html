@@ -1,0 +1,60 @@
+---
+layout: default
+title: Blog
+blog_posts:
+  - title: "Benefit from our partnerships"
+    date: "09/10/2024"
+    description: "FleetCard frees you to save on more than fuel. Our partners offer exclusive discounts on tyres, windscreens, batteries"
+    image: "assets/img/blog-img.png"
+    url: "blog-single.html"
+  - title: "Calculate your monthly fuel savings in seconds! Calculate your monthly fuel savings in seconds!"
+    date: "09/10/2024"
+    description: "FleetCard frees you to save on more than fuel. Our partners offer exclusive discounts on tyres, windscreens, batteries"
+    image: "assets/img/blog-img.png"
+    url: "blog-single.html"
+  - title: "Calculate your monthly fuel savings in seconds! Calculate your monthly fuel savings in seconds!"
+    date: "09/10/2024"
+    description: "FleetCard frees you to save on more than fuel. Our partners offer exclusive discounts on tyres, windscreens, batteries"
+    image: "assets/img/blog-img.png"
+  - title: "Benefit from our partnerships"
+    date: "09/10/2024"
+    description: "FleetCard frees you to save on more than fuel. Our partners offer exclusive discounts on tyres, windscreens, batteries"
+    image: "assets/img/blog-img.png"
+    url: "blog-single.html"
+---
+
+		{{> header }}
+
+		{{> bread }}
+
+		<!-- blog -->
+		<section class="section blog">
+			<div class="container">
+				<div class="section__title">
+					<h1>Новостной блог</h1>
+				</div>
+				<div class="blog-list">
+					{{#each blog_posts}}
+					<div class="blog-card">
+						<div class="blog-card__img">
+							<img src="{{image}}" alt="">
+						</div>
+						<div class="blog-card__content">
+							<span>{{date}}</span>
+							<a class="blog-card--title" href="{{url}}">
+								<h3>{{title}}</h3>
+							</a>
+							<p>{{description}}</p>
+							<a class="blog-card--link" href="{{url}}">Read more <span>→</span></a>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+				{{> pagination }}
+			</div>
+		</section>
+
+		{{> footer }}
+
+		</div>
+	</main>

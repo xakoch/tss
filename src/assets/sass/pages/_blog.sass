@@ -1,0 +1,105 @@
+.blog
+
+	&-list
+		display: grid
+		grid-template-columns: repeat(3, 1fr)
+		grid-gap: 50px 20px
+		margin: 60px 0 110px
+
+	.pagination
+		margin-bottom: 150px
+
+	&-card
+		background: $w
+		+br(18px)
+		overflow: hidden
+		height: min-content
+
+	&-card__img
+		img
+			height: 185px
+			overflow: hidden
+			+br(18px)
+			width: 100%
+			object-fit: cover
+			object-position: center
+
+	&-card__content
+		padding: 40px
+
+		span
+			color: $gray2
+			font-size: 13px
+			+med
+
+		h3
+			padding: 10px 0 25px
+			font-weight: normal
+			font-size: 18px
+			color: $b45
+			&:hover
+				color: $red
+
+		p
+			font-size: 14px
+			color: $gray3
+			line-height: 150%
+
+	&-card--link
+		display: block
+		margin-top: 25px
+		color: $red
+		+med
+		font-size: 14px
+		transition: color .3s ease-out
+		&:hover
+			color: $red3
+			span
+				transform: translateX(5px)
+				color: $red
+		span
+			color: $red
+			font-size: 14px
+			display: inline-block
+			transform: translateX(1px)
+			transition: transform .3s linear, color .1s ease
+
+
+	&-single__head
+		max-width: 950px
+		margin-bottom: 80px
+
+		h1
+			font-size: 40px
+			+reg
+			color: $b31
+			line-height: 120%
+			font-weight: normal
+
+		img
+			width: 100%
+			height: 450px
+			object-position: center
+			object-fit: cover
+			margin-top: 15px
+			+br(18px)
+
+	&-single__wysiwyg
+		margin-bottom: 150px
+		h1,h2,h3,h4,h5,h6
+			margin: 20px 0 !important
+			color: $red
+			+semi
+		p
+			margin-bottom: 20px
+			opacity: .6
+			+reg
+			font-size: 16px
+			line-height: 150%
+
+		ol, ul
+			list-style-type: auto
+			margin: 0 0 15px 30px !important
+
+			li
+				margin-bottom: 5px
