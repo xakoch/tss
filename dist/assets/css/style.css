@@ -605,6 +605,32 @@ body.overflow {
     color: #313131;
 }
 
+.section__subtext {
+    margin-bottom: 35px;
+    position: relative;
+    padding-left: 70px;
+}
+
+.section__subtext::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 0.1px;
+    background: #8E1636;
+}
+
+.section__subtext h5 {
+    font-size: 15px;
+    color: #000000;
+    font-family: Inter-Regular, sans-serif;
+    opacity: 0.3;
+    font-weight: normal;
+}
+
 .pagination {
     display: flex;
     width: 100%;
@@ -1551,4 +1577,26 @@ button.swiper-pagination-bullet {
 
 .blog-single__wysiwyg ol li, .blog-single__wysiwyg ul li {
     margin-bottom: 5px;
+}
+
+.blog-similar .section__head {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.blog-similar .section__head--right {
+    display: flex;
+    align-items: center;
+    grid-gap: 20px;
+}
+
+.blog-similar .btn-prev,
+.blog-similar .btn-next {
+    cursor: pointer;
+}
+
+.blog-similar .btn-prev {
+    transform: rotate(180deg);
 }

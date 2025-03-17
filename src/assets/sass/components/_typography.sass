@@ -16,3 +16,24 @@
 		// +r(560)
 		// 	font-size: 28px
 		// 	line-height: 44px
+
+.section__subtext
+	margin-bottom: 35px
+	position: relative
+	padding-left: 70px
+	&::before
+		content: ''
+		display: block
+		position: absolute
+		top: 50%
+		left: 0
+		transform: translateY(-50%)
+		width: 55px
+		height: 0.1px
+		background: $red
+	h5
+		font-size: 15px
+		color: $b
+		+reg
+		opacity: 0.3
+		font-weight: normal
