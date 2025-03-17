@@ -1,0 +1,52 @@
+.about__list
+	margin-bottom: 150px
+
+.about__list-card
+	display: grid
+	align-items: center
+	grid-template-columns: 1fr 1fr
+
+	img
+		width: 100%
+		object-fit: cover
+		object-position: center
+
+.about__list-content
+	padding: 0 120px 0 75px
+
+	h6
+		+reg
+		color: $red
+		font-size: 20px
+		padding-left: 70px
+		display: inline-block
+		position: relative
+		font-weight: normal
+		&::before
+			content: ''
+			position: absolute
+			top: 50%
+			left: 0
+			transform: translateY(-50%)
+			width: 55px
+			height: 1px
+			background: $red
+
+	h3
+		margin: 62px 0 !important
+		font-size: 40px
+		+reg
+		font-weight: normal
+		line-height: 120%
+		span
+			color: $red
+
+	p
+		+reg
+		font-size: 17px
+		color: $b
+		opacity: .4
+		line-height: 160%
+
+.about__list-cright
+	background: $w

@@ -1,0 +1,68 @@
+.hero
+	position: relative
+	display: flex
+	align-items: center
+	min-height: 820px
+	background-image: url(../img/about-hero-bg-pattern.png)
+	background-size: cover
+	background-repeat: no-repeat
+	overflow: hidden
+
+	&__content
+		padding-top: 100px
+
+	&__img
+		position: absolute
+		top: 50%
+		right: 0
+		transform: translateY(-50%)
+		z-index: 2
+		&::after
+			content: ''
+			position: absolute
+			left: auto
+			right: -20%
+			bottom: -65%
+			width: 800px
+			height: 800px
+			background-image: url(../img/about-hero-card-bg.svg)
+			background-repeat: no-repeat
+			background-size: contain
+			z-index: -1
+
+	&__title
+		display: inline-block
+		margin: 26px 0 86px
+		h1
+			+reg
+			font-weight: normal
+			font-size: 60px
+			line-height: 110%
+			span.color-primary
+				color: $red
+
+	&__subtext
+		span
+			opacity: 0.3
+			font-size: 15px
+			+reg
+			line-height: 110%
+
+	&__footer
+		font-size: 16px
+		+reg
+		opacity: 0.4
+		line-height: 160%
+		position: relative
+
+	&__footer--line
+		padding-left: 35px
+		&:before
+			content: ''
+			height: 100%
+			width: 1px
+			background: $red
+			display: inline-block
+			position: absolute
+			top: 0
+			left: 0
