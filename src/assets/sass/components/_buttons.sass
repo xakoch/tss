@@ -36,11 +36,12 @@
 	// 	z-index: 2
 
 .btn-primary
-	background: linear-gradient(to left, $red, $red3) !important
+	background: linear-gradient(to left, $red, $red3)
 	color: $w
 	border: 1px solid $red
+	+trans(all)
 	&:hover
-		background: $red3
+		background: linear-gradient(to right, $red, $red3)
 
 .btn-secondary
 	background: transparent

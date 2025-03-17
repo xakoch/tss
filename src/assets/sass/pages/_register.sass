@@ -1,0 +1,86 @@
+.register__hero 
+	.container
+		display: grid
+		grid-template-columns: 1.3fr 1fr
+		align-items: center
+		grid-gap: 20px
+
+.register__cta
+	background: $w
+	padding: 100px 0
+
+.register__cta-wrap
+	background-repeat: no-repeat
+	background-size: contain
+	background-position: right
+	position: relative
+	+br(18px)
+	background-color: $f5
+	padding: 70px
+	display: grid
+	grid-template-columns: 2fr 1fr
+	align-items: flex-end
+
+	h4
+		font-size: 28px
+		line-height: 120%
+		color: $b
+		font-weight: normal
+		span
+			opacity: .5
+
+	p
+		font-size: 15px
+		line-height: 160%
+		opacity: .4
+		margin-top: 15px
+		max-width: 580px
+
+.register__cta-btn
+	text-align: right
+
+.register__steps
+	padding: 60px 0 150px
+	background: $w
+
+	&-title
+		margin-bottom: 40px
+		display: block
+		h3
+			font-size: 30px
+			+reg
+			line-height: 120%
+			font-weight: normal
+			color: $red
+
+.register__steps-list
+	display: flex
+	flex-direction: column
+	grid-gap: 20px
+
+	.step
+		display: grid
+		grid-template-columns: 1fr 3fr
+		align-items: center
+		padding: 35px
+		border: 1px solid $ca
+		+br(18px)
+
+	.step__number
+		font-size: 200px
+		+bold
+		color: $red
+		text-align: center
+
+	.step__info
+		h4
+			font-size: 23px
+			line-height: 120%
+			color: $b31
+			font-weight: normal
+		p
+			font-size: 15px
+			color: $b
+			opacity: .4
+			line-height: 160%
+			margin: 40px 0 !important
