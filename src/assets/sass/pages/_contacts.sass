@@ -1,0 +1,59 @@
+.contacts
+	padding-bottom: 150px
+
+.contact__wrap
+	display: grid
+	grid-template-columns: 1fr 1fr
+	grid-gap: 80px
+
+.contact__info
+	h2
+		font-size: 40px
+		color: $red
+		font-weight: normal
+		line-height: 110%
+	p
+		margin: 35px 0 40px
+		opacity: .5
+
+.contact__group
+	margin-bottom: 20px
+
+	&--title
+		opacity: .4
+		font-size: 14px
+		margin-bottom: 10px
+
+	a
+		font-size: 24px
+		+reg
+		color: $red
+		display: inline-flex
+		align-items: center
+		+trans(opacity)
+		&:hover
+			opacity: .5
+		svg
+			width: 20px
+			height: 20px
+			margin-right: 10px
+
+	address
+		font-style: normal
+
+.contact__socials
+	display: flex
+	align-items: center
+	grid-gap: 15px
+	margin-top: 50px
+	a
+		width: 35px
+		height: 35px
+		background: $be
+		+br(50%)
+		+flex
+		+trans(background)
+		&:hover
+			background: $red
+		svg
+			fill: $w

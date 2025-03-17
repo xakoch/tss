@@ -1,0 +1,52 @@
+.partners__hero
+	margin-top: 80px
+
+.partners__content
+	display: flex
+	flex-direction: column
+	grid-gap: 40px
+
+	h1
+		font-size: 40px
+		line-height: 110%
+		+reg
+		font-weight: normal
+		span
+			color: $red
+
+	p
+		max-width: 650px
+		line-height: 23px
+		opacity: .55
+		font-size: 15px
+
+	h6
+		font-weight: normal
+		font-size: 14px
+
+.partners__form
+	form
+		display: flex
+		grid-gap: 20px
+		align-items: flex-end
+	label
+		color: $red
+		font-size: 13px
+		+reg
+		display: block
+		margin-bottom: 8px
+	input
+		min-width: 300px
+		border: 1px solid transparent
+		&:hover, &:focus
+			border: 1px solid $red
+	input[type="submit"]
+		background: linear-gradient(270deg,$red,$red3)
+		color: $w
+		+trans(all)
+		&:hover
+			background: linear-gradient(0deg,$red,$red3)
+
+.partners__footer
+	display: flex
+	grid-gap: 70px
