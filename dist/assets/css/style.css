@@ -548,7 +548,6 @@ body.overflow {
     display: flex;
     align-items: center;
     min-height: 820px;
-    background-image: url(../img/about-hero-bg-pattern.png);
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
@@ -731,6 +730,38 @@ body.overflow {
     font-family: Inter-Regular, sans-serif;
     opacity: 0.3;
     font-weight: normal;
+}
+
+.btn {
+    font-family: Inter-Regular, sans-serif;
+    display: inline-block;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.35s ease-out;
+    position: relative;
+    padding: 25px 52px;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(to left, #8E1636, #660224) !important;
+    color: #ffffff;
+    border: 1px solid #8E1636;
+}
+
+.btn-primary:hover {
+    background: #660224;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid #8E1636;
+    color: #8E1636;
+}
+
+.btn-secondary:hover {
+    background: #8E1636;
+    color: #ffffff;
 }
 
 .pagination {
@@ -1608,6 +1639,12 @@ button.swiper-pagination-bullet {
     color: #000000;
     opacity: 0.4;
     line-height: 160%;
+}
+
+.about__list-btns {
+    display: flex;
+    grid-gap: 20px;
+    margin-top: 60px;
 }
 
 .about__list-cright {
