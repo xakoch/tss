@@ -798,6 +798,12 @@ select::placeholder {
     opacity: 0.5;
 }
 
+.section__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .section__head {
     display: flex;
     align-items: center;
@@ -1846,6 +1852,16 @@ button.swiper-pagination-bullet {
 
 .typecard {
     padding: 120px 0;
+}
+
+.home-map__iframe {
+    margin-top: 40px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.home-map__iframe iframe {
+    width: 100%;
 }
 
 .about__list {
