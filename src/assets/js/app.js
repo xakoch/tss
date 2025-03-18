@@ -152,18 +152,6 @@ function initSwiperSlider() {
     //     heroSlide.autoplay.start();
     // });
 
-    var economySlide = new Swiper(".economy__slider", {
-        slidesPerView: 1,
-        // loop: true,
-        pagination: {
-            el: ".swiper-pagination",
-        },
-        // autoplay: {
-        //     delay: 2500,
-        //     disableOnInteraction: true
-        // }
-    });
-
     var blogSingleSlide = new Swiper(".blog-slider", {
         slidesPerView: 2,
         loop: true,
@@ -183,7 +171,5 @@ function initSwiperSlider() {
             disableOnInteraction: true
         }
     });
-
-    
 
 }
