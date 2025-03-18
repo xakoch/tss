@@ -17,6 +17,55 @@
 		// +r(560)
 		// 	font-size: 28px
 		// 	line-height: 44px
+	h2
+		+reg
+		font-size: 40px
+		font-style: normal
+		line-height: 120%
+		color: $b31
+		font-weight: normal
+		span
+			color: $red
+
+.section__top
+	display: flex
+	align-items: center
+	grid-gap: 50px
+	.section__subtext
+		margin-bottom: 0
+	&.--white
+		.section__subtext 
+			h5
+				color: $w
+				opacity: .7
+			&::before
+				background: $w
+				opacity: .5
+		.section__num
+			color: $w
+			opacity: .5
+
+.section__head
+	display: flex
+	align-items: center
+	justify-content: space-between
+	margin-top: 60px
+
+.section__addblock
+	display: flex
+	align-items: center
+	grid-gap: 30px
+	p
+		font-size: 15px
+		color: $b
+		opacity: 0.4
+		line-height: 160%
+		text-align: right
+
+.section__num
+	color: $red
+	font-size: 14px
+	+reg
 
 .section__subtext
 	margin-bottom: 35px

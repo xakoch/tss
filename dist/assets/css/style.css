@@ -228,6 +228,10 @@ body.page-partners {
     background: #ffffff;
 }
 
+.bg-dark-linear {
+    background: linear-gradient(to right, #1A1A1A 0%, #202020 100%);
+}
+
 .section-header {
     display: flex;
     align-items: center;
@@ -604,11 +608,14 @@ body.page-partners {
 }
 
 .hero__footer {
+    position: relative;
+}
+
+.hero__footer p {
     font-size: 16px;
     font-family: Inter-Regular, sans-serif;
     opacity: 0.4;
     line-height: 160%;
-    position: relative;
 }
 
 .hero__footer--line {
@@ -753,6 +760,71 @@ select::placeholder {
     color: #313131;
 }
 
+.section__title h2 {
+    font-family: Inter-Regular, sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    line-height: 120%;
+    color: #313131;
+    font-weight: normal;
+}
+
+.section__title h2 span {
+    color: #8E1636;
+}
+
+.section__top {
+    display: flex;
+    align-items: center;
+    grid-gap: 50px;
+}
+
+.section__top .section__subtext {
+    margin-bottom: 0;
+}
+
+.section__top.--white .section__subtext h5 {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+.section__top.--white .section__subtext::before {
+    background: #ffffff;
+    opacity: 0.5;
+}
+
+.section__top.--white .section__num {
+    color: #ffffff;
+    opacity: 0.5;
+}
+
+.section__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.section__addblock {
+    display: flex;
+    align-items: center;
+    grid-gap: 30px;
+}
+
+.section__addblock p {
+    font-size: 15px;
+    color: #000000;
+    opacity: 0.4;
+    line-height: 160%;
+    text-align: right;
+}
+
+.section__num {
+    color: #8E1636;
+    font-size: 14px;
+    font-family: Inter-Regular, sans-serif;
+}
+
 .section__subtext {
     margin-bottom: 35px;
     position: relative;
@@ -794,7 +866,7 @@ select::placeholder {
     background: linear-gradient(to left, #8E1636, #660224);
     color: #ffffff;
     border: 1px solid #8E1636;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
 }
 
 .btn-primary:hover {
@@ -805,11 +877,31 @@ select::placeholder {
     background: transparent;
     border: 1px solid #8E1636;
     color: #8E1636;
+    transition: all 0.5s ease;
 }
 
 .btn-secondary:hover {
     background: #8E1636;
     color: #ffffff;
+}
+
+.link {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.link-primary {
+    color: #8E1636;
+}
+
+.link-icon:hover span {
+    transform: translateX(10px);
+}
+
+.link-icon span {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    transform: translateX(5px);
 }
 
 .pagination {
@@ -884,6 +976,10 @@ select::placeholder {
 
 .page-numbers:hover svg {
     fill: #ffffff;
+}
+
+.reviews {
+    padding: 120px 0;
 }
 
 /**
@@ -1619,11 +1715,136 @@ button.swiper-pagination-bullet {
     overflow: hidden;
 }
 
-.home-padding {
-    height: 50vh;
-    width: 100%;
+.page-home .hero__btn {
+    display: flex;
+    align-items: center;
     position: relative;
+}
+
+.page-home .hero__btn a {
     display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.page-home .hero__btn a:hover + span {
+    transform: translateX(-60px);
+}
+
+.page-home .hero__btn .btn-secondary {
+    background: #ffffff;
+}
+
+.page-home .hero__btn .btn-secondary:hover {
+    background: #8E1636;
+}
+
+.page-home .hero__btn span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    background: #8E1636;
+    padding: 24px 24px 24px 60px;
+    border-radius: 18px;
+    transition: transform 0.2s ease;
+    transform: translateX(-30px);
+}
+
+.page-home .hero__footer {
+    display: flex;
+    align-items: center;
+    grid-gap: 30px;
+    margin-top: 80px;
+}
+
+.page-home .hero__footer .arrow_down {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #8E1636;
+    border-radius: 50%;
+}
+
+.economy {
+    padding: 120px 0;
+}
+
+.economy__blocks {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.economy__block {
+    border: 1px solid red;
+    border-radius: 18px;
+}
+
+.eco__item {
+    background: linear-gradient(to left, #8E1636 0%, #660224 100%);
+    position: relative;
+    color: #ffffff;
+    padding: 60px 50px;
+    overflow: hidden;
+}
+
+.eco__item::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(../img/economy-block-pattern.png) no-repeat center center/cover;
+}
+
+.eco__item--number {
+    font-size: 80px;
+    line-height: 110%;
+    margin-bottom: 20px;
+    letter-spacing: -4px;
+    display: flex;
+    align-items: center;
+}
+
+.eco__item--title {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 14px 25px;
+    color: #8E1636;
+    text-align: center;
+    display: inline-block;
+    font-family: Inter-SemiBold, sans-serif;
+    font-size: 18px;
+}
+
+.eco__item--subtitle {
+    margin: 50px 0 20px;
+    font-size: 18px;
+    line-height: 150%;
+    font-family: Inter-SemiBold, sans-serif;
+    max-width: 400px;
+}
+
+.eco__item--text {
+    max-width: 400px;
+    opacity: 0.8;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.eco__item img {
+    position: absolute;
+    top: -10%;
+    right: -15%;
+}
+
+.typecard {
+    padding: 120px 0;
 }
 
 .about__list {

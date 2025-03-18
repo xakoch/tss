@@ -90,6 +90,31 @@ function initWindowInnerheight() {
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Находим все ссылки, которые ведут к якорям
+        const anchorLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+
+        anchorLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Получаем позицию элемента
+                    const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+                    // Плавный скролл к элементу
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
 }
 
 /**
@@ -127,6 +152,18 @@ function initSwiperSlider() {
     //     heroSlide.autoplay.start();
     // });
 
+    var economySlide = new Swiper(".economy__slider", {
+        slidesPerView: 1,
+        // loop: true,
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        // autoplay: {
+        //     delay: 2500,
+        //     disableOnInteraction: true
+        // }
+    });
+
     var blogSingleSlide = new Swiper(".blog-slider", {
         slidesPerView: 2,
         loop: true,
@@ -146,5 +183,7 @@ function initSwiperSlider() {
             disableOnInteraction: true
         }
     });
+
+    
 
 }
