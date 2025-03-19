@@ -64,6 +64,7 @@ function initScript() {
     initBarbaNavUpdate();
     initWindowInnerheight();
     initSwiperSlider();
+    initHomePage();
 }
 
 /**
@@ -152,6 +153,20 @@ function initSwiperSlider() {
     //     heroSlide.autoplay.start();
     // });
 
+    var typecardSlide = new Swiper(".typecard__slide", {
+        slidesPerView: 1,
+        loop: true,
+        speed: 800,
+        navigation: {
+            nextEl: ".btn-next",
+            prevEl: ".btn-prev",
+        },
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: true
+        }
+    });
+
     var blogSingleSlide = new Swiper(".blog-slider", {
         slidesPerView: 2,
         loop: true,
@@ -170,6 +185,206 @@ function initSwiperSlider() {
             delay: 2500,
             disableOnInteraction: true
         }
+    });
+
+
+}
+
+
+/**
+ * Home page
+ */
+function initHomePage() {
+
+    // ===================================
+    // Economy block slider
+    // ===================================
+
+    document.querySelectorAll(".slider-block").forEach((block) => {
+        const track = block.querySelector(".slider-track");
+        const slides = block.querySelectorAll(".slider-slide");
+        let controlsContainer = block.querySelector(".slider-control");
+        if (!controlsContainer) {
+            controlsContainer = document.createElement("div");
+            controlsContainer.classList.add("slider-control");
+            block.prepend(controlsContainer);
+        } else {
+            controlsContainer.innerHTML = "";
+        }
+        let currentIndex = 0;
+        let startX = 0;
+        let moveX = 0;
+        let isSwiping = false;
+        let autoplayInterval;
+        
+        const updateSlider = (index) => {
+            // Make sure index is within bounds
+            if (index >= slides.length) {
+                index = 0;
+            } else if (index < 0) {
+                index = slides.length - 1;
+            }
+            
+            const slideWidth = slides[0].offsetWidth;
+            track.style.transform = `translateX(-${index * slideWidth}px)`;
+            block.querySelectorAll(".slider-button").forEach((btn, idx) => {
+                btn.classList.toggle("active", idx === index);
+            });
+            currentIndex = index;
+        };
+        
+        // Function to start autoplay
+        const startAutoplay = () => {
+            // Clear any existing interval first
+            stopAutoplay();
+            
+            autoplayInterval = setInterval(() => {
+                updateSlider(currentIndex + 1);
+            }, 3500); // 2.5 seconds
+        };
+        
+        // Function to stop autoplay
+        const stopAutoplay = () => {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+        };
+        
+        slides.forEach((_, index) => {
+            const button = document.createElement("button");
+            button.classList.add("slider-button");
+            button.textContent = index + 1;
+            button.addEventListener("click", () => {
+                updateSlider(index);
+                // Restart autoplay when user clicks a button
+                startAutoplay();
+            });
+            controlsContainer.appendChild(button);
+        });
+        controlsContainer.querySelector(".slider-button").classList.add("active");
+        
+        // Swipe events
+        track.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+            // Stop autoplay while user is interacting
+            stopAutoplay();
+        });
+        
+        track.addEventListener("touchmove", (e) => {
+            if (!isSwiping) return;
+            moveX = e.touches[0].clientX;
+        });
+        
+        track.addEventListener("touchend", () => {
+            if (!isSwiping) return;
+            let diff = startX - moveX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < slides.length - 1) {
+                    updateSlider(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    updateSlider(currentIndex - 1);
+                }
+            }
+            isSwiping = false;
+            // Restart autoplay after user finishes interacting
+            startAutoplay();
+        });
+        
+        // Pause autoplay when user hovers over slider
+        block.addEventListener("mouseenter", stopAutoplay);
+        block.addEventListener("mouseleave", startAutoplay);
+        
+        window.addEventListener("resize", () => {
+            updateSlider(currentIndex);
+        });
+        
+        // Start autoplay when page loads
+        startAutoplay();
+    });
+
+    // ===================================
+    // Economy Number Animation 
+    // ===================================
+
+    const numberElements = document.querySelectorAll(".custom-count-number");
+
+    if (numberElements.length === 0) return;
+
+    const parseNumberAndSymbol = (text) => {
+        const match = text.trim().match(/^([\d,]+)(\s*[<%]?)$/); // Учитываем возможный пробел перед "<" или "%"
+        if (!match) return null;
+
+        return {
+            number: parseInt(match[1].replace(/,/g, ""), 10), // Убираем запятые
+            suffix: match[2] || "", // Храним "<", "%" или пустую строку БЕЗ ИЗМЕНЕНИЙ
+        };
+    };
+
+    const animateNumber = (element, finalNumber, suffix) => {
+        let currentNumber = 0;
+        const duration = 2000; // Длительность анимации (мс)
+        const frameRate = 30; // Количество кадров в секунду
+        const totalFrames = (duration / 1000) * frameRate;
+        const increment = finalNumber / totalFrames;
+
+        element.style.opacity = "1"; // Делаем заголовок видимым
+
+        const updateNumber = () => {
+            currentNumber += increment;
+            if (currentNumber >= finalNumber) {
+                currentNumber = finalNumber;
+                clearInterval(animation);
+            }
+            element.textContent = `${Math.floor(currentNumber).toLocaleString("en-US")}${suffix}`;
+        };
+
+        const animation = setInterval(updateNumber, 1000 / frameRate);
+    };
+
+    const onScroll = () => {
+        numberElements.forEach((element) => {
+            const data = parseNumberAndSymbol(element.textContent);
+            if (!data) return;
+
+            const { number, suffix } = data;
+            const blockPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (blockPosition < windowHeight * 0.75 && !element.dataset.animated) {
+                element.dataset.animated = "true"; // Отмечаем как анимированный
+                animateNumber(element, number, suffix);
+            }
+        });
+    };
+    window.addEventListener("scroll", onScroll);
+
+    // ===================================
+    // Typecard Tabs
+    // ===================================
+
+    const tabs = document.querySelectorAll('.typecard__tab');
+    const tabContents = document.querySelectorAll('.typecard__content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('typecard__tab_active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('typecard__tab_active');
+            
+            // Show corresponding content
+            const tabId = this.getAttribute('data-tab');
+            
+            // Hide all tab contents
+            tabContents.forEach(content => content.classList.remove('typecard__content_active'));
+            
+            // Show selected tab content
+            const activeContent = tabId === 'debit' ? document.getElementById('debit-content') : document.getElementById('credit-content');
+            activeContent.classList.add('typecard__content_active');
+        });
     });
 
 }

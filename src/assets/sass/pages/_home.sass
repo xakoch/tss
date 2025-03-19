@@ -46,21 +46,132 @@
 	padding: 120px 0
 
 .economy__blocks
-	display: grid
-	grid-template-columns: 1.5fr 1fr 1fr
+	display: flex
+	width: 100%
 	grid-gap: 20px
 	margin: 30px 0
 
-.economy__block
-	+bb
-	+br(18px)
+.eco-box__content
+	position: relative
+	padding: 40px 30px
+	overflow-x: hidden
 
+.eco-box 
+	display: flex
+	gap: 20px
+	justify-content: space-between
+	width: 50%
+
+	&__item
+		+br(18px)
+		overflow: hidden
+		width: 50%
+		border: solid 1px $red
+		position: relative
+
+	h4, p
+		font-size: 15px
+		color: $b
+		+reg
+		font-weight: normal
+		line-height: 110%
+
+	&__num
+		font-size: 55px
+		line-height: 110%
+		+reg
+		letter-spacing: -4px
+		display: flex
+		align-items: center
+		margin: 20px 0
+		position: relative
+		background: linear-gradient(to bottom, $red3 30%, $w 100%)
+		-webkit-background-clip: text
+		-webkit-text-fill-color: transparent
+		background-clip: text
+		color: transparent
+		span
+			position: relative
+			background: linear-gradient(to bottom, $red3 30%, $w 100%)
+			-webkit-background-clip: text
+			-webkit-text-fill-color: transparent
+			background-clip: text
+			color: transparent
+
+	p
+		color: $red
+
+	img 
+		height: 200px
+		width: auto !important
+		object-fit: cover
+		object-position: left
+		padding-left: 20px
+
+.slider-control
+	display: -webkit-box
+	display: -ms-flexbox
+	display: flex
+	
+	/* justify-content: center */
+	width: -webkit-max-content
+	width: -moz-max-content
+	width: max-content
+	height: 30px
+	-webkit-box-align: center
+	-ms-flex-align: center
+	align-items: center
+	-webkit-box-pack: end
+	-ms-flex-pack: end
+	justify-content: flex-end
+	-ms-flex-item-align: end
+	-ms-grid-row-align: end
+	align-self: flex-end
+	margin-left: auto
+	gap: 5px
+	width: 100%
+
+	position: absolute
+	top: 34px
+	right: 30px
+
+.slider-button
+	background-color: $ed
+	color: $w
+	font-size: 0
+	border: none
+	padding: 5px 10px
+	cursor: pointer
+	width: 18px
+	height: 18px
+	+br(2px)
+	cursor: pointer
+	position: relative
+	z-index: 2
+	&.active
+		background: $red
+
+.slider-track
+	display: flex
+	transition: transform 0.5s ease-in-out
+
+.slider-slide
+	min-width: 100%
+
+// left block
 .eco__item
 	background: linear-gradient(to left, $red 0%, $red3 100%)
 	position: relative
 	color: $w
 	padding: 60px 50px
 	overflow: hidden
+	width: 50%
+	+br(18px)
+	overflow: hidden
+	border: solid 1px $red
+	position: relative
+	display: flex
+	flex-direction: column
 
 	&::before
 		content: ''
@@ -88,6 +199,7 @@
 		color: $red
 		text-align: center
 		display: inline-block
+		width: max-content
 		+semi
 		font-size: 18px
 
@@ -113,7 +225,201 @@
 // Type Card
 // ============================
 .typecard
-	padding: 120px 0
+	+br(25px)
+	color: $w
+	&::before
+		content: ''
+		display: block
+		position: absolute
+		top: 0
+		right: 0
+		background: url(../img/typecard-bg-pattern.png)
+		width: 100%
+		height: 100%
+		background-repeat: no-repeat
+		background-position: right
+		background-size: contain
+
+	&__wrap
+		margin-top: 30px
+		display: flex
+		grid-gap: 50px
+		flex-direction: row
+
+	&__col
+		width: 50%
+		overflow: hidden
+
+	&__info
+		position: relative
+		&::before
+			content: ''
+			position: absolute
+			top: 65%
+			left: 50%
+			transform: translate(-50%,-50%)
+			width: 388px
+			height: 388px
+			+br(50%)
+			background: rgba($w,.12)
+			z-index: 1
+			animation: pulse-shadow 2.5s infinite
+
+	&__nav
+		display: flex
+		align-items: center
+		grid-gap: 20px
+		margin: 30px 0
+
+	.swiper
+		width: 100vw
+
+	.swiper-wrapper
+		display: flex !important
+		flex-direction: row !important
+		grid-column: auto !important
+		grid-row: auto !important
+
+	.swiper-slide
+		width: auto
+		flex-shrink: 0 !important
+
+.typecard__right
+	background-color: rgba(30, 30, 30, 0.5)
+	backdrop-filter: blur(10px)
+	-webkit-backdrop-filter: blur(10px)
+	+br(18px)
+
+.typecard__tabs
+	display: flex
+	padding: 20px 0 0
+
+.typecard__tab
+	flex: 1
+	text-align: center
+	padding: 15px
+	cursor: pointer
+	position: relative
+	opacity: 0.7
+	transition: opacity 0.3s
+
+.typecard__tab_active
+	opacity: 1
+
+.typecard__tab-indicator
+	height: 3px
+	background-color: white
+	position: absolute
+	bottom: 0
+	left: 10%
+	width: 80%
+	border-radius: 3px
+	opacity: 0
+	transition: opacity 0.3s
+
+.typecard__tab_active .typecard__tab-indicator
+	opacity: 1
+
+.typecard__tab-circle
+	display: inline-flex
+	justify-content: center
+	align-items: center
+	width: 30px
+	height: 30px
+	border-radius: 50%
+	background-color: #333
+	margin-right: 10px
+
+.typecard__tab_active .typecard__tab-circle
+	background-color: white
+	color: #333
+
+.typecard__divider
+	height: 1px
+	background-color: rgba(255, 255, 255, 0.2)
+	margin: 10px 0
+
+.typecard__content
+	padding: 40px 40px 20px 60px
+	display: none
+
+.typecard__content_active
+	display: block
+
+.typecard__section
+	margin-bottom: 45px
+
+.typecard__section_features
+	margin-bottom: 30px
+
+.typecard__subtitle
+	font-size: 14px
+	color: rgba(255, 255, 255, 0.6)
+	margin-bottom: 5px
+
+.typecard__title
+	font-size: 24px
+	font-weight: bold
+
+.typecard__description
+	font-size: 16px
+	line-height: 1.5
+	color: rgba(255, 255, 255, 0.8)
+
+.typecard__feature
+	display: flex
+	align-items: center
+	margin-bottom: 15px
+
+.typecard__feature-icon
+	display: flex
+	justify-content: center
+	align-items: center
+	width: 24px
+	height: 24px
+	border-radius: 50%
+	background-color: rgba(255, 255, 255, 0.9)
+	margin-right: 15px
+	color: #333
+
+.typecard__feature-text
+	font-size: 15px
+	color: rgba(255, 255, 255, 0.8)
+
+.typecard__actions
+	display: flex
+	justify-content: space-between
+	align-items: center
+	margin-top: 20px
+
+.typecard__button
+	background-color: white
+	color: #333
+	border: none
+	border-radius: 30px
+	padding: 15px 30px
+	font-weight: bold
+	font-size: 16px
+	cursor: pointer
+	transition: transform 0.2s, box-shadow 0.2s
+
+	&:hover
+		transform: translateY(-2px)
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+
+.typecard__more-info
+	display: flex
+	align-items: center
+	color: rgba(255, 255, 255, 0.7)
+	font-size: 15px
+	cursor: pointer
+	transition: color 0.2s
+
+	&:hover
+		color: white
+
+.typecard__more-info-icon
+	margin-left: 8px
 
 
 // ============================
