@@ -2061,8 +2061,8 @@ button.swiper-pagination-bullet {
 
 .typecard__right {
     background-color: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
     border-radius: 18px;
 }
 
@@ -2086,12 +2086,12 @@ button.swiper-pagination-bullet {
 }
 
 .typecard__tab-indicator {
-    height: 3px;
-    background-color: white;
+    height: 1px;
+    background-color: #ffffff;
     position: absolute;
     bottom: 0;
-    left: 10%;
-    width: 80%;
+    left: 0;
+    width: 100%;
     border-radius: 3px;
     opacity: 0;
     transition: opacity 0.3s;
@@ -2120,7 +2120,6 @@ button.swiper-pagination-bullet {
 .typecard__divider {
     height: 1px;
     background-color: rgba(255, 255, 255, 0.2);
-    margin: 10px 0;
 }
 
 .typecard__content {
@@ -2137,24 +2136,25 @@ button.swiper-pagination-bullet {
 }
 
 .typecard__section_features {
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 .typecard__subtitle {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 5px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    opacity: 0.3;
 }
 
 .typecard__title {
     font-size: 24px;
-    font-weight: bold;
+    font-family: Inter-Regular, sans-serif;
 }
 
 .typecard__description {
-    font-size: 16px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    line-height: 160%;
+    color: #ffffff;
 }
 
 .typecard__feature {
@@ -2163,37 +2163,41 @@ button.swiper-pagination-bullet {
     margin-bottom: 15px;
 }
 
+.typecard__feature:last-child {
+    margin-bottom: 0;
+}
+
 .typecard__feature-icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
-    margin-right: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-right: 10px;
     color: #333;
 }
 
 .typecard__feature-text {
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    color: #ffffff;
 }
 
 .typecard__actions {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    grid-gap: 40px;
 }
 
 .typecard__button {
     background-color: white;
     color: #333;
     border: none;
-    border-radius: 30px;
-    padding: 15px 30px;
-    font-weight: bold;
+    border-radius: 18px;
+    font-family: Inter-Medium, sans-serif;
+    padding: 25px 50px;
     font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -2219,6 +2223,18 @@ button.swiper-pagination-bullet {
 
 .typecard__more-info-icon {
     margin-left: 8px;
+}
+
+.typecard__footer {
+    display: block;
+    margin-top: 80px;
+}
+
+.typecard__footer p {
+    color: #ffffff;
+    opacity: 0.8;
+    line-height: 150%;
+    font-size: 14px;
 }
 
 .home-map__iframe {

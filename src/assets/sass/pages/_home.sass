@@ -286,8 +286,8 @@
 
 .typecard__right
 	background-color: rgba(30, 30, 30, 0.5)
-	backdrop-filter: blur(10px)
-	-webkit-backdrop-filter: blur(10px)
+	backdrop-filter: blur(100px)
+	-webkit-backdrop-filter: blur(100px)
 	+br(18px)
 
 .typecard__tabs
@@ -307,12 +307,12 @@
 	opacity: 1
 
 .typecard__tab-indicator
-	height: 3px
-	background-color: white
+	height: 1px
+	background-color: $w
 	position: absolute
 	bottom: 0
-	left: 10%
-	width: 80%
+	left: 0
+	width: 100%
 	border-radius: 3px
 	opacity: 0
 	transition: opacity 0.3s
@@ -337,7 +337,6 @@
 .typecard__divider
 	height: 1px
 	background-color: rgba(255, 255, 255, 0.2)
-	margin: 10px 0
 
 .typecard__content
 	padding: 40px 40px 20px 60px
@@ -350,55 +349,58 @@
 	margin-bottom: 45px
 
 .typecard__section_features
-	margin-bottom: 30px
+	margin-bottom: 60px
 
 .typecard__subtitle
 	font-size: 14px
-	color: rgba(255, 255, 255, 0.6)
-	margin-bottom: 5px
+	color: $w
+	margin-bottom: 15px
+	opacity: .3
 
 .typecard__title
 	font-size: 24px
-	font-weight: bold
+	+reg
 
 .typecard__description
-	font-size: 16px
-	line-height: 1.5
-	color: rgba(255, 255, 255, 0.8)
+	font-size: 18px
+	line-height: 160%
+	color: $w
 
 .typecard__feature
 	display: flex
 	align-items: center
 	margin-bottom: 15px
+	&:last-child
+		margin-bottom: 0
 
 .typecard__feature-icon
 	display: flex
 	justify-content: center
 	align-items: center
-	width: 24px
-	height: 24px
+	width: 21px
+	height: 21px
 	border-radius: 50%
-	background-color: rgba(255, 255, 255, 0.9)
-	margin-right: 15px
+	background-color: rgba($w, .7)
+	margin-right: 10px
 	color: #333
 
 .typecard__feature-text
-	font-size: 15px
-	color: rgba(255, 255, 255, 0.8)
+	font-size: 16px
+	color: $w
 
 .typecard__actions
 	display: flex
-	justify-content: space-between
 	align-items: center
 	margin-top: 20px
+	grid-gap: 40px
 
 .typecard__button
 	background-color: white
 	color: #333
 	border: none
-	border-radius: 30px
-	padding: 15px 30px
-	font-weight: bold
+	+br(18px)
+	+med
+	padding: 25px 50px
 	font-size: 16px
 	cursor: pointer
 	transition: transform 0.2s, box-shadow 0.2s
@@ -421,6 +423,14 @@
 .typecard__more-info-icon
 	margin-left: 8px
 
+.typecard__footer
+	display: block
+	margin-top: 80px
+	p
+		color: $w
+		opacity: .8
+		line-height: 150%
+		font-size: 14px
 
 // ============================
 // Map
