@@ -191,9 +191,10 @@ function initSwiperSlider() {
         slidesToShow: 5,
         slidesToScroll: 1,
         centerMode: true,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        infinite: true,
+        // autoplay: true,
+        // autoplaySpeed: 2000,
+        // infinite: true,
+        cssEase: 'ease-in-out',
     });
 
     // const $slider = jQuery('.reviews__slider');

@@ -1032,18 +1032,15 @@ select::placeholder {
     font-family: Inter-Regular, sans-serif;
 }
 
-.reviews .swiper {
-    width: 100%;
-    height: 100%;
-}
-
 .reviews__item {
+    max-width: 285px !important;
     height: 100%;
     border-radius: 18px;
     overflow: hidden;
-    border: 1px solid red;
     transform: scale(0.7);
     transition: transform 0.2s ease;
+    width: 100% !important;
+    border: 2px solid transparent;
 }
 
 .reviews__item video {
@@ -1059,14 +1056,24 @@ select::placeholder {
     margin-top: 50px;
 }
 
+.reviews .slick-list {
+    padding: 0 20px !important;
+}
+
 .reviews .slick-track {
     display: flex;
     align-items: center;
-    grid-gap: 10px;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.reviews .slick-slide {
+    transition: 0.5s;
 }
 
 .reviews .slick-current {
     transform: scale(1);
+    border-color: #ffffff;
 }
 
 /**
