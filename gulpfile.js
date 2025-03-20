@@ -29,6 +29,7 @@ const path = {
         css: distPath + "assets/css/",
         js: distPath + "assets/js/",
         images: distPath + "assets/img/",
+        videos: distPath + "assets/video/",
         fonts: distPath + "assets/fonts/",
     },
     src: {
@@ -36,6 +37,7 @@ const path = {
         css: srcPath + "assets/sass/*.sass",
         js: srcPath + "assets/js/*.js",
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}",
+        videos: srcPath + "assets/video/**/*.{mp4,webm,ogg,mov}",
         fonts:  srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}"
     },
     watch: {
@@ -43,6 +45,7 @@ const path = {
         js:     srcPath + "assets/js/**/*.js",
         css:    srcPath + "assets/sass/**/*.sass",
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}",
+        videos: srcPath + "assets/video/**/*.{mp4,webm,ogg,mov}",
         fonts:  srcPath + "assets/fonts/**/*.{eot,woff,woff2,ttf,svg}"
     },
     clean: "./" + distPath
@@ -139,6 +142,12 @@ function images() {
         .pipe(browserSync.reload({stream: true}));
 }
 
+function videos() {
+    return src(path.src.videos, {base: srcPath + "assets/video/"})
+        .pipe(dest(path.build.videos))
+        .pipe(browserSync.reload({stream: true}));
+}
+
 // function webpImages() {
 //     return src(path.src.images, {base: srcPath + "assets/img/"})
 //         .pipe(imagewebp())
@@ -160,16 +169,18 @@ function watchFiles() {
     gulp.watch([path.watch.css], css)
     gulp.watch([path.watch.js], js)
     gulp.watch([path.watch.images], images)
+    gulp.watch([path.watch.videos], videos)
     gulp.watch([path.watch.fonts], fonts)
 }
 
-const build = gulp.series(clean, gulp.parallel(html, css, js, images, fonts))
+const build = gulp.series(clean, gulp.parallel(html, css, js, images, videos, fonts))
 const watch = gulp.parallel(build, watchFiles, serve)
 
 exports.html = html
 exports.css = css
 exports.js = js
 exports.images = images
+exports.videos = videos
 // exports.webpImages = webpImages
 exports.fonts = fonts
 exports.clean = clean

@@ -1,2 +1,52 @@
 .reviews
-	padding: 120px 0
+	padding: 160px 0
+	overflow: hidden
+	+br(18px)
+	color: $w
+	&::before
+		content: ''
+		position: absolute
+		top: -60%
+		right: -2%
+		background-image: url(../img/reviews-cards.png)
+		background-size: contain
+		background-repeat: no-repeat
+		background-position: right
+		width: 1120px
+		height: 100%
+
+	.section__addblock
+		p
+			color: rgba($w,.4)
+			font-size: 16px
+			line-height: 160%
+			font-weight: normal
+			+reg
+
+	.swiper
+		width: 100%
+		height: 100%
+
+	&__item
+		height: 100%
+		+br(18px)
+		overflow: hidden
+		+bb
+		transform: scale(0.7)
+		+trans(transform)
+		video
+			height: 100%
+			width: 100%
+			object-fit: cover
+			object-position: center
+
+	&__content
+		margin-top: 50px
+
+	.slick-track
+		display: flex
+		align-items: center
+		grid-gap: 10px
+
+	.slick-current
+		transform: scale(1)

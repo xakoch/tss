@@ -187,7 +187,107 @@ function initSwiperSlider() {
         }
     });
 
+    $('.reviews__slider').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        centerMode: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        infinite: true,
+    });
 
+    // const $slider = jQuery('.reviews__slider');
+
+    // Инициализация slick
+//     $slider.slick({
+//         dots: true,
+//         infinite: true,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         centerMode: true,
+//         centerPadding: '0px',
+//         speed: 500,
+//         variableWidth: true,
+//         cssEase: 'ease-in-out',
+//         appendDots: jQuery('.custom-dots-container'),
+//         prevArrow: '<div class="prev-arrow">...</div>',
+//         nextArrow: '<div class="next-arrow">...</div>',
+//         responsive: [
+//             {
+//                 breakpoint: 1024,
+//                 settings: { slidesToShow: 2, slidesToScroll: 1 }
+//             },
+//             {
+//                 breakpoint: 600,
+//                 settings: { slidesToShow: 1, slidesToScroll: 1 }
+//             }
+//         ]
+//     });
+
+//     // Функция остановки всех видео
+//     function pauseAllVideos() {
+//         document.querySelectorAll('.review-video').forEach(video => {
+//             video.pause();
+//             video.currentTime = 0;
+//         });
+//     }
+
+//     // Остановка видео при смене слайда
+//     $slider.on('beforeChange', () => {
+//         pauseAllVideos();
+//     });
+
+//     // Обработчик на кнопки Play
+//     document.querySelectorAll('.play-button').forEach(button => {
+//         button.addEventListener('click', event => {
+//             const parentSlide = button.closest('.slider-item');
+
+//             // Запрещаем воспроизведение на неактивных слайдах
+//             if (!parentSlide.classList.contains('slick-active')) {
+//                 event.preventDefault();
+//                 event.stopPropagation();
+//                 return;
+//             }
+
+//             const video = parentSlide.querySelector('.review-video');
+
+//             if (video) {
+//                 pauseAllVideos(); // Останавливаем все видео перед запуском нового
+
+//                 video.play().then(() => {
+//                     button.style.display = 'none';
+//                 }).catch(error => console.error('Ошибка воспроизведения:', error));
+//             }
+//         });
+//     });
+
+//     // Обработчик на видео
+//     document.querySelectorAll('.review-video').forEach(video => {
+//         const button = video.closest('.slider-item').querySelector('.play-button');
+
+//         video.addEventListener('click', () => {
+//             if (!video.closest('.slider-item').classList.contains('slick-active')) {
+//                 return;
+//             }
+
+//             if (video.paused) {
+//                 pauseAllVideos(); // Останавливаем другие видео перед воспроизведением
+//                 video.play().then(() => {
+//                     button.style.display = 'none';
+//                 }).catch(error => console.error('Ошибка воспроизведения:', error));
+//             } else {
+//                 video.pause();
+//             }
+//         });
+
+//         video.addEventListener('pause', () => {
+//             button.style.display = 'block';
+//         });
+
+//         video.addEventListener('play', () => {
+//             button.style.display = 'none';
+//         });
+//     });
 }
 
 

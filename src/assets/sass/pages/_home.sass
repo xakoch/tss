@@ -435,9 +435,89 @@
 // ============================
 // Map
 // ============================
+.home-map
+	background-image: url(../img/world.png)
+	background-size: cover
+	background-repeat: no-repeat
+	background-position: right
+
 .home-map__iframe
 	margin-top: 40px
 	+br(18px)
 	overflow: hidden
 	iframe
 		width: 100%
+		display: none
+	.fakemap
+		width: 100%
+		height: 500px
+		background: $w
+
+// ============================
+// Form
+// ============================
+.home-form
+	.section__title
+		max-width: 473px
+		h2
+			color: $w
+			line-height: 120%
+		span
+			color: rgba($w,.6)
+	&__inner
+		+br(18px)
+		background: linear-gradient(to left, $red 0%, $red3 100%)
+		padding: 70px 80px
+		position: relative
+		overflow: hidden
+		&::before, &::after
+			content: ''
+			position: absolute
+			top: 0
+			right: 25%
+			background-image: url(../img/form-bg-element.png)
+			background-size: contain
+			background-repeat: no-repeat
+			background-position: right
+			width: 100%
+			height: 100%
+		&::after
+			right: 0
+			background-image: url(../img/form-bg-pattern.png)
+	.form
+		margin-top: 40px
+		margin-bottom: 30px
+		display: flex
+		align-items: flex-end
+		grid-gap: 10px
+		position: relative
+		z-index: 2
+	label
+		color: rgba($w, .7)
+		display: block
+		margin-bottom: 15px
+		+reg
+	.input
+		+br(18px)
+		padding: 25px 30px
+	input[type="tel"]
+		background: rgba($w,.3)
+		min-width: 400px
+		color: $w
+		+med
+		font-size: 18px
+		&::placeholder
+			+med
+			font-size: 18px
+			color: rgba($w, .7)
+	input[type="submit"]
+		padding: 25px 60px
+	&__footer
+		display: flex
+		align-items: center
+		grid-gap: 15px
+		p
+			color: rgba($w, .5)
+			max-width: 485px
+			line-height: 140%
+			font-size: 13px
