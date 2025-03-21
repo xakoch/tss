@@ -2591,8 +2591,8 @@ button.swiper-pagination-bullet {
 
 .calculator {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    background: rgba(142, 22, 54, 0.4);
+    grid-template-columns: 1.3fr 2fr;
+    background: rgba(102, 2, 36, 0.4);
     padding: 20px;
     border-radius: 18px;
     align-items: center;
@@ -2603,8 +2603,32 @@ button.swiper-pagination-bullet {
     color: #ffffff;
 }
 
+.savings .section__subtext::before {
+    background: #ffffff;
+}
+
+.savings .section__subtext h5 {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.savings h2 {
+    font-weight: normal;
+    font-size: 36px;
+    font-family: Inter-Regular, sans-serif;
+}
+
+.savings h2 span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .savings__info {
     margin-top: 50px;
+}
+
+.savings__label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
 }
 
 .savings__amount {
@@ -2727,6 +2751,79 @@ button.swiper-pagination-bullet {
     color: rgba(0, 0, 0, 0.4);
     font-size: 14px;
     line-height: 160%;
+}
+
+.range-input {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.range-input__label {
+    color: #9e0b36;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.range-input__slider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #f0f0f0;
+    outline: none;
+    margin: 20px 0;
+}
+
+.range-input__slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 60px;
+    height: 40px;
+    border-radius: 8px;
+    background: #9e0b36;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.range-input__slider::-moz-range-thumb {
+    width: 60px;
+    height: 40px;
+    border-radius: 8px;
+    background: #9e0b36;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.range-input__value {
+    display: none;
+}
+
+.range-input__tooltip {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    background-color: #9e0b36;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transform: translateX(-50%);
+    display: block;
+    text-align: center;
+    pointer-events: none;
+  /* Allows clicks to pass through */
+    transition: left 0.1s ease-out;
 }
 
 .register__hero .container {

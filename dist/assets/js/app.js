@@ -385,69 +385,94 @@ function initHomePage() {
  * Calculation
  */
 function initCalc() {
-    // Get DOM elements
-    const fleetSlider = document.getElementById('fleet-slider');
-    const fleetValue = document.getElementById('fleet-value');
-    const gallonsSlider = document.getElementById('gallons-slider');
-    const gallonsValue = document.getElementById('gallons-value');
-    const savingsAmount = document.getElementById('savings-amount');
-    const numberButtons = document.querySelectorAll('.button-group__button');
-    
-    // Set initial values
-    let fleet = 1;
-    let fillUps = 1;
-    let gallons = 50;
-    
-    // Calculate savings
-    function calculateSavings() {
-        // Based on the specific requirement:
-        // When fleet=1, fillUps=1, gallons=50, annual savings should be $25
-        // When fleet=1, fillUps=1, gallons=51, annual savings should be $25.5
-        // This means $0.5 per gallon per year with 1 fillup per week and 1 vehicle
+        // Get DOM elements
+        const fleetSlider = document.getElementById('fleet-slider');
+        const fleetValue = document.getElementById('fleet-value');
+        const fleetTooltip = document.getElementById('fleet-tooltip');
+        const gallonsSlider = document.getElementById('gallons-slider');
+        const gallonsValue = document.getElementById('gallons-value');
+        const gallonsTooltip = document.getElementById('gallons-tooltip');
+        const savingsAmount = document.getElementById('savings-amount');
+        const numberButtons = document.querySelectorAll('.button-group__button');
         
-        // Calculate the base savings
-        const savingsPerGallon = 0.5; // $0.50 per gallon annually when fillups=1, fleet=1
-        const baseSavings = gallons * savingsPerGallon;
+        // Set initial values
+        let fleet = 1;
+        let fillUps = 1;
+        let gallons = 50;
         
-        // Scale by number of vehicles and weekly fill-ups
-        const annualSavings = baseSavings * fleet * fillUps;
+        // Calculate savings
+        function calculateSavings() {
+            // Based on the specific requirement:
+            // When fleet=1, fillUps=1, gallons=50, annual savings should be $25
+            // When fleet=1, fillUps=1, gallons=51, annual savings should be $25.5
+            // This means $0.5 per gallon per year with 1 fillup per week and 1 vehicle
+            
+            // Calculate the base savings
+            const savingsPerGallon = 0.5; // $0.50 per gallon annually when fillups=1, fleet=1
+            const baseSavings = gallons * savingsPerGallon;
+            
+            // Scale by number of vehicles and weekly fill-ups
+            const annualSavings = baseSavings * fleet * fillUps;
+            
+            // Format with one decimal place if it's not a whole number
+            const formattedSavings = Number.isInteger(annualSavings) 
+                ? annualSavings 
+                : annualSavings.toFixed(1);
+                
+            savingsAmount.textContent = `${formattedSavings}`;
+        }
         
-        // Format with one decimal place if it's not a whole number
-        const formattedSavings = Number.isInteger(annualSavings) 
-            ? annualSavings 
-            : annualSavings.toFixed(1);
+        // Update position of the tooltip
+        function updateTooltipPosition(slider, tooltip) {
+            const min = parseInt(slider.min);
+            const max = parseInt(slider.max);
+            const val = parseInt(slider.value);
+            const percentage = ((val - min) / (max - min)) * 100;
+            const thumbWidth = 60; // Width of thumb in pixels
+            const sliderWidth = slider.offsetWidth - thumbWidth;
+            const offset = (percentage / 100) * sliderWidth + (thumbWidth / 2);
             
-        savingsAmount.textContent = `$${formattedSavings}`;
-    }
-    
-    // Update sliders
-    fleetSlider.addEventListener('input', function() {
-        fleet = parseInt(this.value);
-        fleetValue.textContent = fleet;
-        calculateSavings();
-    });
-    
-    gallonsSlider.addEventListener('input', function() {
-        gallons = parseInt(this.value);
-        gallonsValue.textContent = gallons;
-        calculateSavings();
-    });
-    
-    // Set up number buttons for fill-ups
-    numberButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            numberButtons.forEach(btn => btn.classList.remove('button-group__button--active'));
-            
-            // Add active class to clicked button
-            this.classList.add('button-group__button--active');
-            
-            // Update fillUps value
-            fillUps = parseInt(this.dataset.value);
+            tooltip.style.left = `${offset}px`;
+        }
+        
+        // Update sliders
+        fleetSlider.addEventListener('input', function() {
+            fleet = parseInt(this.value);
+            fleetValue.textContent = fleet;
+            fleetTooltip.textContent = fleet;
+            updateTooltipPosition(fleetSlider, fleetTooltip);
             calculateSavings();
         });
-    });
-    
-    // Initial calculation
-    calculateSavings();
+        
+        gallonsSlider.addEventListener('input', function() {
+            gallons = parseInt(this.value);
+            gallonsValue.textContent = gallons;
+            gallonsTooltip.textContent = gallons;
+            updateTooltipPosition(gallonsSlider, gallonsTooltip);
+            calculateSavings();
+        });
+        
+        // Set up number buttons for fill-ups
+        numberButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                numberButtons.forEach(btn => btn.classList.remove('button-group__button--active'));
+                
+                // Add active class to clicked button
+                this.classList.add('button-group__button--active');
+                
+                // Update fillUps value
+                fillUps = parseInt(this.dataset.value);
+                calculateSavings();
+            });
+        });
+        
+        // Initialize tooltip positions
+        window.addEventListener('load', function() {
+            updateTooltipPosition(fleetSlider, fleetTooltip);
+            updateTooltipPosition(gallonsSlider, gallonsTooltip);
+        });
+        
+        // Initial calculation
+        calculateSavings();
 }
