@@ -1,3 +1,7 @@
+// ========================================
+// home page
+// ========================================
+
 // ============================
 // Custom Hero
 // ============================
@@ -433,6 +437,45 @@
 		font-size: 14px
 
 // ============================
+// Why
+// ============================
+.why
+	background-image: url(../img/why-bg-pattern.png)
+	background-repeat: no-repeat
+	background-size: cover
+	padding: 200px 0
+
+	&__img
+		position: absolute
+		top: 50%
+		right: 0
+		transform: translate(10%, -50%)
+
+	.section__top
+		margin-bottom: 30px
+
+	h2
+		font-size: 40px
+		line-height: 120%
+		font-weight: normal
+		max-width: 530px
+		span
+			color: $red
+
+	p
+		font-size: 17px
+		color: rgba($b,.4)
+		line-height: 160%
+		+reg
+		margin: 20px 0 60px
+		max-width: 570px
+
+	&__btns
+		display: flex
+		grid-gap: 15px
+
+
+// ============================
 // Map
 // ============================
 .home-map
@@ -448,10 +491,6 @@
 	iframe
 		width: 100%
 		display: none
-	.fakemap
-		width: 100%
-		height: 500px
-		background: $w
 
 // ============================
 // Form

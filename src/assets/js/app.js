@@ -1,38 +1,61 @@
 initPageTransitions();
 
 function initPageTransitions() {
-    // Перед началом перехода скроллим страницу наверх
+    // Scroll to top before transition begins
     barba.hooks.before(() => {
         window.scrollTo({ top: 0 });
     });
-
+    
     barba.init({
-        sync: false, // Лучше отключить sync для корректных анимаций
+        sync: false, // Better to disable sync for proper animations
         debug: false,
         timeout: 7000,
         transitions: [{
             name: 'default',
             once({ next }) {
-                // Инициализация при первой загрузке
+                // Initialize on first load
                 updateBodyClass(next.html);
                 initScript();
             },
             async leave(data) {
-                // Анимация исчезновения контента
+                // Content fade-out animation
                 initBarbaNavUpdate(data);
-                await gsap.to(data.current.container, {
-                    opacity: 0,
-                    duration: 0.5
+                
+                // Use Web Animation API instead of GSAP
+                const animation = data.current.container.animate([
+                    { opacity: 1 },
+                    { opacity: 0 }
+                ], {
+                    duration: 500, // 500ms = 0.5 seconds
+                    easing: 'ease'
                 });
+                
+                // Wait for animation to complete
+                await animation.finished;
                 data.current.container.remove();
             },
             async enter({ next }) {
-                // Анимация появления контента
+                // Content fade-in animation
                 updateBodyClass(next.html);
-                return gsap.from(next.container, {
-                    opacity: 0,
-                    duration: 0.5
+                
+                // Set initial state
+                next.container.style.opacity = '0';
+                
+                // Use Web Animation API
+                const animation = next.container.animate([
+                    { opacity: 0 },
+                    { opacity: 1 }
+                ], {
+                    duration: 500,
+                    easing: 'ease'
                 });
+                
+                // Update final state after animation
+                animation.onfinish = () => {
+                    next.container.style.opacity = '1';
+                };
+                
+                return animation.finished;
             },
             async beforeEnter({ next }) {
                 updateBodyClass(next.html);
@@ -187,15 +210,188 @@ function initSwiperSlider() {
         }
     });
 
-    $('.reviews__slider').slick({
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        centerMode: true,
-        // autoplay: true,
-        // autoplaySpeed: 2000,
-        // infinite: true,
-        cssEase: 'ease-in-out',
-    });
+    // $('.reviews__slider').slick({
+    //     slidesToShow: 5,
+    //     slidesToScroll: 1,
+    //     centerMode: true,
+    //     // autoplay: true,
+    //     // autoplaySpeed: 2000,
+    //     // infinite: true,
+    //     cssEase: 'ease-in-out',
+    //     appendDots: jQuery('.custom-dots-container'),
+    // });
+
+    // $(document).ready(function(){
+    //     // Подготовка видео перед инициализацией слайдера
+    //     $('.reviews__item video').each(function() {
+    //         var video = $(this);
+            
+    //         // Устанавливаем дефолтный постер для сохранения высоты
+    //         // Для дефолтного постера используем общий плейсхолдер
+    //         var defaultPoster = 'assets/img/reviews-video-poster.png'; // Путь к дефолтному изображению
+    //         video.attr('poster', defaultPoster);
+            
+    //         // Добавляем возможность воспроизведения по клику
+    //         video.on('click', function() {
+    //             // Получаем индекс текущего слайда
+    //             var slideIndex = video.closest('.slick-slide').data('slick-index');
+                
+    //             // Сначала перемещаем слайдер к этому слайду для центрирования
+    //             $('.reviews__slider').slick('slickGoTo', slideIndex);
+                
+    //             // Добавляем небольшую задержку для завершения анимации перемещения
+    //             setTimeout(function() {
+    //                 if (video[0].paused) {
+    //                     // Останавливаем все остальные видео
+    //                     $('.reviews__item video').not(video).each(function() {
+    //                         this.pause();
+    //                         $(this).closest('.reviews__item').removeClass('video-is-playing');
+    //                     });
+                        
+    //                     // Воспроизводим текущее видео
+    //                     video[0].play();
+    //                     video.closest('.reviews__item').addClass('video-is-playing');
+    //                 } else {
+    //                     // Ставим на паузу текущее видео
+    //                     video[0].pause();
+    //                     video.closest('.reviews__item').removeClass('video-is-playing');
+    //                 }
+    //             }, 300); // Время, необходимое для завершения анимации slickGoTo
+    //         });
+    //     });
+        
+    //     // Инициализация слайдера с оптимальными настройками
+    //     $('.reviews__slider').slick({
+    //         dots: true,
+    //         // infinite: true,
+    //         speed: 500,
+    //         slidesToShow: 5,
+    //         centerMode: true,
+    //         slidesToScroll: 1,
+    //         adaptiveHeight: false, // Отключаем, чтобы не терять высоту
+    //         lazyLoad: 'ondemand',
+    //         prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+    //         nextArrow: '<button type="button" class="slick-next">Next</button>',
+    //         responsive: [
+    //             {
+    //                 breakpoint: 1200,
+    //                 settings: {
+    //                     slidesToShow: 3,
+    //                     centerMode: true
+    //                 }
+    //             },
+    //             {
+    //                 breakpoint: 768,
+    //                 settings: {
+    //                     slidesToShow: 1,
+    //                     centerMode: true,
+    //                     arrows: false
+    //                 }
+    //             }
+    //         ]
+    //     });
+        
+    //     // Остановка видео при переключении слайдов
+    //     $('.reviews__slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    //         // Находим текущий слайд
+    //         var currentSlideElement = $(slick.$slides[currentSlide]);
+            
+    //         // Останавливаем видео на текущем слайде
+    //         currentSlideElement.find('video').each(function() {
+    //             this.pause();
+    //             $(this).closest('.reviews__item').removeClass('video-is-playing');
+    //         });
+    //     });
+        
+    //     // Функция ленивой загрузки постеров
+    //     function loadPostersForVisibleSlides(slick, currentSlide) {
+    //         // Определяем индексы видимых слайдов (текущий, пред, след)
+    //         var slidesToLoad = [currentSlide];
+            
+    //         // Добавляем предыдущий и следующий слайды в очередь загрузки
+    //         if (currentSlide > 0) slidesToLoad.push(currentSlide - 1);
+    //         if (currentSlide < slick.slideCount - 1) slidesToLoad.push(currentSlide + 1);
+            
+    //         // Загружаем постеры для видимых слайдов
+    //         $.each(slidesToLoad, function(i, slideIndex) {
+    //             var slide = $(slick.$slides[slideIndex]);
+    //             var video = slide.find('video');
+                
+    //             if (video.length > 0 && !video.attr('data-loaded')) {
+    //                 var poster = video.data('poster');
+                    
+    //                 if (poster) {
+    //                     // Предзагрузка изображения
+    //                     var img = new Image();
+    //                     img.onload = function() {
+    //                         // Полностью удаляем предыдущий постер и устанавливаем новый
+    //                         video.removeAttr('poster');
+                            
+    //                         // Небольшая задержка для гарантированного сброса кэша браузера
+    //                         setTimeout(function() {
+    //                             video.attr('poster', poster);
+    //                             video.attr('data-loaded', 'true');
+                                
+    //                             console.log('Постер загружен: ' + poster);
+                                
+    //                             // Обновляем слайдер
+    //                             slick.setPosition();
+    //                         }, 10);
+    //                     };
+    //                     img.onerror = function() {
+    //                         console.error('Ошибка загрузки постера: ' + poster);
+    //                         // Оставляем дефолтный постер в случае ошибки
+    //                     };
+    //                     img.src = poster;
+    //                 }
+    //             }
+    //         });
+    //     }
+        
+    //     // Загружаем постеры для всех слайдов сразу после инициализации слайдера
+    //     // с небольшой задержкой, чтобы страница успела загрузиться
+    //     setTimeout(function() {
+    //         var slickInstance = $('.reviews__slider').slick('getSlick');
+            
+    //         // Загружаем постеры для всех слайдов
+    //         for (var i = 0; i < slickInstance.slideCount; i++) {
+    //             loadPostersForVisibleSlides(slickInstance, i);
+    //         }
+            
+    //         console.log('Запущена загрузка всех постеров');
+    //     }, 500); // Увеличиваем задержку для гарантированной загрузки страницы
+        
+    //     // Добавляем метод принудительного обновления постеров 
+    //     // для случаев, когда автоматическая замена не сработала
+    //     function forceRefreshPosters() {
+    //         var slickInstance = $('.reviews__slider').slick('getSlick');
+            
+    //         // Получаем все видео элементы
+    //         $('.reviews__item video').each(function() {
+    //             var video = $(this);
+                
+    //             if (video.data('poster')) {
+    //                 // Сначала удаляем постер, затем добавляем заново
+    //                 var poster = video.data('poster');
+    //                 video.removeAttr('poster');
+                    
+    //                 setTimeout(function() {
+    //                     video.attr('poster', poster);
+    //                 }, 10);
+    //             }
+    //         });
+            
+    //         // Обновляем слайдер
+    //         setTimeout(function() {
+    //             slickInstance.setPosition();
+    //         }, 100);
+    //     }
+        
+    //     // Запускаем принудительное обновление через 1 секунду
+    //     setTimeout(forceRefreshPosters, 1000);
+    //     // И еще раз через 2 секунды для надежности
+    //     setTimeout(forceRefreshPosters, 2000);
+    // });
 
     // const $slider = jQuery('.reviews__slider');
 

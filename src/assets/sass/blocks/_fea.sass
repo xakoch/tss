@@ -1,0 +1,68 @@
+// ========================================
+// hero - block
+// ========================================
+.fea
+
+	&__wrap
+		background: $w
+		+br(18px)
+		display: flex
+		align-items: flex-start
+		grid-gap: 80px
+		padding: 90px 80px
+
+	&__col
+		width: 50%
+		display: flex
+		flex-direction: column
+
+	&__items
+		grid-gap: 20px
+
+	&__item
+		background-repeat: no-repeat
+		background-size: cover
+		color: $w
+		padding: 40px
+		+br(18px)
+		display: flex
+		grid-gap: 15px
+
+		span
+			text-transform: uppercase
+			display: block
+			margin-bottom: 7px
+			font-size: 14px
+			+med
+			color: rgba($w,.5)
+		h4
+			font-size: 24px
+			+med
+			line-height: 110%
+			font-weight: normal
+		p
+			margin-top: 25px
+			line-height: 150%
+			font-size: 15px
+
+	&__icon
+		width: 57px
+		height: 57px
+		min-width: 57px
+		+flex
+		background: $w
+		+br(10px)
+
+	&__sticky
+		position: sticky
+		top: 40px
+		.section__title
+			margin-top: 30px
+		p
+			margin-top: 70px
+			color: rgba($b, .4)
+			line-height: 150%
+			font-size: 15px
+			max-width: 800px
+		a
+			margin-top: 45px
