@@ -88,6 +88,7 @@ function initScript() {
     initWindowInnerheight();
     initSwiperSlider();
     initHomePage();
+    initCalc();
 }
 
 /**
@@ -146,36 +147,6 @@ function initWindowInnerheight() {
  */
 function initSwiperSlider() {
 
-    // var heroSlide = new Swiper(".hero__slider", {
-    //     slidesPerView: 1,
-    //     loop: true,
-    //     lazy: true,
-    //     pauseOnMouseEnter: true,
-    //     pagination: {
-    //         el: ".swiper-pagination",
-    //         clickable: true,
-    //         renderBullet: function (index, className) {
-    //             return '<span class="' + className + '">' + (index + 1) + '</span>';
-    //         }
-    //     },
-    //     navigation: {
-    //         nextEl: ".btn-next",
-    //         prevEl: ".btn-prev",
-    //     },
-    //     autoplay: {
-    //         delay: 3000,
-    //         disableOnInteraction: true
-    //     }
-    // });
-
-    // $('.hero').mouseenter(function() {
-    //     heroSlide.autoplay.stop();
-    // });
-
-    // $('.hero').mouseleave(function() {
-    //     heroSlide.autoplay.start();
-    // });
-
     var typecardSlide = new Swiper(".typecard__slide", {
         slidesPerView: 1,
         loop: true,
@@ -209,282 +180,6 @@ function initSwiperSlider() {
             disableOnInteraction: true
         }
     });
-
-    // $('.reviews__slider').slick({
-    //     slidesToShow: 5,
-    //     slidesToScroll: 1,
-    //     centerMode: true,
-    //     // autoplay: true,
-    //     // autoplaySpeed: 2000,
-    //     // infinite: true,
-    //     cssEase: 'ease-in-out',
-    //     appendDots: jQuery('.custom-dots-container'),
-    // });
-
-    // $(document).ready(function(){
-    //     // Подготовка видео перед инициализацией слайдера
-    //     $('.reviews__item video').each(function() {
-    //         var video = $(this);
-            
-    //         // Устанавливаем дефолтный постер для сохранения высоты
-    //         // Для дефолтного постера используем общий плейсхолдер
-    //         var defaultPoster = 'assets/img/reviews-video-poster.png'; // Путь к дефолтному изображению
-    //         video.attr('poster', defaultPoster);
-            
-    //         // Добавляем возможность воспроизведения по клику
-    //         video.on('click', function() {
-    //             // Получаем индекс текущего слайда
-    //             var slideIndex = video.closest('.slick-slide').data('slick-index');
-                
-    //             // Сначала перемещаем слайдер к этому слайду для центрирования
-    //             $('.reviews__slider').slick('slickGoTo', slideIndex);
-                
-    //             // Добавляем небольшую задержку для завершения анимации перемещения
-    //             setTimeout(function() {
-    //                 if (video[0].paused) {
-    //                     // Останавливаем все остальные видео
-    //                     $('.reviews__item video').not(video).each(function() {
-    //                         this.pause();
-    //                         $(this).closest('.reviews__item').removeClass('video-is-playing');
-    //                     });
-                        
-    //                     // Воспроизводим текущее видео
-    //                     video[0].play();
-    //                     video.closest('.reviews__item').addClass('video-is-playing');
-    //                 } else {
-    //                     // Ставим на паузу текущее видео
-    //                     video[0].pause();
-    //                     video.closest('.reviews__item').removeClass('video-is-playing');
-    //                 }
-    //             }, 300); // Время, необходимое для завершения анимации slickGoTo
-    //         });
-    //     });
-        
-    //     // Инициализация слайдера с оптимальными настройками
-    //     $('.reviews__slider').slick({
-    //         dots: true,
-    //         // infinite: true,
-    //         speed: 500,
-    //         slidesToShow: 5,
-    //         centerMode: true,
-    //         slidesToScroll: 1,
-    //         adaptiveHeight: false, // Отключаем, чтобы не терять высоту
-    //         lazyLoad: 'ondemand',
-    //         prevArrow: '<button type="button" class="slick-prev">Previous</button>',
-    //         nextArrow: '<button type="button" class="slick-next">Next</button>',
-    //         responsive: [
-    //             {
-    //                 breakpoint: 1200,
-    //                 settings: {
-    //                     slidesToShow: 3,
-    //                     centerMode: true
-    //                 }
-    //             },
-    //             {
-    //                 breakpoint: 768,
-    //                 settings: {
-    //                     slidesToShow: 1,
-    //                     centerMode: true,
-    //                     arrows: false
-    //                 }
-    //             }
-    //         ]
-    //     });
-        
-    //     // Остановка видео при переключении слайдов
-    //     $('.reviews__slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-    //         // Находим текущий слайд
-    //         var currentSlideElement = $(slick.$slides[currentSlide]);
-            
-    //         // Останавливаем видео на текущем слайде
-    //         currentSlideElement.find('video').each(function() {
-    //             this.pause();
-    //             $(this).closest('.reviews__item').removeClass('video-is-playing');
-    //         });
-    //     });
-        
-    //     // Функция ленивой загрузки постеров
-    //     function loadPostersForVisibleSlides(slick, currentSlide) {
-    //         // Определяем индексы видимых слайдов (текущий, пред, след)
-    //         var slidesToLoad = [currentSlide];
-            
-    //         // Добавляем предыдущий и следующий слайды в очередь загрузки
-    //         if (currentSlide > 0) slidesToLoad.push(currentSlide - 1);
-    //         if (currentSlide < slick.slideCount - 1) slidesToLoad.push(currentSlide + 1);
-            
-    //         // Загружаем постеры для видимых слайдов
-    //         $.each(slidesToLoad, function(i, slideIndex) {
-    //             var slide = $(slick.$slides[slideIndex]);
-    //             var video = slide.find('video');
-                
-    //             if (video.length > 0 && !video.attr('data-loaded')) {
-    //                 var poster = video.data('poster');
-                    
-    //                 if (poster) {
-    //                     // Предзагрузка изображения
-    //                     var img = new Image();
-    //                     img.onload = function() {
-    //                         // Полностью удаляем предыдущий постер и устанавливаем новый
-    //                         video.removeAttr('poster');
-                            
-    //                         // Небольшая задержка для гарантированного сброса кэша браузера
-    //                         setTimeout(function() {
-    //                             video.attr('poster', poster);
-    //                             video.attr('data-loaded', 'true');
-                                
-    //                             console.log('Постер загружен: ' + poster);
-                                
-    //                             // Обновляем слайдер
-    //                             slick.setPosition();
-    //                         }, 10);
-    //                     };
-    //                     img.onerror = function() {
-    //                         console.error('Ошибка загрузки постера: ' + poster);
-    //                         // Оставляем дефолтный постер в случае ошибки
-    //                     };
-    //                     img.src = poster;
-    //                 }
-    //             }
-    //         });
-    //     }
-        
-    //     // Загружаем постеры для всех слайдов сразу после инициализации слайдера
-    //     // с небольшой задержкой, чтобы страница успела загрузиться
-    //     setTimeout(function() {
-    //         var slickInstance = $('.reviews__slider').slick('getSlick');
-            
-    //         // Загружаем постеры для всех слайдов
-    //         for (var i = 0; i < slickInstance.slideCount; i++) {
-    //             loadPostersForVisibleSlides(slickInstance, i);
-    //         }
-            
-    //         console.log('Запущена загрузка всех постеров');
-    //     }, 500); // Увеличиваем задержку для гарантированной загрузки страницы
-        
-    //     // Добавляем метод принудительного обновления постеров 
-    //     // для случаев, когда автоматическая замена не сработала
-    //     function forceRefreshPosters() {
-    //         var slickInstance = $('.reviews__slider').slick('getSlick');
-            
-    //         // Получаем все видео элементы
-    //         $('.reviews__item video').each(function() {
-    //             var video = $(this);
-                
-    //             if (video.data('poster')) {
-    //                 // Сначала удаляем постер, затем добавляем заново
-    //                 var poster = video.data('poster');
-    //                 video.removeAttr('poster');
-                    
-    //                 setTimeout(function() {
-    //                     video.attr('poster', poster);
-    //                 }, 10);
-    //             }
-    //         });
-            
-    //         // Обновляем слайдер
-    //         setTimeout(function() {
-    //             slickInstance.setPosition();
-    //         }, 100);
-    //     }
-        
-    //     // Запускаем принудительное обновление через 1 секунду
-    //     setTimeout(forceRefreshPosters, 1000);
-    //     // И еще раз через 2 секунды для надежности
-    //     setTimeout(forceRefreshPosters, 2000);
-    // });
-
-    // const $slider = jQuery('.reviews__slider');
-
-    // Инициализация slick
-//     $slider.slick({
-//         dots: true,
-//         infinite: true,
-//         slidesToShow: 1,
-//         slidesToScroll: 1,
-//         centerMode: true,
-//         centerPadding: '0px',
-//         speed: 500,
-//         variableWidth: true,
-//         cssEase: 'ease-in-out',
-//         appendDots: jQuery('.custom-dots-container'),
-//         prevArrow: '<div class="prev-arrow">...</div>',
-//         nextArrow: '<div class="next-arrow">...</div>',
-//         responsive: [
-//             {
-//                 breakpoint: 1024,
-//                 settings: { slidesToShow: 2, slidesToScroll: 1 }
-//             },
-//             {
-//                 breakpoint: 600,
-//                 settings: { slidesToShow: 1, slidesToScroll: 1 }
-//             }
-//         ]
-//     });
-
-//     // Функция остановки всех видео
-//     function pauseAllVideos() {
-//         document.querySelectorAll('.review-video').forEach(video => {
-//             video.pause();
-//             video.currentTime = 0;
-//         });
-//     }
-
-//     // Остановка видео при смене слайда
-//     $slider.on('beforeChange', () => {
-//         pauseAllVideos();
-//     });
-
-//     // Обработчик на кнопки Play
-//     document.querySelectorAll('.play-button').forEach(button => {
-//         button.addEventListener('click', event => {
-//             const parentSlide = button.closest('.slider-item');
-
-//             // Запрещаем воспроизведение на неактивных слайдах
-//             if (!parentSlide.classList.contains('slick-active')) {
-//                 event.preventDefault();
-//                 event.stopPropagation();
-//                 return;
-//             }
-
-//             const video = parentSlide.querySelector('.review-video');
-
-//             if (video) {
-//                 pauseAllVideos(); // Останавливаем все видео перед запуском нового
-
-//                 video.play().then(() => {
-//                     button.style.display = 'none';
-//                 }).catch(error => console.error('Ошибка воспроизведения:', error));
-//             }
-//         });
-//     });
-
-//     // Обработчик на видео
-//     document.querySelectorAll('.review-video').forEach(video => {
-//         const button = video.closest('.slider-item').querySelector('.play-button');
-
-//         video.addEventListener('click', () => {
-//             if (!video.closest('.slider-item').classList.contains('slick-active')) {
-//                 return;
-//             }
-
-//             if (video.paused) {
-//                 pauseAllVideos(); // Останавливаем другие видео перед воспроизведением
-//                 video.play().then(() => {
-//                     button.style.display = 'none';
-//                 }).catch(error => console.error('Ошибка воспроизведения:', error));
-//             } else {
-//                 video.pause();
-//             }
-//         });
-
-//         video.addEventListener('pause', () => {
-//             button.style.display = 'block';
-//         });
-
-//         video.addEventListener('play', () => {
-//             button.style.display = 'none';
-//         });
-//     });
 }
 
 
@@ -684,4 +379,75 @@ function initHomePage() {
         });
     });
 
+}
+
+/**
+ * Calculation
+ */
+function initCalc() {
+    // Get DOM elements
+    const fleetSlider = document.getElementById('fleet-slider');
+    const fleetValue = document.getElementById('fleet-value');
+    const gallonsSlider = document.getElementById('gallons-slider');
+    const gallonsValue = document.getElementById('gallons-value');
+    const savingsAmount = document.getElementById('savings-amount');
+    const numberButtons = document.querySelectorAll('.button-group__button');
+    
+    // Set initial values
+    let fleet = 1;
+    let fillUps = 1;
+    let gallons = 50;
+    
+    // Calculate savings
+    function calculateSavings() {
+        // Based on the specific requirement:
+        // When fleet=1, fillUps=1, gallons=50, annual savings should be $25
+        // When fleet=1, fillUps=1, gallons=51, annual savings should be $25.5
+        // This means $0.5 per gallon per year with 1 fillup per week and 1 vehicle
+        
+        // Calculate the base savings
+        const savingsPerGallon = 0.5; // $0.50 per gallon annually when fillups=1, fleet=1
+        const baseSavings = gallons * savingsPerGallon;
+        
+        // Scale by number of vehicles and weekly fill-ups
+        const annualSavings = baseSavings * fleet * fillUps;
+        
+        // Format with one decimal place if it's not a whole number
+        const formattedSavings = Number.isInteger(annualSavings) 
+            ? annualSavings 
+            : annualSavings.toFixed(1);
+            
+        savingsAmount.textContent = `$${formattedSavings}`;
+    }
+    
+    // Update sliders
+    fleetSlider.addEventListener('input', function() {
+        fleet = parseInt(this.value);
+        fleetValue.textContent = fleet;
+        calculateSavings();
+    });
+    
+    gallonsSlider.addEventListener('input', function() {
+        gallons = parseInt(this.value);
+        gallonsValue.textContent = gallons;
+        calculateSavings();
+    });
+    
+    // Set up number buttons for fill-ups
+    numberButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            numberButtons.forEach(btn => btn.classList.remove('button-group__button--active'));
+            
+            // Add active class to clicked button
+            this.classList.add('button-group__button--active');
+            
+            // Update fillUps value
+            fillUps = parseInt(this.dataset.value);
+            calculateSavings();
+        });
+    });
+    
+    // Initial calculation
+    calculateSavings();
 }

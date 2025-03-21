@@ -11,6 +11,78 @@
 	.fakemap
 		margin-top: 50px
 
+// ========================================
+// calculator
+// ========================================
+.calc
+	padding: 100px 0
+	+br(18px)
+	background-image: url(../img/calc-bg.png)
+	background-repeat: no-repeat
+	background-size: cover
+
+.calculator
+	display: grid
+	grid-template-columns: 1fr 2fr
+	background: rgba($red,.4)
+	padding: 20px
+	+br(18px)
+	align-items: center
+	padding-left: 60px
+
+.savings
+	color: $w
+
+	&__info
+		margin-top: 50px
+
+	&__amount
+		font-size: 96px
+		+reg
+
+.controls
+	background: $w
+	+br(18px)
+	padding: 50px
+
+	&__card
+		display: flex
+		flex-direction: column
+		grid-gap: 45px
+
+	label
+		display: block
+		margin-bottom: 20px
+		font-size: 17px
+		color: $red
+
+	.range-input
+		width: 100%
+
+	.range-input__value
+		width: 100%
+
+.button-group
+	display: flex
+	grid-gap: 15px
+
+	&__button
+		width: 82px
+		height: 44px
+		+br(10px)
+		border: 1px solid #e6e6e6
+		+flex
+		cursor: pointer
+		+trans(all, .3s)
+
+	&__button--active
+		background: $red
+		border-color: $red
+		color: $w
+
+// ========================================
+// tss card - map
+// ========================================
 .tsscard-map
 	margin-top: 50px
 	svg

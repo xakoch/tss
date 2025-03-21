@@ -2581,6 +2581,87 @@ button.swiper-pagination-bullet {
     margin-top: 50px;
 }
 
+.calc {
+    padding: 100px 0;
+    border-radius: 18px;
+    background-image: url(../img/calc-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    background: rgba(142, 22, 54, 0.4);
+    padding: 20px;
+    border-radius: 18px;
+    align-items: center;
+    padding-left: 60px;
+}
+
+.savings {
+    color: #ffffff;
+}
+
+.savings__info {
+    margin-top: 50px;
+}
+
+.savings__amount {
+    font-size: 96px;
+    font-family: Inter-Regular, sans-serif;
+}
+
+.controls {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 50px;
+}
+
+.controls__card {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 45px;
+}
+
+.controls label {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 17px;
+    color: #8E1636;
+}
+
+.controls .range-input {
+    width: 100%;
+}
+
+.controls .range-input__value {
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    grid-gap: 15px;
+}
+
+.button-group__button {
+    width: 82px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #e6e6e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-group__button--active {
+    background: #8E1636;
+    border-color: #8E1636;
+    color: #ffffff;
+}
+
 .tsscard-map {
     margin-top: 50px;
 }
