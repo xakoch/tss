@@ -2911,11 +2911,11 @@ button.swiper-pagination-bullet {
     transition: left 0.1s ease-out;
 }
 
-.page-ref .hero {
+.page-referral-program .hero {
     padding: 250px 0 100px;
 }
 
-.page-ref .hero__title {
+.page-referral-program .hero__title {
     margin: 25px 0 50px;
 }
 
