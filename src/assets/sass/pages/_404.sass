@@ -1,3 +1,44 @@
 // ========================================
 // 404 page
 // ========================================
+.car-container
+	position: absolute
+	top: 61%
+	left: 50%
+	transform: translate(-50%, -50%)
+
+.car-1
+	animation: drive 10s infinite
+.car-2
+	animation: drive 0.1s infinite
+	top: 70%
+.car-3
+	animation: drive 0.2s infinite
+.car-4
+	animation: drive 0.3s infinite
+.car-5
+	// top: 77%
+	animation: drive 70s infinite
+
+@keyframes drive
+	0%
+		transform: translateX(-300%)
+	50%
+		transform: translateX(300%)
+	100%
+		transform: translateX(-300%)
+	
+.message
+	position: absolute
+	top: 50%
+	left: 50%
+	transform: translate(-50%, -50%)
+	text-align: center
+
+h1
+	font-size: 4em
+	margin: 0
+
+p
+	font-size: 1.5em
+	margin: 0
