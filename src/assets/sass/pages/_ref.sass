@@ -92,7 +92,6 @@
 
 	&__inner
 		margin-top: 75px
-		background: #000
 		background-color: $red
 		+br(30px)
 		padding: 70px
@@ -135,7 +134,7 @@
 	&__afterblock
 		margin-top: 50px
 		p
-			color: #545454
+			color: $g54
 			font-size: 14px
 			line-height: 150%
 			+reg
@@ -221,3 +220,63 @@
 
 	&__wrap
 		margin-top: 60px
+		display: grid
+		grid-template-columns: repeat(3, 1fr)
+		grid-gap: 20px
+	&__col
+		background: $w
+		+br(18px)
+		padding: 40px 35px
+		h4
+			margin: 25px 0 10px !important
+			font-size: 13px
+			font-weight: normal
+			color: $red
+			line-height: 150%
+			+med
+		p
+			color: rgba($b, .5)
+			font-size: 18px
+			line-height: 110%
+			+reg
+
+
+
+// ========================================
+// refeed
+// ========================================
+.refeed
+	padding-bottom: 100px
+	.form
+		display: flex
+		align-items: flex-end
+		grid-gap: 25px
+		margin: 60px 0 50px
+	label
+		display: block
+		font-size: 15px
+		margin-bottom: 13px
+		color: $g54
+	.input--text
+		border: 1px solid $c9
+		+br(18px)
+		background: transparent
+		color: $c9
+		font-size: 18px
+		&::placeholder
+			color: $c9
+			font-size: 18px
+	.form__group
+		width: 100%
+	.refeed__footer
+		display: flex
+		align-items: center
+		grid-gap: 10px
+		p
+			color: rgba($b, .3)
+			font-size: 14px
+			line-height: 140%
+
+	input[type="submit"]
+		background: $red
+		color: $w

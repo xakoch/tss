@@ -3029,7 +3029,6 @@ button.swiper-pagination-bullet {
 
 .reform__inner {
     margin-top: 75px;
-    background: #000;
     background-color: #8E1636;
     border-radius: 30px;
     padding: 70px;
@@ -3190,6 +3189,88 @@ button.swiper-pagination-bullet {
 
 .pay__wrap {
     margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.pay__col {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 40px 35px;
+}
+
+.pay__col h4 {
+    margin: 25px 0 10px !important;
+    font-size: 13px;
+    font-weight: normal;
+    color: #8E1636;
+    line-height: 150%;
+    font-family: Inter-Medium, sans-serif;
+}
+
+.pay__col p {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 18px;
+    line-height: 110%;
+    font-family: Inter-Regular, sans-serif;
+}
+
+.refeed {
+    padding-bottom: 100px;
+}
+
+.refeed .form {
+    display: flex;
+    align-items: flex-end;
+    grid-gap: 25px;
+    margin: 60px 0 50px;
+}
+
+.refeed label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 13px;
+    color: #545454;
+}
+
+.refeed .input--text {
+    border: 1px solid #C9C9C9;
+    border-radius: 18px;
+    background: transparent;
+    color: #C9C9C9;
+    font-size: 18px;
+}
+
+.refeed .input--text::-moz-placeholder {
+    color: #C9C9C9;
+    font-size: 18px;
+}
+
+.refeed .input--text::placeholder {
+    color: #C9C9C9;
+    font-size: 18px;
+}
+
+.refeed .form__group {
+    width: 100%;
+}
+
+.refeed .refeed__footer {
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+}
+
+.refeed .refeed__footer p {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 140%;
+}
+
+.refeed input[type=submit] {
+    background: #8E1636;
+    color: #ffffff;
 }
 
 .register__hero .container {
