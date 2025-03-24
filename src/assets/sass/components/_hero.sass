@@ -79,5 +79,54 @@
 		max-width: 560px
 
 	&__btns
-		display: block
-		margin-bottom: 40px
+		display: flex
+		align-items: center
+		grid-gap: 15px
+		&.mb-40
+			margin-bottom: 40px
+
+	// ref page
+
+	&__banner
+		height: 380px
+		display: flex
+		flex-direction: column
+		justify-content: space-between
+		+br(30px)
+		overflow: hidden
+		padding: 25px
+
+		&-icon
+			width: 70px
+			height: 70px
+			+flex
+			+br(50%)
+			background: $w
+
+	&__top-wrap
+		display: flex
+		justify-content: space-between
+		align-items: center
+		grid-gap: 20px
+
+	&__top-right
+		li
+			position: relative
+			display: block
+			margin-bottom: 10px
+			padding-left: 45px
+			&:last-child
+				margin-bottom: 0
+			&::before
+				content: ''
+				display: block
+				width: 18px
+				height: 18px
+				+br(50%)
+				background: $red
+				position: absolute
+				top: 50%
+				left: 0
+				transform: translateY(-50%)
+		p
+			color: rgba($b,.4)

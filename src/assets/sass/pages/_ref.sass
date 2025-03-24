@@ -1,0 +1,223 @@
+// ========================================
+// hero
+// ========================================
+.page-ref
+	.hero
+		padding: 250px 0 100px
+	.hero__title
+		margin: 25px 0 50px
+
+
+// ========================================
+// impact
+// ========================================
+.impact
+	&__wrap
+		margin: 80px 0 0
+	&__and
+		display: inline-flex
+		align-items: center
+		grid-gap: 10px
+		margin: 25px 0
+		background: $b30
+		+br(100px)
+		color: $w
+		padding: 14px 38px
+		i
+			width: 16px
+			height: 16px
+			+br(50%)
+			background: $w
+			display: block
+
+	&__cols
+		display: grid
+		grid-template-columns: repeat(3, 1fr)
+		grid-gap: 25px
+	&__col
+		+br(30px)
+		padding: 54px 50px
+		min-height: 250px
+		&--gray
+			background: $fa
+		&--border
+			border: 1px solid $red
+		&--cta
+			background: linear-gradient(to left, $red 30%, $red3 100%)
+			color: $w
+			h3
+				font-size: 24px !important
+			p
+				font-size: 14px !important
+				color: rgba($w,.6) !important
+				margin-bottom: 10px !important
+			a
+				margin-top: 40px
+		p
+			font-size: 18px
+			+reg
+			color: rgba($b, .8)
+			line-height: 130%
+	&__num
+		display: flex
+		align-items: flex-end
+		margin-bottom: 20px
+		&--text
+			background: linear-gradient(to bottom, $red3 30%, $w 100%)
+			-webkit-background-clip: text
+			-webkit-text-fill-color: transparent
+			background-clip: text
+			color: transparent
+			font-size: 96px
+			line-height: 100%
+		span
+			font-size: 22px
+			color: $gray2 !important
+			position: relative
+			top: -10px
+			left: 10px
+	&__text
+		margin-top: 60px
+		p
+			font-size: 16px
+			line-height: 160%
+			color: rgba($b, .4)
+			+reg
+
+// ========================================
+// form
+// ========================================
+.reform
+	padding: 0 0 80px
+
+	&__inner
+		margin-top: 75px
+		background: #000
+		background-color: $red
+		+br(30px)
+		padding: 70px
+		color: $w
+		.section__title
+			h3
+				margin-bottom: 80px !important
+				font-size: 40px
+				font-weight: normal
+
+		label
+			display: block
+			margin-bottom: 12px
+
+		form
+			display: flex
+			align-items: flex-end
+			grid-gap: 30px
+			width: 100%
+
+		.input--text
+			background: rgba($w, .3)
+			color: $w
+			&::placeholder
+				color: rgba($w, .7)
+
+	.form__group
+		width: 100%
+
+	&__footer
+		margin-top: 50px
+		display: flex
+		align-items: center
+		grid-gap: 15px
+		p
+			color: rgba($w, .8)
+			font-size: 14px
+			line-height: 140%
+
+	&__afterblock
+		margin-top: 50px
+		p
+			color: #545454
+			font-size: 14px
+			line-height: 150%
+			+reg
+
+// ========================================
+// get
+// ========================================
+.get
+	&__wrap
+		display: grid
+		grid-template-columns: 1fr 1fr
+		// grid-template-rows: auto auto
+		grid-gap: 20px
+		margin-top: 80px
+	&__item
+		background: $w
+		+br(30px)
+		overflow: hidden
+		padding: 60px 40px
+		& > img
+			+br(18px)
+			width: 100%
+			object-fit: cover
+			object-position: center
+		&:not(:first-child)
+			display: grid
+			grid-template-columns: 1fr auto
+			gap: 20px
+			align-items: center
+			padding: 40px
+
+			.get__icon, .get__title, .get__text
+				grid-column: 1
+
+			.get__text
+				margin-bottom: 0
+
+			.get__img
+				grid-column: 2
+				grid-row: 1 / 4
+				max-width: 100%
+				height: auto
+				object-fit: cover
+				object-position: center
+	&__icon
+		width: 57px
+		height: 57px
+		+br(50%)
+		background: $red
+		+flex
+		margin-bottom: 40px
+	&__title
+		font-size: 20px
+		line-height: 120%
+		margin-bottom: 20px
+	&__text
+		font-size: 14px
+		color: rgba($b, .4)
+		line-height: 160%
+		margin-bottom: 40px
+
+	// Первый элемент занимает все левое пространство на всю высоту
+	.get__item:first-child
+		grid-row: 1 / 3
+		grid-column: 1 / 2
+
+	// Второй элемент занимает верхнюю правую часть
+	.get__item:nth-child(2)
+		grid-row: 1 / 2
+		grid-column: 2 / 3
+
+	// Третий элемент занимает нижнюю правую часть
+	.get__item:nth-child(3)
+		grid-row: 2 / 3
+		grid-column: 2 / 3
+
+
+// ========================================
+// payment
+// ========================================
+.pay
+	padding: 0 0 120px
+
+	&__wrap
+		margin-top: 60px
