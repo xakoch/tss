@@ -1951,7 +1951,7 @@ button.swiper-pagination-bullet {
     z-index: 1;
     display: block;
     background: #8E1636;
-    padding: 24px 24px 24px 60px;
+    padding: 23px 24px 23px 60px;
     border-radius: 18px;
     transition: transform 0.2s ease;
     transform: translateX(-30px);
