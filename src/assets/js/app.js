@@ -483,11 +483,11 @@ function initHomePage() {
         }
 
         // ===================================
-        // Typecard Tabs
+        // Typecard Tabs with Animation
         // ===================================
         const tabs = document.querySelectorAll('.typecard__tab');
         const tabContents = document.querySelectorAll('.typecard__content');
-        
+
         if (tabs.length > 0 && tabContents.length > 0) {
             tabs.forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -502,16 +502,28 @@ function initHomePage() {
                         const tabId = this.getAttribute('data-tab');
                         if (!tabId) return;
                         
-                        // Hide all tab contents
-                        tabContents.forEach(content => content.classList.remove('typecard__content_active'));
+                        // Get current active content
+                        const currentActive = document.querySelector('.typecard__content_active');
                         
-                        // Show selected tab content
-                        const activeContent = tabId === 'debit' 
-                            ? document.getElementById('debit-content') 
-                            : document.getElementById('credit-content');
-                            
-                        if (activeContent) {
-                            activeContent.classList.add('typecard__content_active');
+                        // Get new content to activate
+                        const newActive = document.getElementById(tabId + '-content');
+                        
+                        if (!newActive) return;
+                        
+                        // If jQuery is available, add fade animation
+                        if (typeof jQuery !== 'undefined') {
+                            // Fade out currently active content
+                            jQuery('.typecard__content_active').fadeOut(300, function() {
+                                // Remove active class after fade out
+                                jQuery(this).removeClass('typecard__content_active');
+                                
+                                // Fade in the new content
+                                jQuery(newActive).css('display', 'none').addClass('typecard__content_active').fadeIn(300);
+                            });
+                        } else {
+                            // Fallback to non-animated version if jQuery isn't available
+                            tabContents.forEach(content => content.classList.remove('typecard__content_active'));
+                            newActive.classList.add('typecard__content_active');
                         }
                     } catch (error) {
                         console.error('Error in tab click handling:', error);

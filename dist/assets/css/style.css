@@ -772,6 +772,39 @@ select::placeholder {
     line-height: 18px;
 }
 
+input.wpcf7-not-valid,
+textarea.wpcf7-not-valid,
+select.wpcf7-not-valid {
+    border: 2px solid #8E1636 !important;
+}
+
+form {
+    position: relative;
+}
+
+.wpcf7-not-valid-tip {
+    display: none;
+}
+
+.wpcf7-spinner {
+    position: absolute;
+}
+
+.wpcf7 form .wpcf7-response-output {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    bottom: -30px;
+}
+
+.wpcf7 form.sent .wpcf7-response-output {
+    border-color: #46b450;
+    background: #46b450;
+    color: white;
+    padding: 15px;
+    bottom: 100px;
+}
+
 .bread {
     position: absolute;
     top: 152px;
@@ -3464,6 +3497,13 @@ button.swiper-pagination-bullet {
 .partners__content h6 {
     font-weight: normal;
     font-size: 14px;
+}
+
+.partners__content img {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
 }
 
 .partners__form form {

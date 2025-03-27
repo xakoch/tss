@@ -25,8 +25,30 @@ select
 		font-style: normal
 		font-weight: 400
 		line-height: 18px
-	// &.not-valid
-	// 	border-color: red
+	&.wpcf7-not-valid
+		border: 2px solid $red !important
+
+form
+	position: relative
+
+.wpcf7-not-valid-tip
+	display: none
+
+.wpcf7-spinner
+	position: absolute
+
+.wpcf7 form .wpcf7-response-output
+	position: absolute
+	left: 0
+	margin: 0
+	bottom: -30px
+
+.wpcf7 form.sent .wpcf7-response-output
+	border-color: #46b450
+	background: #46b450
+	color: white
+	padding: 15px
+	bottom: 100px
 
 // select
 // 	-moz-appearance: none
