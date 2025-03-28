@@ -10,6 +10,71 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Инициализация Lenis для плавного скролла
+let lenis;
+
+function initLenis() {
+    try {
+        if (typeof Lenis === 'undefined') {
+            console.warn('Lenis не найден');
+            return;
+        }
+        
+        // Уничтожаем предыдущий экземпляр Lenis, если он существует
+        if (lenis) {
+            lenis.destroy();
+        }
+        
+        // Создаем новый экземпляр Lenis
+        lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+        
+        // Привязываем Lenis к requestAnimationFrame для обновления
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        
+        requestAnimationFrame(raf);
+        
+        // Обрабатываем якорные ссылки с Lenis
+        const anchorLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+        
+        if (anchorLinks.length > 0) {
+            anchorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Скролл к элементу с помощью Lenis
+                        lenis.scrollTo(targetElement, {
+                            offset: 0,
+                            duration: 1.2,
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                        });
+                    }
+                });
+            });
+        }
+        
+        console.log('Lenis initialized successfully');
+    } catch (error) {
+        console.error('Error in initLenis:', error);
+    }
+}
+
 function initPageTransitions() {
     try {
         // Scroll to top before transition begins
@@ -27,25 +92,39 @@ function initPageTransitions() {
                     // Initialize on first load
                     updateBodyClass(next.html);
                     initScript();
+                    
+                    // Анимация появления контента при первой загрузке с GSAP
+                    if (typeof gsap !== 'undefined') {
+                        gsap.from(next.container, {
+                            opacity: 0,
+                            duration: 0.5,
+                            ease: 'power1.out',
+                            clearProps: 'all'
+                        });
+                    }
                 },
                 async leave(data) {
                     try {
-                        // Content fade-out animation
+                        // Content fade-out animation with GSAP
                         if (data && data.current && data.current.container) {
                             initBarbaNavUpdate(data);
                             
-                            // Use Web Animation API instead of GSAP
-                            const animation = data.current.container.animate([
-                                { opacity: 1 },
-                                { opacity: 0 }
-                            ], {
-                                duration: 500, // 500ms = 0.5 seconds
-                                easing: 'ease'
-                            });
-                            
-                            // Wait for animation to complete
-                            await animation.finished;
-                            data.current.container.remove();
+                            if (typeof gsap !== 'undefined') {
+                                // Возвращаем промис с анимацией GSAP
+                                return gsap.to(data.current.container, {
+                                    opacity: 0,
+                                    duration: 0.5,
+                                    ease: 'power1.out',
+                                    onComplete: () => {
+                                        data.current.container.remove();
+                                    }
+                                });
+                            } else {
+                                // Fallback если GSAP не доступен
+                                data.current.container.style.opacity = '0';
+                                await delay(500);
+                                data.current.container.remove();
+                            }
                         }
                     } catch (error) {
                         console.error('Error in leave transition:', error);
@@ -53,27 +132,52 @@ function initPageTransitions() {
                 },
                 async enter({ next }) {
                     try {
-                        // Content fade-in animation
+                        // Content fade-in animation with GSAP
                         updateBodyClass(next.html);
                         
                         // Set initial state
                         next.container.style.opacity = '0';
                         
-                        // Use Web Animation API
-                        const animation = next.container.animate([
-                            { opacity: 0 },
-                            { opacity: 1 }
-                        ], {
-                            duration: 500,
-                            easing: 'ease'
-                        });
-                        
-                        // Update final state after animation
-                        animation.onfinish = () => {
+                        if (typeof gsap !== 'undefined') {
+                            // Создаем временную шкалу для последовательных анимаций
+                            const tl = gsap.timeline();
+                            
+                            // Анимация основного контейнера
+                            tl.to(next.container, {
+                                opacity: 1,
+                                duration: 0.5,
+                                ease: 'power1.out',
+                                clearProps: 'opacity'
+                            });
+                            
+                            // Находим и анимируем хедер и заголовок
+                            const header = next.container.querySelector('.header');
+                            const heroTitle = next.container.querySelector('.hero__title h1');
+                            
+                            if (header) {
+                                tl.to(header, {
+                                    opacity: 1, 
+                                    y: 0, 
+                                    duration: 0.8,
+                                    ease: "power2.out"
+                                }, "-=0.3"); // Начинаем немного раньше окончания предыдущей анимации
+                            }
+                            
+                            if (heroTitle) {
+                                tl.to(heroTitle, {
+                                    opacity: 1, 
+                                    y: 0, 
+                                    duration: 0.8,
+                                    ease: "power2.out"
+                                }, "-=0.5"); // Начинаем немного раньше окончания предыдущей анимации
+                            }
+                            
+                            // Возвращаем промис окончания всей временной шкалы
+                            return tl;
+                        } else {
+                            // Fallback если GSAP не доступен
                             next.container.style.opacity = '1';
-                        };
-                        
-                        return animation.finished;
+                        }
                     } catch (error) {
                         console.error('Error in enter transition:', error);
                         // Установим непрозрачность напрямую в случае ошибки
@@ -82,6 +186,22 @@ function initPageTransitions() {
                 },
                 async beforeEnter({ next }) {
                     updateBodyClass(next.html);
+                    
+                    // Подготавливаем элементы для анимации
+                    if (typeof gsap !== 'undefined') {
+                        const header = next.container.querySelector('.header');
+                        const heroTitle = next.container.querySelector('.hero__title h1');
+                        
+                        // Устанавливаем начальное состояние для анимируемых элементов
+                        if (header) {
+                            gsap.set(header, { opacity: 0, y: -30 });
+                        }
+                        
+                        if (heroTitle) {
+                            gsap.set(heroTitle, { opacity: 0, y: 50 });
+                        }
+                    }
+                    
                     initScript();
                 },
             }]
@@ -118,9 +238,13 @@ function delay(n = 2000) {
  */
 function initScript() {
     try {
+        initLenis();
         initBarbaNavUpdate();
         initWindowInnerheight();
         initSwiperSlider();
+        
+        // Анимируем стандартные элементы на всех страницах
+        animateCommonElements();
         
         // Проверяем, находимся ли мы на домашней странице перед вызовом initHomePage
         if (isHomePage()) {
@@ -130,6 +254,72 @@ function initScript() {
         initCalc();
     } catch (error) {
         console.error('Error in initScript:', error);
+    }
+}
+
+/**
+ * Анимирует общие элементы всех страниц
+ */
+function animateCommonElements() {
+    try {
+        if (typeof gsap === 'undefined') {
+            console.warn('GSAP не найден, анимации элементов недоступны');
+            return;
+        }
+        
+        // Анимация хедера
+        const header = document.querySelector('.header');
+        if (header) {
+            gsap.fromTo(header, 
+                { opacity: 0, y: -30 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+            );
+        }
+        
+        // Анимация заголовка (снизу вверх)
+        const heroTitle = document.querySelector('.hero__title h1');
+        if (heroTitle) {
+            gsap.fromTo(heroTitle, 
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power2.out" }
+            );
+        }
+        
+        // Анимация футера
+        const footer = document.querySelector('.footer');
+        if (footer) {
+            // Первоначально скрываем футер
+            gsap.set(footer, { opacity: 0, y: 80 });
+            
+            // Создаем обсервер для отслеживания видимости футера
+            const footerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !footer.classList.contains('animated')) {
+                        // Анимация появления снизу вверх с небольшой задержкой
+                        gsap.to(footer, {
+                            opacity: 1, 
+                            y: 0, 
+                            duration: 0.8, 
+                            ease: "power2.out"
+                        });
+                        
+                        // Добавляем класс для предотвращения повторной анимации
+                        footer.classList.add('animated');
+                        
+                        // Отключаем наблюдение после анимации
+                        footerObserver.unobserve(footer);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -10% 0px"
+            });
+            
+            // Начинаем наблюдение за футером
+            footerObserver.observe(footer);
+        }
+    } catch (error) {
+        console.error('Error in animateCommonElements:', error);
     }
 }
 
@@ -201,30 +391,7 @@ function initWindowInnerheight() {
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         });
 
-        // Обрабатываем якорные ссылки
-        const anchorLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
-        
-        if (anchorLinks.length > 0) {
-            anchorLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-
-                    if (targetElement) {
-                        // Получаем позицию элемента
-                        const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset;
-
-                        // Плавный скролл к элементу
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
+        // Обработка якорных ссылок теперь происходит в initLenis
     } catch (error) {
         console.error('Error in initWindowInnerheight:', error);
     }
@@ -279,8 +446,136 @@ function initSwiperSlider() {
                 }
             });
         }
+        
+        // Инициализируем Slick карусель с видео
+        initVideoCarousel();
     } catch (error) {
         console.error('Error in initSwiperSlider:', error);
+    }
+}
+
+/**
+ * Slick карусель с видео
+ */
+function initVideoCarousel() {
+    try {
+        // Проверяем наличие jQuery и Slick
+        if (typeof jQuery === 'undefined') {
+            console.warn('jQuery не найден, Slick карусель недоступна');
+            return;
+        }
+        
+        const $mySlider = jQuery('.reviews__slider');
+        
+        // Проверяем наличие элемента карусели
+        if ($mySlider.length === 0) {
+            return;
+        }
+        
+        // Проверяем, не инициализирован ли уже слайдер
+        if ($mySlider.hasClass('slick-initialized')) {
+            return;
+        }
+        
+        // Инициализируем Slick карусель
+        $mySlider.slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: true,
+            centerPadding: '0px',
+            speed: 500,
+            variableWidth: true,
+            cssEase: 'ease-in-out',
+            lazyLoad: 'ondemand',
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+        
+        // Функция для остановки всех видео
+        function pauseAllVideos() {
+            document.querySelectorAll('.review-video').forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        }
+        
+        // Остановка видео при смене слайда
+        $mySlider.on('beforeChange', () => {
+            pauseAllVideos();
+        });
+        
+        // Обработчики для кнопок воспроизведения
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', event => {
+                const parentSlide = button.closest('.slide');
+                
+                // Проверяем, активен ли слайд
+                if (!parentSlide.classList.contains('slick-active')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
+                
+                const video = parentSlide.querySelector('.review-video');
+                if (video) {
+                    pauseAllVideos();
+                    video.play().then(() => {
+                        button.style.display = 'none';
+                    }).catch(error => console.error('Ошибка воспроизведения:', error));
+                }
+            });
+        });
+        
+        // Обработчики для видео
+        document.querySelectorAll('.review-video').forEach(video => {
+            const button = video.closest('.slide').querySelector('.play-button');
+            
+            // При клике на видео
+            video.addEventListener('click', () => {
+                if (!video.closest('.slide').classList.contains('slick-active')) {
+                    return;
+                }
+                
+                if (video.paused) {
+                    pauseAllVideos();
+                    video.play().then(() => {
+                        button.style.display = 'none';
+                    }).catch(error => console.error('Ошибка воспроизведения:', error));
+                } else {
+                    video.pause();
+                }
+            });
+            
+            // При паузе видео
+            video.addEventListener('pause', () => {
+                button.style.display = 'block';
+            });
+            
+            // При воспроизведении видео
+            video.addEventListener('play', () => {
+                button.style.display = 'none';
+            });
+        });
+        
+        console.log('Video carousel initialized successfully');
+    } catch (error) {
+        console.error('Error in initVideoCarousel:', error);
     }
 }
 
@@ -331,7 +626,19 @@ function initHomePage() {
                         }
                         
                         const slideWidth = slides[0].offsetWidth;
-                        track.style.transform = `translateX(-${index * slideWidth}px)`;
+                        
+                        // Используем GSAP для анимации слайдера
+                        if (typeof gsap !== 'undefined') {
+                            gsap.to(track, {
+                                x: -index * slideWidth,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                        } else {
+                            // Fallback если GSAP не доступен
+                            track.style.transform = `translateX(-${index * slideWidth}px)`;
+                        }
+                        
                         block.querySelectorAll(".slider-button").forEach((btn, idx) => {
                             btn.classList.toggle("active", idx === index);
                         });
@@ -419,11 +726,11 @@ function initHomePage() {
         }
 
         // ===================================
-        // Economy Number Animation 
+        // Economy Number Animation с использованием GSAP
         // ===================================
         const numberElements = document.querySelectorAll(".custom-count-number");
 
-        if (numberElements.length > 0) {
+        if (numberElements.length > 0 && typeof gsap !== 'undefined') {
             const parseNumberAndSymbol = (text) => {
                 if (!text) return null;
                 
@@ -437,53 +744,52 @@ function initHomePage() {
             };
 
             const animateNumber = (element, finalNumber, suffix) => {
-                let currentNumber = 0;
-                const duration = 2000;
-                const frameRate = 30;
-                const totalFrames = (duration / 1000) * frameRate;
-                const increment = finalNumber / totalFrames;
-
+                // Создаем объект для анимации
+                const obj = { value: 0 };
+                
+                // Устанавливаем начальное значение
                 element.style.opacity = "1";
-
-                const updateNumber = () => {
-                    currentNumber += increment;
-                    if (currentNumber >= finalNumber) {
-                        currentNumber = finalNumber;
-                        clearInterval(animation);
-                    }
-                    element.textContent = `${Math.floor(currentNumber).toLocaleString("en-US")}${suffix}`;
-                };
-
-                const animation = setInterval(updateNumber, 1000 / frameRate);
-            };
-
-            const onScroll = () => {
-                numberElements.forEach((element) => {
-                    try {
-                        const data = parseNumberAndSymbol(element.textContent);
-                        if (!data) return;
-
-                        const { number, suffix } = data;
-                        const blockPosition = element.getBoundingClientRect().top;
-                        const windowHeight = window.innerHeight;
-
-                        if (blockPosition < windowHeight * 0.75 && !element.dataset.animated) {
-                            element.dataset.animated = "true";
-                            animateNumber(element, number, suffix);
-                        }
-                    } catch (error) {
-                        console.error('Error in number animation:', error);
+                
+                // Анимируем с GSAP
+                gsap.to(obj, {
+                    value: finalNumber,
+                    duration: 2,
+                    ease: "power1.out",
+                    onUpdate: function() {
+                        element.textContent = `${Math.floor(obj.value).toLocaleString("en-US")}${suffix}`;
                     }
                 });
             };
+
+            // Создаем обсервер для отслеживания видимости элементов
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.animated) {
+                        try {
+                            const data = parseNumberAndSymbol(entry.target.textContent);
+                            if (!data) return;
+
+                            const { number, suffix } = data;
+                            entry.target.dataset.animated = "true";
+                            animateNumber(entry.target, number, suffix);
+                        } catch (error) {
+                            console.error('Error in number animation:', error);
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -25% 0px"
+            });
             
-            // Вызываем onScroll один раз для проверки элементов в пределах видимости при загрузке
-            onScroll();
-            window.addEventListener("scroll", onScroll);
+            // Наблюдаем за всеми элементами
+            numberElements.forEach(element => {
+                observer.observe(element);
+            });
         }
 
         // ===================================
-        // Typecard Tabs with Animation
+        // Typecard Tabs с использованием GSAP
         // ===================================
         const tabs = document.querySelectorAll('.typecard__tab');
         const tabContents = document.querySelectorAll('.typecard__content');
@@ -508,20 +814,35 @@ function initHomePage() {
                         // Get new content to activate
                         const newActive = document.getElementById(tabId + '-content');
                         
-                        if (!newActive) return;
+                        if (!newActive || !currentActive) return;
                         
-                        // If jQuery is available, add fade animation
-                        if (typeof jQuery !== 'undefined') {
-                            // Fade out currently active content
+                        // Если GSAP доступен, используем его для анимации
+                        if (typeof gsap !== 'undefined') {
+                            // Скрываем текущий активный контент
+                            gsap.to(currentActive, {
+                                opacity: 0,
+                                duration: 0.3,
+                                onComplete: function() {
+                                    currentActive.classList.remove('typecard__content_active');
+                                    
+                                    // Показываем новый контент
+                                    newActive.classList.add('typecard__content_active');
+                                    newActive.style.opacity = 0;
+                                    
+                                    gsap.to(newActive, {
+                                        opacity: 1,
+                                        duration: 0.3
+                                    });
+                                }
+                            });
+                        } else if (typeof jQuery !== 'undefined') {
+                            // Fallback на jQuery, если GSAP не доступен
                             jQuery('.typecard__content_active').fadeOut(300, function() {
-                                // Remove active class after fade out
                                 jQuery(this).removeClass('typecard__content_active');
-                                
-                                // Fade in the new content
                                 jQuery(newActive).css('display', 'none').addClass('typecard__content_active').fadeIn(300);
                             });
                         } else {
-                            // Fallback to non-animated version if jQuery isn't available
+                            // Fallback на обычное переключение, если ни GSAP, ни jQuery не доступны
                             tabContents.forEach(content => content.classList.remove('typecard__content_active'));
                             newActive.classList.add('typecard__content_active');
                         }
@@ -579,8 +900,30 @@ function initCalc() {
             const formattedSavings = Number.isInteger(annualSavings) 
                 ? annualSavings 
                 : annualSavings.toFixed(1);
+            
+            // Анимация числа с GSAP, если он доступен
+            if (typeof gsap !== 'undefined' && savingsAmount) {
+                // Получаем текущее значение
+                const currentValue = parseFloat(savingsAmount.textContent) || 0;
                 
-            savingsAmount.textContent = `${formattedSavings}`;
+                // Создаем объект для анимации
+                const obj = { value: currentValue };
+                
+                // Анимируем с GSAP
+                gsap.to(obj, {
+                    value: parseFloat(formattedSavings),
+                    duration: 0.5,
+                    ease: "power1.out",
+                    onUpdate: function() {
+                        const displayValue = Number.isInteger(obj.value) 
+                            ? Math.floor(obj.value) 
+                            : obj.value.toFixed(1);
+                        savingsAmount.textContent = `${displayValue}`;
+                    }
+                });
+            } else {
+                savingsAmount.textContent = `${formattedSavings}`;
+            }
         }
         
         // Update position of the tooltip
@@ -595,7 +938,16 @@ function initCalc() {
             const sliderWidth = slider.offsetWidth - thumbWidth;
             const offset = (percentage / 100) * sliderWidth + (thumbWidth / 2);
             
-            tooltip.style.left = `${offset}px`;
+            // Используем GSAP для плавного перемещения тултипа
+            if (typeof gsap !== 'undefined') {
+                gsap.to(tooltip, {
+                    left: `${offset}px`,
+                    duration: 0.2,
+                    ease: "power1.out"
+                });
+            } else {
+                tooltip.style.left = `${offset}px`;
+            }
         }
         
         // Update sliders

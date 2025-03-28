@@ -161,8 +161,12 @@
 	margin-bottom: 40px
 	position: relative
 
+.range-input__group
+	position: relative
+	border: 1px solid transparent
+
 .range-input__label
-	color: #9e0b36
+	color: $red3
 	font-size: 1.2rem
 	margin-bottom: 30px
 	display: block
@@ -170,12 +174,13 @@
 .range-input__slider
 	width: 100%
 	-webkit-appearance: none
-	height: 6px
-	border-radius: 3px
-	background: #f0f0f0
+	height: 5px
+	+br(10px)
+	background: rgba($red,.3)
 	outline: none
 	margin: 20px 0
-    
+	padding: 0
+
 	&::-webkit-slider-thumb
 		-webkit-appearance: none
 		appearance: none
@@ -210,12 +215,15 @@
 
 .range-input__tooltip
 	position: absolute
-	top: 45px
-	left: 0
+	top: 0
+	left: 0px
 	background-color: #9e0b36
 	color: white
-	padding: 10px 20px
-	border-radius: 8px
+	// padding: 10px 20px
+	+br(8px)
+	width: 70px
+	height: 50px
+	line-height: 50px
 	font-weight: bold
 	transform: translateX(-50%)
 	display: block

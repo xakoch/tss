@@ -2,30 +2,148 @@
 // reviews - block
 // ========================================
 
-// .reviews
-// 	padding: 160px 0
-// 	overflow: hidden
-// 	+br(18px)
-// 	color: $w
-// 	&::before
-// 		content: ''
-// 		position: absolute
-// 		top: -60%
-// 		right: -2%
-// 		background-image: url(../img/reviews-cards.png)
-// 		background-size: contain
-// 		background-repeat: no-repeat
-// 		background-position: right
-// 		width: 1120px
-// 		height: 100%
+.reviews
+	padding: 160px 0
+	overflow: hidden
+	+br(18px)
+	color: $w
+	&::before
+		content: ''
+		position: absolute
+		top: -60%
+		right: -2%
+		background-image: url(../img/reviews-cards.png)
+		background-size: contain
+		background-repeat: no-repeat
+		background-position: right
+		width: 1120px
+		height: 100%
+	&::after
+		content: ''
+		position: absolute
+		bottom: -10%
+		width: 100%
+		height: 100%
+		background-image: url(../img/reviews-bottom-pattern.png)
+		background-size: 90%
+		background-repeat: no-repeat
+		background-position: bottom
+		z-index: 0
 
-// 	.section__addblock
-// 		p
-// 			color: rgba($w,.4)
-// 			font-size: 16px
-// 			line-height: 160%
-// 			font-weight: normal
-// 			+reg
+	.section__addblock
+		p
+			color: rgba($w,.4)
+			font-size: 16px
+			line-height: 160%
+			font-weight: normal
+			+reg
+
+	&__content
+		position: relative
+		z-index: 3
+
+	&__slider
+		margin-top: 50px
+
+		.slick-next
+			right: -45px
+		.slick-prev
+			left: -45px
+
+
+	.slick-track
+		padding: 50px 0
+
+	.slide
+		max-width: calc(9.6 * (1vw + 1vh))
+		min-width: 288px
+		height: calc(16*(1vw + 1vh)) !important
+		// border: 2px solid transparent
+		text-align: center
+		background: $b
+		display: flex
+		justify-content: center
+		align-items: center
+		overflow: hidden
+		border-radius: 10px
+		margin: 0 20px
+		position: relative
+		transition: transform 0.5s ease-in-out
+		transform: scale(0.8)
+
+		video
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			-o-object-fit: cover
+			object-fit: cover
+			pointer-events: all
+
+		.overlay
+			position: absolute
+			top: 0
+			left: 0
+			bottom: 0
+			right: 0
+			width: 100%
+			height: 100%
+			// background: $b
+			background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%)
+			display: flex
+			flex-direction: column
+			align-items: center
+			justify-content: center
+			pointer-events: none
+			z-index: 3
+			// border: 2px solid $b
+
+	.slick-dots
+		bottom: -50px
+
+	.slick-dots li
+		height: 7px
+		width: 7px
+		+br(50%)
+		background: #D9D9D9
+		margin: 0 7px
+
+	.slick-dots li button:before
+		display: none
+
+	.slick-dots li.slick-active
+		width: 34px
+		+br(100px)
+		background: $w
+
+	.slick-current.slick-center
+		transform: scale(1.15)
+		border: 2px solid $w
+		.overlay
+			background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8) 100%)
+
+	.text-block
+		width: 100%
+		position: absolute
+		bottom: 5%
+		left: 5%
+		text-align: left
+		color: $w
+
+	.play-button
+		display: block
+		cursor: pointer
+
+	h3, p
+		color: $w
+		line-height: 160%
+
+	h3
+		font-size: 18px
+
+	p
+		font-size: 14px
+
 
 // 	&__item
 // 		max-width: 285px !important

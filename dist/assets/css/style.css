@@ -378,6 +378,11 @@ body.page-partners {
     color: #8E1636;
 }
 
+.header__lang span {
+    color: #8E1636;
+    font-family: Inter-Regular, sans-serif;
+}
+
 .header__cta {
     background: linear-gradient(to left, #8E1636, #660224);
     font-size: 18px;
@@ -805,6 +810,32 @@ form {
     bottom: 100px;
 }
 
+.form__group {
+    margin-bottom: 10px;
+}
+
+.form__group:last-child {
+    margin-bottom: 0;
+}
+
+.form__group--two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.form__group--checked {
+    display: flex;
+    grid-gap: 10px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.form__group--checked input {
+    width: -moz-max-content;
+    width: max-content;
+}
+
 .bread {
     position: absolute;
     top: 152px;
@@ -1137,6 +1168,170 @@ form {
 
 .page-numbers:hover svg {
     fill: #ffffff;
+}
+
+.reviews {
+    padding: 160px 0;
+    overflow: hidden;
+    border-radius: 18px;
+    color: #ffffff;
+}
+
+.reviews::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    right: -2%;
+    background-image: url(../img/reviews-cards.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    width: 1120px;
+    height: 100%;
+}
+
+.reviews::after {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/reviews-bottom-pattern.png);
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 0;
+}
+
+.reviews .section__addblock p {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+    line-height: 160%;
+    font-weight: normal;
+    font-family: Inter-Regular, sans-serif;
+}
+
+.reviews__content {
+    position: relative;
+    z-index: 3;
+}
+
+.reviews__slider {
+    margin-top: 50px;
+}
+
+.reviews__slider .slick-next {
+    right: -45px;
+}
+
+.reviews__slider .slick-prev {
+    left: -45px;
+}
+
+.reviews .slick-track {
+    padding: 50px 0;
+}
+
+.reviews .slide {
+    max-width: calc(9.6 * (1vw + 1vh));
+    min-width: 288px;
+    height: calc(16 * (1vw + 1vh)) !important;
+    text-align: center;
+    background: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 0 20px;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+    transform: scale(0.8);
+}
+
+.reviews .slide video {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: all;
+}
+
+.reviews .slide .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.reviews .slick-dots {
+    bottom: -50px;
+}
+
+.reviews .slick-dots li {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background: #D9D9D9;
+    margin: 0 7px;
+}
+
+.reviews .slick-dots li button:before {
+    display: none;
+}
+
+.reviews .slick-dots li.slick-active {
+    width: 34px;
+    border-radius: 100px;
+    background: #ffffff;
+}
+
+.reviews .slick-current.slick-center {
+    transform: scale(1.15);
+    border: 2px solid #ffffff;
+}
+
+.reviews .slick-current.slick-center .overlay {
+    background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.reviews .text-block {
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    text-align: left;
+    color: #ffffff;
+}
+
+.reviews .play-button {
+    display: block;
+    cursor: pointer;
+}
+
+.reviews h3, .reviews p {
+    color: #ffffff;
+    line-height: 160%;
+}
+
+.reviews h3 {
+    font-size: 18px;
+}
+
+.reviews p {
+    font-size: 14px;
 }
 
 .fea__wrap {
@@ -1953,6 +2148,279 @@ button.swiper-pagination-bullet {
     transform-origin: center bottom;
     backface-visibility: hidden;
     overflow: hidden;
+}
+
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+} /* Slider */
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.slick-list:focus {
+    outline: none;
+}
+
+.slick-list.dragging {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slick-track:before,
+.slick-track:after {
+    display: table;
+    content: "";
+}
+
+.slick-track:after {
+    clear: both;
+}
+
+.slick-loading .slick-track {
+    visibility: hidden;
+}
+
+.slick-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+
+[dir=rtl] .slick-slide {
+    float: right;
+}
+
+.slick-slide img {
+    display: block;
+}
+
+.slick-slide.slick-loading img {
+    display: none;
+}
+
+.slick-slide.dragging img {
+    pointer-events: none;
+}
+
+.slick-initialized .slick-slide {
+    display: block;
+}
+
+.slick-loading .slick-slide {
+    visibility: hidden;
+}
+
+.slick-vertical .slick-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+/* Slider */
+/* Icons */
+/* Arrows */
+.slick-prev,
+.slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+    color: transparent;
+    outline: none;
+    background: transparent;
+}
+
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before {
+    opacity: 1;
+}
+
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
+    opacity: 0.25;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    font-family: "slick";
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.75;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev {
+    left: -25px;
+}
+
+[dir=rtl] .slick-prev {
+    right: -25px;
+    left: auto;
+}
+
+.slick-prev:before {
+    content: "←";
+}
+
+[dir=rtl] .slick-prev:before {
+    content: "→";
+}
+
+.slick-next {
+    right: -25px;
+}
+
+[dir=rtl] .slick-next {
+    right: auto;
+    left: -25px;
+}
+
+.slick-next:before {
+    content: "→";
+}
+
+[dir=rtl] .slick-next:before {
+    content: "←";
+}
+
+/* Dots */
+.slick-dotted.slick-slider {
+    margin-bottom: 30px;
+}
+
+.slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+    outline: none;
+}
+
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+    opacity: 1;
+}
+
+.slick-dots li button:before {
+    font-family: "slick";
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: "•";
+    text-align: center;
+    opacity: 0.25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-dots li.slick-active button:before {
+    opacity: 0.75;
+    color: black;
 }
 
 .page-home .hero__btn {
@@ -2876,8 +3344,13 @@ button.swiper-pagination-bullet {
     position: relative;
 }
 
+.range-input__group {
+    position: relative;
+    border: 1px solid transparent;
+}
+
 .range-input__label {
-    color: #9e0b36;
+    color: #660224;
     font-size: 1.2rem;
     margin-bottom: 30px;
     display: block;
@@ -2886,11 +3359,12 @@ button.swiper-pagination-bullet {
 .range-input__slider {
     width: 100%;
     -webkit-appearance: none;
-    height: 6px;
-    border-radius: 3px;
-    background: #f0f0f0;
+    height: 5px;
+    border-radius: 10px;
+    background: rgba(142, 22, 54, 0.3);
     outline: none;
     margin: 20px 0;
+    padding: 0;
 }
 
 .range-input__slider::-webkit-slider-thumb {
@@ -2930,12 +3404,14 @@ button.swiper-pagination-bullet {
 
 .range-input__tooltip {
     position: absolute;
-    top: 45px;
-    left: 0;
+    top: 0;
+    left: 0px;
     background-color: #9e0b36;
     color: white;
-    padding: 10px 20px;
     border-radius: 8px;
+    width: 70px;
+    height: 50px;
+    line-height: 50px;
     font-weight: bold;
     transform: translateX(-50%);
     display: block;
@@ -3779,6 +4255,34 @@ button.swiper-pagination-bullet {
 
 .contact__socials a svg {
     fill: #ffffff;
+}
+
+.contact__form--content {
+    padding: 25px;
+    border-radius: 18px;
+    background: #ffffff;
+    margin-top: 30px;
+}
+
+.contact__form--content input[type=submit] {
+    background: #8E1636;
+    color: #ffffff;
+    margin-top: 40px;
+    transition: background 0.2s ease;
+}
+
+.contact__form--content input[type=submit]:hover {
+    background: #660224;
+}
+
+.contact__form--content input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.contact__form--content label {
+    cursor: pointer;
 }
 
 .notfound {

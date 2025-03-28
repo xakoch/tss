@@ -63,8 +63,10 @@ pagename: page-tsscard
 			                <div class="range-input">
 			                    <label class="range-input__label">Choose fleet size</label>
 			                    <div class="range-input__value" id="fleet-value">1</div>
-			                    <input type="range" min="1" max="100" value="1" class="range-input__slider" id="fleet-slider">
-			                    <div class="range-input__tooltip" id="fleet-tooltip">1</div>
+			                    <div class="range-input__group">
+				                    <input type="range" min="1" max="100" value="1" class="range-input__slider" id="fleet-slider">
+				                    <div class="range-input__tooltip" id="fleet-tooltip">1</div>
+			                    </div>
 			                </div>
 			                
 			                <div class="range-input">
@@ -83,8 +85,10 @@ pagename: page-tsscard
 				            <div class="range-input">
 				                <label class="range-input__label">Choose Gallons Per Fill-Up</label>
 				                <div class="range-input__value" id="gallons-value">50</div>
-				                <input type="range" min="50" max="250" value="50" class="range-input__slider" id="gallons-slider">
-				                <div class="range-input__tooltip" id="gallons-tooltip">50</div>
+			                    <div class="range-input__group">
+					                <input type="range" min="50" max="250" value="50" class="range-input__slider" id="gallons-slider">
+					                <div class="range-input__tooltip" id="gallons-tooltip">50</div>
+					            </div>
 				            </div>
 			            </div>
 			        </div>
