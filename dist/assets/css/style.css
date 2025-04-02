@@ -388,7 +388,7 @@ body.page-partners {
     font-size: 18px;
     font-family: Inter-Medium, sans-serif;
     color: #ffffff;
-    padding: 24px 56px;
+    padding: 26px 56px;
     border-radius: 18px;
 }
 
@@ -642,6 +642,7 @@ body.page-partners {
 
 .hero__footer {
     position: relative;
+    margin-top: 40px;
 }
 
 .hero__footer p {
@@ -670,8 +671,7 @@ body.page-partners {
     background: #ffffff;
     border-radius: 18px;
     box-shadow: 0px 4px 100px 0px rgba(0, 0, 0, 0.03);
-    height: 400px;
-    max-width: 560px;
+    max-width: 100%;
 }
 
 .hero__btns {
@@ -715,7 +715,7 @@ body.page-partners {
     position: relative;
     display: block;
     margin-bottom: 10px;
-    padding-left: 45px;
+    padding-left: 30px;
 }
 
 .hero__top-right li:last-child {
@@ -725,8 +725,8 @@ body.page-partners {
 .hero__top-right li::before {
     content: "";
     display: block;
-    width: 18px;
-    height: 18px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: #8E1636;
     position: absolute;
@@ -787,6 +787,16 @@ form {
     position: relative;
 }
 
+.form__checkbox {
+    display: flex;
+    align-items: center;
+    grid-gap: 15px;
+}
+
+.form__checkbox label {
+    margin-bottom: 0 !important;
+}
+
 .wpcf7-not-valid-tip {
     display: none;
 }
@@ -821,6 +831,12 @@ form {
 .form__group--two {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.form__group--four {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
 }
 
@@ -1062,6 +1078,10 @@ form {
 .btn-secondary:hover {
     background: #8E1636;
     color: #ffffff;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .btn-white {
@@ -3790,6 +3810,110 @@ html.lenis, html.lenis body {
     grid-gap: 20px;
 }
 
+.register__hero .hero__form {
+    padding: 40px 30px;
+}
+
+.register__hero .hero__form label {
+    color: #8E1636;
+    font-size: 13px;
+    font-family: Inter-Regular, sans-serif;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.register__hero .form__step-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+.register__hero .form__step-header h4 {
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.register__hero .form__step-header ul {
+    display: flex;
+    align-items: center;
+}
+
+.register__hero .form__step-header li {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #8E1636;
+    font-size: 14px;
+    font-family: Inter-Regular, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #8E1636;
+}
+
+.register__hero .form__step-header li.filled {
+    background: #8E1636;
+    color: #ffffff;
+}
+
+.register__hero .form__step-header hr {
+    height: 1px;
+    background: #8E1636;
+    width: 35px;
+}
+
+.register__hero .form__step-footer {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.register__hero .form__group {
+    margin-bottom: 20px;
+    grid-gap: 20px;
+}
+
+.register__hero .form__group:last-child {
+    margin-bottom: 0;
+}
+
+.register__hero .input {
+    height: 60px;
+}
+
+.register__hero .btn {
+    height: 60px;
+    line-height: 60px;
+    padding: 0;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.register__hero input[type=submit] {
+    background: #8E1636;
+    color: #ffffff;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.register__hero input[type=submit]:hover {
+    background: #660224;
+}
+
+.register__hero .wpcf7 form.sent .wpcf7-response-output {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Inter-Medium, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+}
+
 .register__cta {
     background: #ffffff;
     padding: 100px 0;
@@ -3913,10 +4037,122 @@ html.lenis, html.lenis body {
     padding: 100px 0;
 }
 
-.ca__form form {
-    height: 500px;
-    background: #C5C5C5;
-    border-radius: 18px;
+.ca__form label {
+    color: #8E1636;
+    font-size: 13px;
+    font-family: Inter-Regular, sans-serif;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.ca__form .form__step-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+.ca__form .form__step-header h4 {
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.ca__form .form__step-header ul {
+    display: flex;
+    align-items: center;
+}
+
+.ca__form .form__step-header li {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: #8E1636;
+    font-size: 14px;
+    font-family: Inter-Regular, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #8E1636;
+}
+
+.ca__form .form__step-header li.filled {
+    background: #8E1636;
+    color: #ffffff;
+}
+
+.ca__form .form__step-header hr {
+    height: 1px;
+    background: #8E1636;
+    width: 35px;
+}
+
+.ca__form .form__step-footer {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+    grid-gap: 20px;
+}
+
+.ca__form .form__step-footer a:first-child {
+    grid-area: 1/3/2/4;
+}
+
+.ca__form .form__step-footer a:last-child,
+.ca__form .form__step-footer input {
+    grid-area: 1/4/2/5;
+}
+
+.ca__form .form__group {
+    margin-bottom: 20px;
+    grid-gap: 20px;
+}
+
+.ca__form .form__group:last-child {
+    margin-bottom: 0;
+}
+
+.ca__form .input {
+    height: 60px;
+}
+
+.ca__form select {
+    color: #8E1636;
+    font-size: 13px;
+    font-family: Inter-Regular, sans-serif;
+}
+
+.ca__form .btn {
+    height: 60px;
+    line-height: 60px;
+    padding: 0;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.ca__form input[type=submit] {
+    background: #8E1636;
+    color: #ffffff;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.ca__form input[type=submit]:hover {
+    background: #660224;
+}
+
+.ca__form .wpcf7 form.sent .wpcf7-response-output {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    font-size: 18px;
+    font-family: Inter-Medium, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
 }
 
 .thx__hero {

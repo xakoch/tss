@@ -53,6 +53,7 @@
 
 	&__footer
 		position: relative
+		margin-top: 40px
 		p
 			font-size: 16px
 			+reg
@@ -75,8 +76,7 @@
 		background: $w
 		+br(18px)
 		box-shadow: 0px 4px 100px 0px rgba(0, 0, 0, 0.03)
-		height: 400px
-		max-width: 560px
+		max-width: 100%
 
 	&__btns
 		display: flex
@@ -114,14 +114,14 @@
 			position: relative
 			display: block
 			margin-bottom: 10px
-			padding-left: 45px
+			padding-left: 30px
 			&:last-child
 				margin-bottom: 0
 			&::before
 				content: ''
 				display: block
-				width: 18px
-				height: 18px
+				width: 10px
+				height: 10px
 				+br(50%)
 				background: $red
 				position: absolute

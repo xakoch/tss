@@ -16,12 +16,12 @@ const imagemin = require("gulp-imagemin");
 const del = require("del");
 // const notify = require("gulp-notify");
 const imagewebp = require("gulp-webp");
+const concat = require('gulp-concat');
 const browserSync = require("browser-sync").create();
 
 /* Paths */
 const srcPath = "src/"
 const distPath = "dist/"
-
 
 const path = {
     build: {

@@ -31,6 +31,14 @@ select
 form
 	position: relative
 
+.form
+	&__checkbox
+		display: flex
+		align-items: center
+		grid-gap: 15px
+		label
+			margin-bottom: 0 !important
+
 .wpcf7-not-valid-tip
 	display: none
 
@@ -57,6 +65,10 @@ form
 	&--two
 		display: grid
 		grid-template-columns: 1fr 1fr
+		grid-gap: 20px
+	&--four
+		display: grid
+		grid-template-columns: repeat(4, 1fr)
 		grid-gap: 20px
 	&--checked
 		display: flex

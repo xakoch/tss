@@ -252,7 +252,7 @@ function initScript() {
         }
         
         initCalc();
-        initMultiStepForm();
+        initRegisterStepForm();
 
         document.addEventListener('wpcf7mailsent', function(event) {
             setTimeout(function() {
@@ -590,6 +590,7 @@ function initVideoCarousel() {
         console.error('Error in initVideoCarousel:', error);
     }
 }
+
 
 /**
  * Home page
@@ -1012,396 +1013,257 @@ function initCalc() {
     }
 }
 
+
 /**
- * Universal Multi-Step Form with GSAP animations and step indicators
- * Works with any number of steps and form fields
+ * Register Step Form with GSAP animations and step indicators
  */
-function initMultiStepForm() {
-
-    document.addEventListener('wpcf7mailsent', function(event) {
-        // Получаем элемент формы
-        const form = event.target;
-        
-        // Проверяем наличие класса form-redirect
-        if (form.classList.contains('form-redirect')) {
-            // Используем Barba.js для плавного перехода
-            barba.go('https://ias.rsq.mybluehost.me/website_e4331c8e/card-activation-thank-you/');
-        }
-    }, false);
-
+function initRegisterStepForm() {
     // Get form elements
-    const form = document.querySelector('.form') || document.querySelector('.wpcf7-form');
-    if (!form) return;
-    
-    // Get all steps
-    const steps = Array.from(form.querySelectorAll('.form__step, .form-step'));
-    if (steps.length < 2) return; // Need at least two steps to work
-    
-    // Get all next buttons
-    const nextButtons = form.querySelectorAll('.form__step-next, .next-step');
-    
-    // Get all back buttons
-    const backButtons = form.querySelectorAll('.form__step-back');
+    const form = document.querySelector('.wpcf7-form');
+    const step1 = document.querySelector('.form__step-1');
+    const step2 = document.querySelector('.form__step-2');
+    const nextBtn = document.querySelector('.form__step-next');
+    const backBtn = document.querySelector('.form__step-back');
     
     // Get step indicators
-    const stepIndicators = document.querySelectorAll('.form__step-header ul li, .progress-steps li');
+    const stepIndicators = document.querySelectorAll('.form__step-header ul li');
+    // Проверяем наличие индикаторов перед получением
+    let step1Indicator = null;
+    let step2Indicator = null;
     
-    // Map steps to their respective indicators
-    const stepIndicatorMap = new Map();
+    // Проверяем и находим элементы на основе их содержимого
     stepIndicators.forEach(indicator => {
-        const stepNumber = indicator.textContent.trim();
-        if (/^\d+$/.test(stepNumber)) {
-            const index = parseInt(stepNumber) - 1;
-            if (index >= 0 && index < steps.length) {
-                stepIndicatorMap.set(steps[index], indicator);
-            }
+        if (indicator.textContent.trim() === '1') {
+            step1Indicator = indicator;
+        } else if (indicator.textContent.trim() === '2') {
+            step2Indicator = indicator;
         }
     });
+
+    // Required fields in step 1
+    const requiredFields = [
+        'input[name="lastname"]',
+        'input[name="firstname"]',
+        'input[name="email-479"]',
+        'input[name="tel"]'
+    ];
+
+    // Initial setup with GSAP
+    gsap.set(step1, { autoAlpha: 1 });
+    gsap.set(step2, { autoAlpha: 0, display: 'none' });
     
-    // Setup GSAP for all steps
-    steps.forEach((step, index) => {
-        if (index === 0) {
-            // First step is visible
-            gsap.set(step, { autoAlpha: 1 });
-            step.style.display = 'block';
-            // Fill first indicator
-            const indicator = stepIndicatorMap.get(step);
-            if (indicator) {
-                indicator.classList.add('filled');
-            }
-        } else {
-            // Hide other steps
-            gsap.set(step, { autoAlpha: 0, display: 'none' });
-        }
-    });
-    
-    // Handle Next button clicks
-    nextButtons.forEach((nextButton, buttonIndex) => {
-        nextButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Find the current step (parent of the button)
-            let currentStep = null;
-            let currentStepIndex = -1;
-            
-            steps.forEach((step, index) => {
-                if (step.contains(nextButton)) {
-                    currentStep = step;
-                    currentStepIndex = index;
-                }
-            });
-            
-            if (currentStep && currentStepIndex < steps.length - 1) {
-                // Get next step
-                const nextStep = steps[currentStepIndex + 1];
-                
-                // Get all required fields in current step
-                const requiredFields = getRequiredFieldsInStep(currentStep);
-                
-                // Validate all required fields
-                const isValid = validateRequiredFields(requiredFields);
-                
-                if (isValid) {
-                    // Update step indicators
-                    const nextIndicator = stepIndicatorMap.get(nextStep);
-                    if (nextIndicator) {
-                        nextIndicator.classList.add('filled');
-                    }
-                    
-                    // Animate transition to next step
-                    gsap.timeline()
-                        .to(currentStep, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
-                        .set(currentStep, { display: 'none' })
-                        .set(nextStep, { display: 'block' })
-                        .to(nextStep, { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
-                }
-            }
-        });
-    });
-    
-    // Handle Back button clicks
-    backButtons.forEach(backButton => {
-        backButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Find the current step (parent of the button)
-            let currentStep = null;
-            let currentStepIndex = -1;
-            
-            steps.forEach((step, index) => {
-                if (step.contains(backButton)) {
-                    currentStep = step;
-                    currentStepIndex = index;
-                }
-            });
-            
-            if (currentStep && currentStepIndex > 0) {
-                // Get previous step
-                const prevStep = steps[currentStepIndex - 1];
-                
-                // Update step indicators
-                const currentIndicator = stepIndicatorMap.get(currentStep);
-                if (currentIndicator) {
-                    currentIndicator.classList.remove('filled');
-                }
-                
-                // Animate transition back to previous step
-                gsap.timeline()
-                    .to(currentStep, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
-                    .set(currentStep, { display: 'none' })
-                    .set(prevStep, { display: 'block' })
-                    .to(prevStep, { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
-            }
-        });
-    });
-    
-    // Get all required fields in a step
-    function getRequiredFieldsInStep(step) {
-        const fields = [];
-        
-        // Look for inputs with aria-required="true"
-        const ariaRequiredInputs = step.querySelectorAll('input[aria-required="true"], select[aria-required="true"], textarea[aria-required="true"]');
-        ariaRequiredInputs.forEach(input => fields.push(input));
-        
-        // Look for inputs with required attribute
-        const requiredInputs = step.querySelectorAll('input[required], select[required], textarea[required]');
-        requiredInputs.forEach(input => {
-            if (!fields.includes(input)) {
-                fields.push(input);
-            }
-        });
-        
-        // Look for inputs with class containing "required"
-        const classRequiredInputs = step.querySelectorAll('input.wpcf7-validates-as-required, select.wpcf7-validates-as-required, textarea.wpcf7-validates-as-required');
-        classRequiredInputs.forEach(input => {
-            if (!fields.includes(input)) {
-                fields.push(input);
-            }
-        });
-        
-        return fields;
+    // Step 1 indicator is filled by default
+    if (step1Indicator) {
+        step1Indicator.classList.add('filled');
     }
-    
+
+    // Handle Next button click
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Validate all required fields in step 1
+            const isValid = validateRequiredFields(requiredFields);
+
+            if (isValid) {
+                // Update step indicators
+                if (step2Indicator) {
+                    // Простое добавление класса без GSAP
+                    step2Indicator.classList.add('filled');
+                }
+                
+                // Animate transition to step 2
+                gsap.timeline()
+                    .to(step1, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
+                    .set(step1, { display: 'none' })
+                    .set(step2, { display: 'block' })
+                    .to(step2, { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
+            }
+        });
+    }
+
+    // Handle Back button click
+    if (backBtn) {
+        backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Update step indicators
+            if (step2Indicator) {
+                // Простое удаление класса без GSAP
+                step2Indicator.classList.remove('filled');
+            }
+            
+            // Animate transition back to step 1
+            gsap.timeline()
+                .to(step2, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
+                .set(step2, { display: 'none' })
+                .set(step1, { display: 'block' })
+                .to(step1, { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
+        });
+    }
+
     // Validate required fields
     function validateRequiredFields(fields) {
         let isValid = true;
-        
+
         // Remove any existing error messages
         const existingErrors = form.querySelectorAll('.form-error-message');
         existingErrors.forEach(error => error.remove());
-        
+
         // Reset field styling
         form.querySelectorAll('.input-error').forEach(field => {
             field.classList.remove('input-error');
         });
-        
+
         // Check each required field
-        fields.forEach(field => {
-            // Get the field's parent element (could be the input itself or a span/div containing it)
-            const fieldParent = field.closest('span') || field.parentNode;
-            
-            // For select elements, check if a non-default option is selected
-            if (field.tagName === 'SELECT') {
-                // Skip validation if field is not required
-                if (!isFieldRequired(field)) return;
-                
-                const hasSelectedOption = field.selectedIndex > 0;
-                const hasValue = field.value && field.value !== "" && !field.value.includes("Select");
-                
-                if (!hasSelectedOption || !hasValue) {
-                    isValid = false;
-                    addErrorStyling(field, fieldParent, "Please select an option");
-                }
-            }
-            // For checkbox and radio inputs
-            else if (field.type === 'checkbox' || field.type === 'radio') {
-                // Skip validation if field is not required
-                if (!isFieldRequired(field)) return;
-                
-                if (!field.checked) {
-                    isValid = false;
-                    addErrorStyling(field, fieldParent, "This field is required");
-                }
-            }
-            // For all other input types
-            else {
-                // Skip validation if field is not required
-                if (!isFieldRequired(field)) return;
-                
+        fields.forEach(selector => {
+            const field = form.querySelector(selector);
+
+            if (field && field.getAttribute('aria-required') === 'true') {
                 if (!field.value.trim()) {
                     isValid = false;
-                    addErrorStyling(field, fieldParent, "This field is required");
+
+                    // Add error styling
+                    field.classList.add('input-error');
+
+                    // Add error message with GSAP animation
+                    const errorMessage = document.createElement('span');
+                    errorMessage.className = 'form-error-message';
+                    errorMessage.textContent = 'This field is required';
+                    errorMessage.style.opacity = '0';
+                    
+                    // Insert error message after the field
+                    field.parentNode.appendChild(errorMessage);
+                    
+                    // Animate error message appearance
+                    gsap.to(errorMessage, { 
+                        opacity: 1, 
+                        duration: 0.3, 
+                        ease: "power2.out"
+                    });
+                    
+                    // Shake effect on invalid field
+                    gsap.fromTo(field, 
+                        { x: 0 }, 
+                        { x: 5, duration: 0.1, repeat: 3, yoyo: true }
+                    );
                 }
-                
-                // Email validation
-                if (field.type === 'email' && field.value.trim()) {
+
+                // Additional validation for email
+                if (selector.includes('email') && field.value.trim()) {
                     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailPattern.test(field.value.trim())) {
                         isValid = false;
-                        addErrorStyling(field, fieldParent, "Please enter a valid email address");
+
+                        // Add error styling
+                        field.classList.add('input-error');
+
+                        // Add error message with GSAP animation
+                        const errorMessage = document.createElement('span');
+                        errorMessage.className = 'form-error-message';
+                        errorMessage.textContent = 'Please enter a valid email address';
+                        errorMessage.style.opacity = '0';
+                        
+                        // Insert error message after the field
+                        field.parentNode.appendChild(errorMessage);
+                        
+                        // Animate error message appearance
+                        gsap.to(errorMessage, { 
+                            opacity: 1, 
+                            duration: 0.3, 
+                            ease: "power2.out"
+                        });
+                        
+                        // Shake effect on invalid field
+                        gsap.fromTo(field, 
+                            { x: 0 }, 
+                            { x: 5, duration: 0.1, repeat: 3, yoyo: true }
+                        );
                     }
                 }
-                
-                // Phone validation
-                if ((field.type === 'tel' || field.name.includes('phone') || field.name.includes('tel')) && field.value.trim()) {
+
+                // Additional validation for phone
+                if (selector.includes('tel') && field.value.trim()) {
                     const phonePattern = /^[0-9\+\-\(\)\s]+$/;
                     if (!phonePattern.test(field.value.trim())) {
                         isValid = false;
-                        addErrorStyling(field, fieldParent, "Please enter a valid phone number");
-                    }
-                }
-                
-                // Confirm email validation
-                if (field.name.includes('confirm_email') && field.value.trim()) {
-                    const emailField = form.querySelector('input[name="email"], input[name*="email"]:not([name*="confirm"])');
-                    if (emailField && field.value !== emailField.value) {
-                        isValid = false;
-                        addErrorStyling(field, fieldParent, "Email addresses do not match");
+
+                        // Add error styling
+                        field.classList.add('input-error');
+
+                        // Add error message with GSAP animation
+                        const errorMessage = document.createElement('span');
+                        errorMessage.className = 'form-error-message';
+                        errorMessage.textContent = 'Please enter a valid phone number';
+                        errorMessage.style.opacity = '0';
+                        
+                        // Insert error message after the field
+                        field.parentNode.appendChild(errorMessage);
+                        
+                        // Animate error message appearance
+                        gsap.to(errorMessage, { 
+                            opacity: 1, 
+                            duration: 0.3, 
+                            ease: "power2.out"
+                        });
+                        
+                        // Shake effect on invalid field
+                        gsap.fromTo(field, 
+                            { x: 0 }, 
+                            { x: 5, duration: 0.1, repeat: 3, yoyo: true }
+                        );
                     }
                 }
             }
         });
-        
+
         return isValid;
     }
-    
-    // Check if a field is really required
-    function isFieldRequired(field) {
-        return (
-            field.hasAttribute('required') || 
-            field.getAttribute('aria-required') === 'true' ||
-            field.classList.contains('wpcf7-validates-as-required')
-        );
-    }
-    
-    // Add error styling and message to a field
-    function addErrorStyling(field, fieldParent, errorText) {
-        // Add error class to the input
-        field.classList.add('input-error');
-        
-        // Create error message element
-        const errorMessage = document.createElement('span');
-        errorMessage.className = 'form-error-message';
-        errorMessage.textContent = errorText;
-        errorMessage.style.opacity = '0';
-        
-        // Insert error message after the field or its parent
-        fieldParent.appendChild(errorMessage);
-        
-        // Animate error message appearance
-        gsap.to(errorMessage, { 
-            opacity: 1, 
-            duration: 0.3, 
-            ease: "power2.out"
-        });
-        
-        // Shake effect on invalid field
-        gsap.fromTo(field, 
-            { x: 0 }, 
-            { x: 5, duration: 0.1, repeat: 3, yoyo: true }
-        );
-    }
-    
-    // Handle form submission
-    const submitButton = form.querySelector('input[type="submit"], button[type="submit"]');
-    if (submitButton) {
-        submitButton.addEventListener('click', function(e) {
-            // Only prevent default if this is not a WP Contact Form 7
-            if (!form.classList.contains('wpcf7-form')) {
-                e.preventDefault();
-            }
-            
-            // Find the current step (the one containing the submit button)
-            const currentStep = steps.find(step => step.contains(submitButton));
-            if (!currentStep) return;
-            
-            // Get all required fields in the final step
-            const requiredFields = getRequiredFieldsInStep(currentStep);
-            
-            // Validate all required fields
-            const isValid = validateRequiredFields(requiredFields);
-            
-            if (isValid && !form.classList.contains('wpcf7-form')) {
-                // In case of a non-CF7 form, you can add your own submission logic here
-                alert('Form submitted successfully!');
-                
-                // Reset the form to first step
-                resetFormToFirstStep();
-            }
-        });
-    }
-    
-    // Integrate with Contact Form 7 if present
-    if (typeof document.addEventListener === 'function') {
-        document.addEventListener('wpcf7invalid', function(event) {
-            // Don't let CF7 handle invalid fields if we're on a multi-step form
-        });
-        
-        document.addEventListener('wpcf7mailsent', function() {
-            // Reset form to first step on successful submission
-            resetFormToFirstStep();
-        });
-    }
-    
-    // Reset form to first step
-    function resetFormToFirstStep() {
+
+    // Integrate with Contact Form 7
+    document.addEventListener('wpcf7invalid', function(event) {
+        // If the form is on step 2 and validation fails, keep showing step 2
+        if (getComputedStyle(step2).display !== 'none') {
+            event.preventDefault();
+        }
+    });
+  
+    // Reset form on successful submission
+    document.addEventListener('wpcf7mailsent', function() {
         // Reset step indicators
-        stepIndicators.forEach((indicator, index) => {
-            if (index > 0) {
-                indicator.classList.remove('filled');
-            }
-        });
+        if (step2Indicator) {
+            // Простое удаление класса без GSAP
+            step2Indicator.classList.remove('filled');
+        }
         
-        // Find current visible step
-        const currentStep = steps.find(step => getComputedStyle(step).display !== 'none');
-        if (!currentStep || currentStep === steps[0]) return;
-        
-        // Animate back to first step
+        // Animate back to step 1
         gsap.timeline()
-            .to(currentStep, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
-            .set(currentStep, { display: 'none' })
-            .set(steps[0], { display: 'block' })
-            .to(steps[0], { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
-        
+            .to(step2, { autoAlpha: 0, duration: 0.4, ease: "power2.out" })
+            .set(step2, { display: 'none' })
+            .set(step1, { display: 'block' })
+            .to(step1, { autoAlpha: 1, duration: 0.4, ease: "power2.in" });
+    
         // Reset all inputs with slight delay
         gsap.delayedCall(0.5, function() {
-            form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea, select').forEach(input => {
-                if (input.type === 'checkbox' || input.type === 'radio') {
-                    input.checked = false;
-                } else {
-                    input.value = '';
-                }
-                
-                // Reset select elements to first option
-                if (input.tagName === 'SELECT') {
-                    input.selectedIndex = 0;
-                }
+            form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
+                input.value = '';
             });
         });
-    }
-    
-    // Add CSS for error styling
-    if (!document.getElementById('multi-step-form-styles')) {
-        const style = document.createElement('style');
-        style.id = 'multi-step-form-styles';
-        style.textContent = `
-            .input-error {
-                border-color: red !important;
-            }
-            .form-error-message {
-                color: red;
-                font-size: 12px;
-                display: block;
-                margin-top: 5px;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
+    });
 
-// Initialize the form when the document is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMultiStepForm);
-} else {
-    initMultiStepForm();
+    // Add CSS for error styling
+    const style = document.createElement('style');
+    style.textContent = `
+        .input-error {
+            border-color: red !important;
+        }
+        .form-error-message {
+            color: red;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+        }
+    `;
+    document.head.appendChild(style);
+
 }

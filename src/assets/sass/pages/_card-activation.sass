@@ -3,16 +3,13 @@
 // ========================================
 .ca__head
 	padding-bottom: 60px
-
 	h1, h4
 		font-weight: normal
-
 	h1
 		font-size: 40px
 		line-height: 120%
 		color: $b31
 		margin-top: 15px !important
-
 	h4
 		font-size: 15px
 		opacity: .3
@@ -23,11 +20,92 @@
 	background: $w
 	padding: 100px 0
 
-	form
-		height: 500px
-		background: $gray2
-		+br(18px)
+	label
+		color: $red
+		font-size: 13px
+		+reg
+		margin-bottom: 10px
+		display: block
 
+	.form__step-header
+		display: flex
+		justify-content: space-between
+		margin-bottom: 50px
+		align-items: center
+		h4
+			font-weight: normal
+			font-size: 18px
+		ul
+			display: flex
+			align-items: center
+		li
+			+br(50%)
+			width: 30px
+			height: 30px
+			color: $red
+			font-size: 14px
+			+reg
+			+flex
+			border: 1px solid $red
+			&.filled
+				background: $red
+				color: $w
+		hr
+			height: 1px
+			background: $red
+			width: 35px
+	
+	.form__step-footer
+		margin-top: 30px
+		display: grid
+		grid-template-columns: repeat(4, 1fr)
+		grid-template-rows: 1fr
+		grid-column-gap: 20px
+		grid-row-gap: 0px
+		grid-gap: 20px
+		a:first-child
+			grid-area: 1 / 3 / 2 / 4
+		a:last-child,
+		input
+			grid-area: 1 / 4 / 2 / 5
+
+	.form__group
+		margin-bottom: 20px
+		grid-gap: 20px
+		&:last-child
+			margin-bottom: 0
+
+	.input
+		height: 60px
+		
+	select
+		color: $red
+		font-size: 13px
+		+reg
+
+	.btn
+		height: 60px
+		line-height: 60px
+		padding: 0
+		font-size: 14px
+		+br(10px)
+
+	input[type="submit"]
+		background: $red
+		color: $w
+		+br(10px)
+		+trans(background)
+		&:hover
+			background: $red3
+
+	.wpcf7 form.sent .wpcf7-response-output
+		+br(10px)
+		height: 100%
+		width: 100%
+		font-size: 18px
+		+med
+		+flex
+		bottom: 0
 
 .thx__hero
 	text-align: center

@@ -7,6 +7,79 @@
 		grid-template-columns: 1.3fr 1fr
 		align-items: center
 		grid-gap: 20px
+	.hero__form
+		padding: 40px 30px
+		label
+			color: $red
+			font-size: 13px
+			+reg
+			margin-bottom: 10px
+			display: block
+	.form__step-header
+		display: flex
+		justify-content: space-between
+		margin-bottom: 50px
+		align-items: center
+		h4
+			font-weight: normal
+			font-size: 18px
+		ul
+			display: flex
+			align-items: center
+		li
+			+br(50%)
+			width: 30px
+			height: 30px
+			color: $red
+			font-size: 14px
+			+reg
+			+flex
+			border: 1px solid $red
+			&.filled
+				background: $red
+				color: $w
+		hr
+			height: 1px
+			background: $red
+			width: 35px
+	.form__step-footer
+		margin-top: 30px
+		display: grid
+		grid-template-columns: 1fr 1fr
+		grid-gap: 20px
+
+	.form__group
+		margin-bottom: 20px
+		grid-gap: 20px
+		&:last-child
+			margin-bottom: 0
+
+	.input
+		height: 60px
+
+	.btn
+		height: 60px
+		line-height: 60px
+		padding: 0
+		font-size: 14px
+		+br(10px)
+
+	input[type="submit"]
+		background: $red
+		color: $w
+		+br(10px)
+		+trans(background)
+		&:hover
+			background: $red3
+
+	.wpcf7 form.sent .wpcf7-response-output
+		+br(10px)
+		height: 100%
+		width: 100%
+		font-size: 18px
+		+med
+		+flex
+		bottom: 0
 
 .register__cta
 	background: $w

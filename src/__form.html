@@ -1,0 +1,128 @@
+<div class="form-steps-wrapper">
+
+<div class="form-step step-1 active">
+
+    <label> {Company Legal Name} *
+        [text* company_name placeholder "{Business Name}"]
+    </label>
+
+    <label> {Country} *
+        [select* country "US" "Other"]
+    </label>
+
+    <label> {Doing Business As}
+        [text* doing_business placeholder ""]
+    </label>
+
+    <label> {Business Physical Address} *
+        [text* physical_address placeholder "{Physical Address}"]
+    </label>
+
+    <label> {Address Line} 2
+        [text* address_line_2 placeholder ""]
+    </label>
+
+    <label> {Business Phone}*
+        [text* your-phone placeholder "{Phone number}"]
+    </label>
+
+  <button type="button" class="next-step">{Next Step} →</button>
+</div>
+
+<div class="form-step step-2">
+
+    <label> {First Name} *
+        [text* first_name]
+    </label>
+
+    <label> {Last Name} *
+        [text* last_name]
+    </label>
+
+    <label> {State / Province}*
+        [select* state "{Select option}" "California" "Colorado" "Florida"]
+    </label>
+
+    <label> City*
+        [text* city]
+    </label>
+
+    <label> Title*
+        [select* title "{Select option}" "Manager" "Owner" "others"]
+    </label>
+
+    <label> Postal Code *
+        [text* postal_code]
+    </label>
+
+<button type="button" class="next-step">{Next Step} →</button>
+</div>
+
+
+<div class="form-step step-3">
+
+    <label> {Email Address} *
+        [email* email]
+    </label>
+
+    <label> {Confirm Email Address} *
+        [email* confirm_email]
+    </label>
+
+    <label> {Total # of trucks in your fleet} *
+        [number* trucks]
+    </label>
+
+    <label> {Total # of drivers} *
+        [number* drivers]
+    </label>
+
+   <label>
+      [checkbox team_drivers "{Team Drivers / Slip Seat}"]
+   </label>
+
+ <button type="button" class="next-step">{Next Step} →</button>
+</div>
+
+<div class="form-step step-4">
+
+<label> {Legal Structure} *
+    [select* legal_structure "{Select option}" "Sole Proprietorship" "Partnership" "Corporation" "LLC"]
+</label>
+
+<label> {Taxpayer ID} *
+    [text* taxpayer_id ]
+</label>
+
+<label> {Business Description} *
+    [select* business_description "{Select option}" "Retail" "Service" "Manufacturing" "Other"]
+</label>
+
+<label> {Please Select An Identifier} (MC, FF, or DOT #) *
+    [select* identifier "{Select option}" "MC" "FF" "DOT"]
+</label>
+
+<label> {Year Established} *
+    [text* year_established placeholder "{Enter Year}"]
+</label>
+
+<label> {Annual Gross Revenue} *
+    [text* gross_revenue]
+</label>
+
+<label> {Parent Company}
+    [text parent_company ]
+</label>
+
+<label> {Estimated Monthly Spend} *
+    [text* monthly_spend ]
+</label>
+
+<label> Industry *
+    [select* industry "{Select option}" "Technology" "Healthcare" "Finance" "Other"]
+</label>
+
+ [submit id:submit-button"{Send Application}"]
+</div>
+
+</div>

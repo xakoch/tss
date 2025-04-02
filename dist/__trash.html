@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+    <!-- favicon -->
+    <meta name="msapplication-TileColor" content="#1C509D">
+    <meta name="theme-color" content="#1C509D" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- style -->
+    <link rel="stylesheet" media="all" href="assets/css/style.min.css" />
+</head>
+<body data-barba="wrapper" class="">
+
+    <div class="form__step-header">
+        <h4>Форма обратной связи</h4>
+        <ul>
+            <li class="filled">1</li>
+            <hr>
+            <li>2</li>
+        </ul>
+    </div>
+    <div class="form__step form__step-1">
+        <div class="form__step-content">
+            <div class="form__group form__group--two">
+                <div class="form__inner">
+                    <label for="lastname">First Name</label>
+                    [text* lastname autocomplete:firstname class:input placeholder "First Name"]
+                </div>
+                <div class="form__inner">
+                    <label for="lastname">Last Name</label>
+                    [text* firstname autocomplete:lastname class:input placeholder "Last Name"]
+                </div>
+            </div>
+            <div class="form__group form__group--two">
+                <div class="form__inner">
+                    <label for="lastname">E-mail</label>
+                    [email* email-479 class:input placeholder "E-mail"]
+                </div>
+                <div class="form__inner">
+                    <label for="lastname">Phone number</label>
+                    [tel* tel autocomplete:tel class:input placeholder "Phone number"]
+                </div>
+            </div>
+        </div>
+        <div class="form__step-footer">
+            <a class="btn btn-secondary form__step-next text-center" href="#">Next Step →</a>
+        </div>
+    </div>
+    <div class="form__step form__step-2">
+        <div class="form__step-content">
+            <div class="form__group form__group--two">
+                <div class="form__inner">
+                    <label for="lastname">Company name</label>
+                    [text* company-name autocomplete:name class:input placeholder "Company Name"]
+                </div>
+                <div class="form__inner">
+                    <label for="lastname">MC number</label>
+                    [text mc-number class:input placeholder "MC"]
+                </div>
+            </div>
+            <div class="form__group form__group--two">
+                <div class="form__inner">
+                    <label for="lastname">DOT#</label>
+                    [text dot-number class:input placeholder "DOT#"]
+                </div>
+                <div class="form__inner">
+                    <label for="lastname">???</label>
+                    [text trucks-count class:input placeholder "How many trucks do you have"]
+                </div>
+            </div>
+        </div>
+        <div class="form__step-footer">
+            <a class="btn btn-secondary form__step-back text-center" href="#">← Back</a>
+            [submit class:input "Submit"]
+        </div>
+    </div>
+    
+    
+    <div class="form__group">
+        <label for="phone">Your phone number:</label>
+        [tel* your-phone class:input id:phone placeholder "555-555-1234"]
+    </div>
+    <div class="form__group">
+        <input class="input" type="submit" value="Get A Call Back" required="">
+        [submit class:input "Get A Call Back"]
+    </div>
+    [telegram]
+
+    <a class="back" href="/">back to all pages</a>
+    <!-- END content -->
+
+    <!-- BEGIN scripts -->
+    <script defer type="text/javascript" src="assets/js/lib.min.js"></script>
+    <script defer type="text/javascript" src="assets/js/app.min.js"></script>
+    <!-- END scripts -->
+
+</body>
+</html>

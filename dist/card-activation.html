@@ -81,7 +81,226 @@
     		<!-- card activation form -->
     		<section class="section ca__form">
     			<div class="container">
-    				<form></form>
+    <form class="form">
+        <div class="form__step-header">
+            <h4>Fill our the form, and we'll send you the TSS Fuel Card</h4>
+            <ul>
+                <li class="filled">1</li>
+                <hr>
+                <li>2</li>
+                <hr>
+                <li>3</li>
+                <hr>
+                <li>4</li>
+            </ul>
+        </div>
+        <div class="form__step form__step-1">
+            <div class="form__step-content">
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="company_name">Company Legal Name *</label>
+                        <span data-name="company_name"><input class="wpcf7-validates-as-required input" autocomplete="organization" aria-required="true" aria-invalid="false" placeholder="Business Name" type="text" name="company_name"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="country">Country *</label>
+                        <span data-name="country">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="country">
+                                 <option value="" disabled selected>Select option</option>
+                                <option value="US">US</option>
+                                <option value="UE">UE</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="doing_business">Doing Business As</label>
+                        <span data-name="doing_business"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" placeholder="" type="text" name="doing_business"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="physical_address">Business Physical Address *</label>
+                        <span data-name="physical_address"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" placeholder="Physical Address" type="text" name="physical_address"></span>
+                    </div>
+                </div>
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="address_line_2">Address Line 2</label>
+                        <span data-name="address_line_2"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" placeholder="" type="text" name="address_line_2"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="your-phone">Business Phone*</label>
+                        <span data-name="your-phone"><input class="wpcf7-form-control wpcf7-tel wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-tel input" autocomplete="tel" aria-required="true" aria-invalid="false" placeholder="Phone number" type="tel" name="your-phone"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form__step-footer one-item">
+                <a class="btn btn-primary form__step-next text-center" href="#">Next Step →</a>
+            </div>
+        </div>
+        <div class="form__step form__step-2">
+            <div class="form__step-content">
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="first_name">First Name *</label>
+                        <span data-name="first_name"><input class="wpcf7-validates-as-required input" autocomplete="given-name" aria-required="true" aria-invalid="false" type="text" name="first_name"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="last_name">Last Name *</label>
+                        <span data-name="last_name"><input class="wpcf7-validates-as-required input" autocomplete="family-name" aria-required="true" aria-invalid="false" type="text" name="last_name"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="state">State / Province*</label>
+                        <span data-name="state">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="state">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="California">California</option>
+                                <option value="Colorado">Colorado</option>
+                                <option value="Florida">Florida</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="city">City*</label>
+                        <span data-name="city"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="text" name="city"></span>
+                    </div>
+                </div>
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="title">Title*</label>
+                        <span data-name="title">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="title">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Owner">Owner</option>
+                                <option value="others">others</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="postal_code">Postal Code *</label>
+                        <span data-name="postal_code"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="text" name="postal_code"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form__step-footer">
+                <a class="btn btn-secondary form__step-back text-center" href="#">← Back</a>
+                <a class="btn btn-primary form__step-next text-center" href="#">Next Step →</a>
+            </div>
+        </div>
+        <div class="form__step form__step-3">
+            <div class="form__step-content">
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="email">Email Address *</label>
+                        <span data-name="email"><input class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email input" aria-required="true" aria-invalid="false" type="email" name="email"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="confirm_email">Confirm Email Address *</label>
+                        <span data-name="confirm_email"><input class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email input" aria-required="true" aria-invalid="false" type="email" name="confirm_email"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="trucks">Total # of trucks in your fleet *</label>
+                        <span data-name="trucks"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="number" name="trucks"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="drivers">Total # of drivers *</label>
+                        <span data-name="drivers"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="number" name="drivers"></span>
+                    </div>
+                </div>
+                <div class="form__group form__group--four">
+                    <div class="form__inner form__checkbox">
+                        <label>Team Drivers / Slip Seat</label>
+                        <span data-name="team_drivers"><input type="checkbox" name="team_drivers" value="Team Drivers / Slip Seat"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form__step-footer">
+                <a class="btn btn-secondary form__step-back text-center" href="#">← Back</a>
+                <a class="btn btn-primary form__step-next text-center" href="#">Next Step →</a>
+            </div>
+        </div>
+        <div class="form__step form__step-4">
+            <div class="form__step-content">
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="legal_structure">Legal Structure *</label>
+                        <span data-name="legal_structure">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="legal_structure">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="Sole Proprietorship">Sole Proprietorship</option>
+                                <option value="Partnership">Partnership</option>
+                                <option value="Corporation">Corporation</option>
+                                <option value="LLC">LLC</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="taxpayer_id">Taxpayer ID *</label>
+                        <span data-name="taxpayer_id"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="text" name="taxpayer_id"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="business_description">Business Description *</label>
+                        <span data-name="business_description">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="business_description">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="Retail">Retail</option>
+                                <option value="Service">Service</option>
+                                <option value="Manufacturing">Manufacturing</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="identifier">Please Select An Identifier (MC, FF, or DOT #) *</label>
+                        <span data-name="identifier">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="identifier">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="MC">MC</option>
+                                <option value="FF">FF</option>
+                                <option value="DOT">DOT</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="year_established">Year Established *</label>
+                        <span data-name="year_established"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" placeholder="Enter Year" type="text" name="year_established"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="gross_revenue">Annual Gross Revenue *</label>
+                        <span data-name="gross_revenue"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="text" name="gross_revenue"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="parent_company">Parent Company</label>
+                        <span data-name="parent_company"><input class="input" aria-required="false" aria-invalid="false" type="text" name="parent_company"></span>
+                    </div>
+                    <div class="form__inner">
+                        <label for="monthly_spend">Estimated Monthly Spend *</label>
+                        <span data-name="monthly_spend"><input class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" type="text" name="monthly_spend"></span>
+                    </div>
+                </div>
+                <div class="form__group form__group--four">
+                    <div class="form__inner">
+                        <label for="industry">Industry *</label>
+                        <span data-name="industry">
+                            <select class="wpcf7-validates-as-required input" aria-required="true" aria-invalid="false" name="industry">
+                                <option value="" disabled selected>Select option</option>
+                                <option value="Technology">Technology</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form__step-footer">
+                <a class="btn btn-secondary form__step-back text-center" href="#">← Back</a>
+                <input id="submit-button" class="wpcf7-form-control wpcf7-submit has-spinner input" type="submit" value="Send Application">
+                <span class="wpcf7-spinner"></span>
+            </div>
+        </div>
+    </form>
     			</div>
     		</section>
     		<!-- ./ card activation form -->
