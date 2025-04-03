@@ -1,0 +1,73 @@
+---
+layout: default
+title: Login
+---
+	
+	{{> header-start }}
+
+	<div class="login-page">
+		<div class="login">
+			{{> header-cabinet }}
+
+		    <div class="login__wrap">
+		    	<div class="login__title">
+			        <h1><span>Персональный</span> кабинет</h1>
+		    	</div>
+		        
+		        <!-- Контейнер для формы входа -->
+		        <div class="login__form">
+		            <p>Пожалуйста, введите ваш логин и пароль</p>
+		            
+		            <form class="form">
+		                <div class="form__group form__group--two">
+		                	<div class="form__inner">
+			                    <label for="user_login">Логин</label>
+			                    <input type="text" name="log" id="user_login" class="form-control" placeholder="Введите ваш логин" autocomplete="username" required>
+		                	</div>
+		                	<div class="form__inner">
+			                    <label for="user_pass">Пароль</label>
+			                    <input type="password" name="pwd" id="user_pass" class="form-control" placeholder="Например: 4fi7BZpix12A" autocomplete="current-password" required>
+		                	</div>
+		                	<div class="form__inner">
+			                    <input type="submit" value="Войти в кабинет" />
+		                	</div>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+
+			<div class="login__help">
+			    <p>Проблемы с авторизацией?</p>
+			    <div class="login__help-footer">
+				    <a href="#">Свяжитесь с нами →</a>
+			    	<a href="#" class="link link--svg"><svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M5.25 9H12.75V10.5H5.25V9ZM5.25 13.5H10.5V12H5.25V13.5ZM16.5 5.6895V18H1.5V2.25C1.5 1.65326 1.73705 1.08097 2.15901 0.65901C2.58097 0.237053 3.15326 0 3.75 0L10.8105 0L16.5 5.6895ZM11.25 5.25H13.9395L11.25 2.5605V5.25ZM15 16.5V6.75H9.75V1.5H3.75C3.55109 1.5 3.36032 1.57902 3.21967 1.71967C3.07902 1.86032 3 2.05109 3 2.25V16.5H15Z" fill="#8E1636" fill-opacity="0.8"/></svg> Promo materials</a>
+			    </div>
+			</div>
+		</div>
+	    <img class="login-img" src="assets/img/wave.webp" alt="Волнообразный фон">
+    </div>
+
+    <!-- Добавляем модальный попап для "Свяжитесь с нами" -->
+<!-- 	<div id="contact-popup" class="contact-popup">
+	    <div class="popup-content">
+	        <span class="close-popup">&times;</span>
+	        <h2>Связаться с нами</h2>
+	        <form id="contact-form">
+	            <div class="form-group">
+	                <label for="contact-name">Ваше имя</label>
+	                <input type="text" id="contact-name" class="form-control" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="contact-email">Email</label>
+	                <input type="email" id="contact-email" class="form-control" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="contact-message">Сообщение</label>
+	                <textarea id="contact-message" class="form-control" rows="4" required></textarea>
+	            </div>
+	            <div class="form-group">
+	                <button type="submit" class="login-button">Отправить</button>
+	            </div>
+	        </form>
+	    </div>
+	</div> -->

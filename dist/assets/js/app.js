@@ -254,6 +254,11 @@ function initScript() {
         initCalc();
         initMultiStepForm();
 
+        if (document.querySelector('.login-page')) {
+            initLoginPage();
+            togglePasswordVisibility();
+        }
+
         document.addEventListener('wpcf7mailsent', function(event) {
             setTimeout(function() {
                 const responseOutput = document.querySelector('.wpcf7-response-output');
@@ -1404,4 +1409,216 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMultiStepForm);
 } else {
     initMultiStepForm();
+}
+
+// Функция инициализации страницы входа
+function initLoginPage() {
+    const loginContainer = document.getElementById('login-form-container');
+    const recoveryContainer = document.getElementById('recovery-form-container');
+    const showRecoveryBtn = document.getElementById('show-recovery');
+    const showLoginBtn = document.getElementById('show-login');
+    const showContactBtn = document.getElementById('show-contact');
+    const contactPopup = document.getElementById('contact-popup');
+    const closePopupBtn = document.querySelector('.close-popup');
+    
+    // Убеждаемся, что форма восстановления изначально скрыта
+    if (recoveryContainer) {
+        // Скрываем форму восстановления с помощью GSAP
+        gsap.set(recoveryContainer, { 
+            autoAlpha: 0, 
+            display: 'none' 
+        });
+    }
+    
+    // Скрываем попап контактов
+    if (contactPopup) {
+        gsap.set(contactPopup, {
+            autoAlpha: 0,
+            display: 'none'
+        });
+    }
+    
+    // Если элементы для переключения форм существуют
+    if (showRecoveryBtn && showLoginBtn && loginContainer && recoveryContainer) {
+        // Кнопка "Проблемы с авторизацией?"
+        showRecoveryBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Скрываем форму входа и показываем форму восстановления
+            gsap.to(loginContainer, {
+                autoAlpha: 0,
+                y: -20,
+                duration: 0.3,
+                ease: "power2.out",
+                onComplete: function() {
+                    gsap.set(loginContainer, { display: 'none' });
+                    gsap.set(recoveryContainer, { display: 'block', y: 20 });
+                    
+                    // Анимируем появление формы восстановления
+                    gsap.to(recoveryContainer, {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+        
+        // Кнопка "Войти в кабинет" (возврат к форме входа)
+        showLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Скрываем форму восстановления и показываем форму входа
+            gsap.to(recoveryContainer, {
+                autoAlpha: 0,
+                y: -20,
+                duration: 0.3,
+                ease: "power2.out",
+                onComplete: function() {
+                    gsap.set(recoveryContainer, { display: 'none' });
+                    gsap.set(loginContainer, { display: 'block', y: 20 });
+                    
+                    // Анимируем появление формы входа
+                    gsap.to(loginContainer, {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+    }
+    
+    // Обработчики для попапа "Свяжитесь с нами"
+    if (showContactBtn && contactPopup && closePopupBtn) {
+        // Открытие попапа
+        showContactBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Показываем попап с анимацией
+            gsap.set(contactPopup, { display: 'flex' });
+            gsap.fromTo(contactPopup, 
+                { autoAlpha: 0, scale: 0.9 }, 
+                { autoAlpha: 1, scale: 1, duration: 0.3, ease: "power2.out" }
+            );
+        });
+        
+        // Закрытие попапа
+        closePopupBtn.addEventListener('click', function() {
+            gsap.to(contactPopup, {
+                autoAlpha: 0,
+                scale: 0.9,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: function() {
+                    gsap.set(contactPopup, { display: 'none' });
+                }
+            });
+        });
+        
+        // Закрытие по клику вне попапа
+        contactPopup.addEventListener('click', function(e) {
+            if (e.target === contactPopup) {
+                gsap.to(contactPopup, {
+                    autoAlpha: 0,
+                    scale: 0.9,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: function() {
+                        gsap.set(contactPopup, { display: 'none' });
+                    }
+                });
+            }
+        });
+    }
+    
+    // Валидация формы входа
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            const userLogin = document.getElementById('user_login');
+            const userPass = document.getElementById('user_pass');
+            
+            if (!userLogin.value || !userPass.value) {
+                e.preventDefault();
+                
+                // Анимация тряски формы при ошибке
+                gsap.to(loginForm, {
+                    x: [-10, 10, -8, 8, -5, 5, 0],
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+                
+                alert('Пожалуйста, заполните все поля');
+            }
+        });
+    }
+    
+    // Валидация формы восстановления пароля
+    const recoveryForm = document.getElementById('recovery-form');
+    if (recoveryForm) {
+        recoveryForm.addEventListener('submit', function(e) {
+            const userEmail = document.getElementById('user_email');
+            
+            if (!userEmail.value) {
+                e.preventDefault();
+                
+                // Анимация тряски формы при ошибке
+                gsap.to(recoveryForm, {
+                    x: [-10, 10, -8, 8, -5, 5, 0],
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+                
+                alert('Пожалуйста, введите email или логин');
+            }
+        });
+    }
+    
+    // Валидация формы контактов
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Здесь можно добавить отправку формы через AJAX
+            alert('Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.');
+            
+            // Закрываем попап
+            gsap.to(contactPopup, {
+                autoAlpha: 0,
+                scale: 0.9,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: function() {
+                    gsap.set(contactPopup, { display: 'none' });
+                    contactForm.reset(); // Сбрасываем форму
+                }
+            });
+        });
+    }
+    
+    // Обработка ошибок авторизации
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('login') && urlParams.get('login') === 'failed') {
+        alert('Неверный логин или пароль. Пожалуйста, попробуйте снова.');
+    }
+}
+
+// Функция для переключения видимости пароля
+function togglePasswordVisibility() {
+    const passwordField = document.getElementById('user_pass');
+    const toggleIcon = document.querySelector('.toggle-password');
+    
+    if (passwordField && toggleIcon) {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.add('visible');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('visible');
+        }
+    }
 }
