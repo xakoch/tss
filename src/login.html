@@ -8,7 +8,6 @@ title: Login
 	<div class="login-page">
 		<div class="login">
 			{{> header-cabinet }}
-
 		    <div class="login__wrap">
 		    	<div class="login__title">
 			        <h1><span>Персональный</span> кабинет</h1>
@@ -17,25 +16,25 @@ title: Login
 		        <!-- Контейнер для формы входа -->
 		        <div class="login__form">
 		            <p>Пожалуйста, введите ваш логин и пароль</p>
-		            
-		            <form class="form">
-		                <div class="form__group form__group--two">
-		                	<div class="form__inner">
-			                    <label for="user_login">Логин</label>
-			                    <input type="text" name="log" id="user_login" class="form-control" placeholder="Введите ваш логин" autocomplete="username" required>
-		                	</div>
-		                	<div class="form__inner">
-			                    <label for="user_pass">Пароль</label>
-			                    <input type="password" name="pwd" id="user_pass" class="form-control" placeholder="Например: 4fi7BZpix12A" autocomplete="current-password" required>
-		                	</div>
-		                	<div class="form__inner">
-			                    <input type="submit" value="Войти в кабинет" />
-		                	</div>
-		                </div>
-		            </form>
+					<form class="form" method="post" action="<?= esc_url(wp_login_url()); ?>">
+					    <div class="form__group form__group--two">
+					        <div class="form__inner">
+					            <label for="user_login">Логин</label>
+					            <input type="text" name="log" id="user_login" class="form-control" placeholder="Введите ваш логин" autocomplete="username" required>
+					        </div>
+					        <div class="form__inner">
+					            <label for="user_pass">Пароль</label>
+					            <input type="password" name="pwd" id="user_pass" class="form-control" placeholder="Например: 4fi7BZpix12A" autocomplete="current-password" required>
+					        </div>
+					        <div class="form__inner">
+					            <?php wp_nonce_field('user-login', 'login-nonce'); ?>
+					            <input type="hidden" name="redirect_to" value="<?= esc_url(home_url('/cabinet/')); ?>">
+					            <input type="submit" name="wp-submit" value="Войти в кабинет" />
+					        </div>
+					    </div>
+					</form>
 		        </div>
 		    </div>
-
 			<div class="login__help">
 			    <p>Проблемы с авторизацией?</p>
 			    <div class="login__help-footer">

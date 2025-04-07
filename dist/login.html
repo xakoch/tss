@@ -15,40 +15,36 @@
 </head>
 <body data-barba="wrapper" class="">
 
+    <!-- BEGIN content -->
     	
     	<main data-barba="container" data-barba-namespace="">
     	    <div class="main-wrap">
     	<div class="login-page">
     		<div class="login">
-    			<header class="header static">
-    				<div class="container">
-    					
-    					<div class="header__left">
-    						<a class="header__logo" href="home.html">
-    							<img src="assets/img/logo.svg" alt="TSS - Fuel">
-    						</a>
+    			<header class="header static header--cabinet">
+    				<div class="header__left">
+    					<a class="header__logo" href="home.html">
+    						<img src="assets/img/logo.svg" alt="TSS - Fuel">
+    					</a>
+    				</div>
+    				<div class="header__right">
+    					<div class="header__lang lang-dropdown">
+    					    <a href="#">
+    					        <span>EN</span>
+    					        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    					            <path d="M5 8.33337L10 13.3334L15 8.33337" stroke="#8E1636" stroke-linecap="round"></path>
+    					        </svg>
+    					    </a>
+    					    <ul class="language-chooser language-chooser-both qtranxs_language_chooser" id="language-chooser">
+    					        <li class="active"><a href="https://jihozvent.uz/ru/" class="qtranxs_flag qtranxs_flag_ru qtranxs_flag_and_text" title="Ру (ru)"><span>Ру</span></a></li>
+    					        <li><a href="https://jihozvent.uz/en/" class="qtranxs_flag qtranxs_flag_en qtranxs_flag_and_text" title="En (en)"><span>En</span></a></li>
+    					    </ul>
+    					    <div class="qtranxs_widget_end"></div>
     					</div>
-    					<div class="header__right">
-    						<div class="header__lang lang-dropdown">
-    						    <a href="#">
-    						        <span>EN</span>
-    						        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-    						            <path d="M5 8.33337L10 13.3334L15 8.33337" stroke="#8E1636" stroke-linecap="round"></path>
-    						        </svg>
-    						    </a>
-    						    <ul class="language-chooser language-chooser-both qtranxs_language_chooser" id="language-chooser">
-    						        <li class="active"><a href="https://jihozvent.uz/ru/" class="qtranxs_flag qtranxs_flag_ru qtranxs_flag_and_text" title="Ру (ru)"><span>Ру</span></a></li>
-    						        <li><a href="https://jihozvent.uz/en/" class="qtranxs_flag qtranxs_flag_en qtranxs_flag_and_text" title="En (en)"><span>En</span></a></li>
-    						    </ul>
-    						    <div class="qtranxs_widget_end"></div>
-    						</div>
-    						<a class="header__cta" href="contacts.html">Contact Us</a>
-    					</div>
-    			
+    					<a class="header__cta" href="contacts.html">Contact Us</a>
     				</div>
     			</header>
-    			<!-- /header -->
-    		    <div class="login__wrap">
+    			<!-- /header -->		    <div class="login__wrap">
     		    	<div class="login__title">
     			        <h1><span>Персональный</span> кабинет</h1>
     		    	</div>
@@ -56,25 +52,25 @@
     		        <!-- Контейнер для формы входа -->
     		        <div class="login__form">
     		            <p>Пожалуйста, введите ваш логин и пароль</p>
-    		            
-    		            <form class="form">
-    		                <div class="form__group form__group--two">
-    		                	<div class="form__inner">
-    			                    <label for="user_login">Логин</label>
-    			                    <input type="text" name="log" id="user_login" class="form-control" placeholder="Введите ваш логин" autocomplete="username" required>
-    		                	</div>
-    		                	<div class="form__inner">
-    			                    <label for="user_pass">Пароль</label>
-    			                    <input type="password" name="pwd" id="user_pass" class="form-control" placeholder="Например: 4fi7BZpix12A" autocomplete="current-password" required>
-    		                	</div>
-    		                	<div class="form__inner">
-    			                    <input type="submit" value="Войти в кабинет" />
-    		                	</div>
-    		                </div>
-    		            </form>
+    					<form class="form" method="post" action="<?= esc_url(wp_login_url()); ?>">
+    					    <div class="form__group form__group--two">
+    					        <div class="form__inner">
+    					            <label for="user_login">Логин</label>
+    					            <input type="text" name="log" id="user_login" class="form-control" placeholder="Введите ваш логин" autocomplete="username" required>
+    					        </div>
+    					        <div class="form__inner">
+    					            <label for="user_pass">Пароль</label>
+    					            <input type="password" name="pwd" id="user_pass" class="form-control" placeholder="Например: 4fi7BZpix12A" autocomplete="current-password" required>
+    					        </div>
+    					        <div class="form__inner">
+    					            <?php wp_nonce_field('user-login', 'login-nonce'); ?>
+    					            <input type="hidden" name="redirect_to" value="<?= esc_url(home_url('/cabinet/')); ?>">
+    					            <input type="submit" name="wp-submit" value="Войти в кабинет" />
+    					        </div>
+    					    </div>
+    					</form>
     		        </div>
     		    </div>
-    
     			<div class="login__help">
     			    <p>Проблемы с авторизацией?</p>
     			    <div class="login__help-footer">
@@ -113,6 +109,14 @@
 
     <a class="back" href="/">back to all pages</a>
     <!-- END content -->
+
+    <!-- BEGIN modals -->
+    <div class="modal" id="modal">
+        <div class="modal__inner">
+            
+        </div>
+    </div>
+    <!-- END modals -->
 
     <!-- BEGIN scripts -->
     <script defer type="text/javascript" src="assets/js/lib.min.js"></script>

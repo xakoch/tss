@@ -342,6 +342,12 @@ body.page-partners {
     top: 0;
 }
 
+.header--cabinet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .header .container {
     display: flex;
     align-items: center;
@@ -548,6 +554,19 @@ body.page-partners {
     max-width: 300px;
     margin-top: 25px;
     opacity: 0.5;
+}
+
+.footer--cabinet {
+    padding: 60px 0;
+}
+
+.footer--cabinet .footer__mail {
+    margin-top: 0;
+}
+
+.footer--cabinet .footer__top {
+    grid-gap: 30px;
+    margin-bottom: 0;
 }
 
 .header__menu {
@@ -1330,15 +1349,21 @@ form {
 .reviews .text-block {
     width: 100%;
     position: absolute;
-    bottom: 5%;
-    left: 5%;
+    bottom: 30px;
+    left: 25px;
     text-align: left;
     color: #ffffff;
+    z-index: 4;
 }
 
 .reviews .play-button {
     display: block;
     cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
 }
 
 .reviews h3, .reviews p {
@@ -3182,7 +3207,7 @@ html.lenis, html.lenis body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: calc(100vh - var(--vh));
 }
 
 .login .header {

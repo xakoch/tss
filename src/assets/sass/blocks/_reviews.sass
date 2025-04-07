@@ -1,7 +1,6 @@
 // ========================================
 // reviews - block
 // ========================================
-
 .reviews
 	padding: 160px 0
 	overflow: hidden
@@ -125,14 +124,20 @@
 	.text-block
 		width: 100%
 		position: absolute
-		bottom: 5%
-		left: 5%
+		bottom: 30px
+		left: 25px
 		text-align: left
 		color: $w
+		z-index: 4
 
 	.play-button
 		display: block
 		cursor: pointer
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%,-50%)
+		z-index: 5
 
 	h3, p
 		color: $w
