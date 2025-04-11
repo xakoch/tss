@@ -242,6 +242,7 @@ function initScript() {
         initBarbaNavUpdate();
         initWindowInnerheight();
         initSwiperSlider();
+        initBtnMenuOpenClose();
         
         // Анимируем стандартные элементы на всех страницах
         animateCommonElements();
@@ -272,6 +273,187 @@ function initScript() {
     } catch (error) {
         console.error('Error in initScript:', error);
     }
+}
+
+
+/**
+ * Hamburger Nav Open/Close
+ */
+function initBtnMenuOpenClose() {
+
+    /**************************************************************
+    * Header / Menu burger
+    **************************************************************/
+    const body = document.querySelector('body');
+    const burger = document.querySelector('.burger');
+    const menu = document.querySelectorAll('.mobile__menu');
+    const links = document.querySelectorAll('.mobile__menu .header__nav a');
+    const langLinks = document.querySelectorAll('.language-chooser a');
+
+    // Установка начального состояния меню
+    gsap.set(menu, { 
+        autoAlpha: 0,
+        clipPath: "circle(0% at top right)",
+        pointerEvents: "none"
+    });
+
+    // Находим пункты меню заранее
+    const menuItems = document.querySelectorAll('.menu-item');
+
+    // Предустановка пунктов меню
+    if (menuItems.length > 0) {
+        gsap.set(menuItems, { 
+            autoAlpha: 0, 
+            x: 30, 
+            rotationY: 45 
+        });
+    }
+
+    function toggleMobileMenu() {
+        if (!burger.classList.contains('is-active')) {
+            // Открываем меню
+            burger.classList.add('is-active');
+            body.classList.add('overflow');
+            
+            // Анимация открытия
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+            
+            // Радиальное раскрытие меню от правого верхнего угла
+            tl.to(menu, { 
+                autoAlpha: 1,
+                clipPath: "circle(150% at top right)", 
+                duration: 0.8,
+                pointerEvents: "auto"
+            });
+            
+            // Анимация пунктов меню
+            if (menuItems.length > 0) {
+                tl.to(menuItems, { 
+                    autoAlpha: 1, 
+                    x: 0, 
+                    rotationY: 0, 
+                    stagger: 0.05, 
+                    duration: 0.6,
+                    clearProps: "rotationY",
+                    ease: "back.out(1.5)"
+                }, "-=0.5");
+            }
+            
+        } else {
+            // Закрываем меню
+            burger.classList.remove('is-active');
+            body.classList.remove('overflow');
+            
+            // Анимация закрытия
+            const tl = gsap.timeline({ 
+                defaults: { ease: "power3.in" },
+                onComplete: () => {
+                    gsap.set(menu, { pointerEvents: "none" });
+                }
+            });
+            
+            // Сначала скрываем пункты меню
+            if (menuItems.length > 0) {
+                tl.to(menuItems, { 
+                    autoAlpha: 0, 
+                    x: 30, 
+                    rotationY: -45, 
+                    stagger: 0.03, 
+                    duration: 0.4
+                });
+            }
+            
+            // Затем схлопываем меню
+            tl.to(menu, { 
+                clipPath: "circle(0% at top right)", 
+                duration: 0.6
+            }, "-=0.3")
+            .to(menu, { 
+                autoAlpha: 0, 
+                duration: 0.2 
+            }, "-=0.2");
+        }
+    }
+
+    burger.addEventListener('click', e => {
+        e.preventDefault();
+        toggleMobileMenu();
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            burger.classList.remove('is-open');
+            body.classList.remove('overflow');
+            gsap.to(menu, { autoAlpha: 0, ease: "power2" })
+        });
+    });
+
+    langLinks.forEach(lang => {
+        lang.addEventListener('click', e => {
+            e.preventDefault();
+            burger.classList.remove('is-open');
+            body.classList.remove('overflow');
+            gsap.to(menu, { autoAlpha: 0, ease: "power2" })
+        });
+    });
+
+    // var submenus = document.querySelectorAll(".sub-menu");
+    // var arrows = document.querySelectorAll(".nav-mobile__toggle");
+
+    // arrows.forEach(function(a) {
+    //     a.addEventListener("click", function(e) {
+    //         e.stopPropagation(); // Prevent click event from bubbling up to the document
+    //         e.preventDefault();
+    //         var submenu = this.parentElement.nextElementSibling; // Use nextElementSibling to target the submenu
+
+    //         // Deactivate other arrows
+    //         arrows.forEach(function(arrow) {
+    //             if (arrow !== this) {
+    //                 arrow.classList.remove("is-active");
+    //             }
+    //         }, this);
+
+    //         if (submenu) {
+    //             toggleSubMenu(submenu, this); // Pass the clicked arrow element
+    //         }
+    //     });
+    // });
+
+    // document.addEventListener("click", function() {
+    //     submenus.forEach(function(submenu) {
+    //         submenu.classList.remove("is-open");
+    //     });
+    //     arrows.forEach(function(arrow) {
+    //         arrow.classList.remove("is-active");
+    //     });
+    // });
+
+    // function toggleSubMenu(submenu, arrow) {
+    //     submenus.forEach(function(otherMenu) {
+    //         if (otherMenu !== submenu) {
+    //             otherMenu.classList.remove("is-open");
+    //         }
+    //     });
+
+    //     if (submenu.classList.contains("is-open")) {
+    //         submenu.classList.remove("is-open");
+    //         arrow.classList.remove("is-active"); // Remove the 'is-active' class
+    //     } else {
+    //         submenu.classList.add("is-open");
+    //         arrow.classList.add("is-active"); // Add the 'is-active' class
+
+    //         // Add staggered animation to open submenu items
+    //         gsap.from(submenu.querySelectorAll("li"), {
+    //             duration: 0.2,
+    //             x: 30,
+    //             autoAlpha: 0,
+    //             ease: "power2",
+    //             stagger: 0.05,
+    //         });
+    //     }
+    // }
+
 }
 
 /**
@@ -372,227 +554,6 @@ function isHomePage() {
     } catch (error) {
         console.error('Error in isHomePage:', error);
         return false;
-    }
-}
-
-/**
- * Обновляет атрибуты элементов с data-barba-update
- */
-function initBarbaNavUpdate(data) {
-    try {
-        // Проверяем, что data и data.next существуют и data.next.html определен
-        if (!data || !data.next || !data.next.html) return;
-
-        const updateItems = $(data.next.html).find('[data-barba-update]');
-        
-        if (updateItems.length > 0) {
-            $('[data-barba-update]').each(function (index) {
-                if ($(updateItems[index]).length > 0) {
-                    const newLinkStatus = $(updateItems[index]).attr('data-link-status');
-                    $(this).attr('data-link-status', newLinkStatus);
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Error in initBarbaNavUpdate:', error);
-    }
-}
-
-/**
- * Устанавливает CSS-переменную для мобильных устройств
- */
-function initWindowInnerheight() {
-    try {
-        $(document).ready(() => {
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        });
-
-        // Обработка якорных ссылок теперь происходит в initLenis
-    } catch (error) {
-        console.error('Error in initWindowInnerheight:', error);
-    }
-}
-
-/**
- * Swiper Slider
- */
-function initSwiperSlider() {
-    try {
-        // Проверяем, существует ли Swiper
-        if (typeof Swiper === 'undefined') {
-            console.warn('Swiper не найден');
-            return;
-        }
-
-        // Инициализируем слайдеры только если соответствующие элементы существуют
-        if (document.querySelector(".typecard__slide")) {
-            var typecardSlide = new Swiper(".typecard__slide", {
-                slidesPerView: 1,
-                loop: true,
-                speed: 800,
-                navigation: {
-                    nextEl: ".btn-next",
-                    prevEl: ".btn-prev",
-                },
-                autoplay: {
-                    delay: 2500,
-                    disableOnInteraction: true
-                }
-            });
-        }
-
-        if (document.querySelector(".blog-slider")) {
-            var blogSingleSlide = new Swiper(".blog-slider", {
-                slidesPerView: 2,
-                loop: true,
-                spaceBetween: 20,
-                // lazy: true,
-                navigation: {
-                    nextEl: ".btn-next",
-                    prevEl: ".btn-prev",
-                },
-                breakpoints: {
-                    1200: {
-                        slidesPerView: 3,
-                    }
-                },
-                autoplay: {
-                    delay: 2500,
-                    disableOnInteraction: true
-                }
-            });
-        }
-        
-        // Инициализируем Slick карусель с видео
-        initVideoCarousel();
-    } catch (error) {
-        console.error('Error in initSwiperSlider:', error);
-    }
-}
-
-/**
- * Slick карусель с видео
- */
-function initVideoCarousel() {
-    try {
-        // Проверяем наличие jQuery и Slick
-        if (typeof jQuery === 'undefined') {
-            console.warn('jQuery не найден, Slick карусель недоступна');
-            return;
-        }
-        
-        const $mySlider = jQuery('.reviews__slider');
-        
-        // Проверяем наличие элемента карусели
-        if ($mySlider.length === 0) {
-            return;
-        }
-        
-        // Проверяем, не инициализирован ли уже слайдер
-        if ($mySlider.hasClass('slick-initialized')) {
-            return;
-        }
-        
-        // Инициализируем Slick карусель
-        $mySlider.slick({
-            dots: true,
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            centerMode: true,
-            centerPadding: '0px',
-            speed: 500,
-            variableWidth: true,
-            cssEase: 'ease-in-out',
-            lazyLoad: 'ondemand',
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }
-            ]
-        });
-        
-        // Функция для остановки всех видео
-        function pauseAllVideos() {
-            document.querySelectorAll('.review-video').forEach(video => {
-                video.pause();
-                video.currentTime = 0;
-            });
-        }
-        
-        // Остановка видео при смене слайда
-        $mySlider.on('beforeChange', () => {
-            pauseAllVideos();
-        });
-        
-        // Обработчики для кнопок воспроизведения
-        document.querySelectorAll('.play-button').forEach(button => {
-            button.addEventListener('click', event => {
-                const parentSlide = button.closest('.slide');
-                
-                // Проверяем, активен ли слайд
-                if (!parentSlide.classList.contains('slick-active')) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return;
-                }
-                
-                const video = parentSlide.querySelector('.review-video');
-                if (video) {
-                    pauseAllVideos();
-                    video.play().then(() => {
-                        button.style.display = 'none';
-                    }).catch(error => console.error('Ошибка воспроизведения:', error));
-                }
-            });
-        });
-        
-        // Обработчики для видео
-        document.querySelectorAll('.review-video').forEach(video => {
-            const button = video.closest('.slide').querySelector('.play-button');
-            
-            // При клике на видео
-            video.addEventListener('click', () => {
-                if (!video.closest('.slide').classList.contains('slick-active')) {
-                    return;
-                }
-                
-                if (video.paused) {
-                    pauseAllVideos();
-                    video.play().then(() => {
-                        button.style.display = 'none';
-                    }).catch(error => console.error('Ошибка воспроизведения:', error));
-                } else {
-                    video.pause();
-                }
-            });
-            
-            // При паузе видео
-            video.addEventListener('pause', () => {
-                button.style.display = 'block';
-            });
-            
-            // При воспроизведении видео
-            video.addEventListener('play', () => {
-                button.style.display = 'none';
-            });
-        });
-        
-        console.log('Video carousel initialized successfully');
-    } catch (error) {
-        console.error('Error in initVideoCarousel:', error);
     }
 }
 
@@ -870,6 +831,227 @@ function initHomePage() {
         }
     } catch (error) {
         console.error('Error in initHomePage:', error);
+    }
+}
+
+/**
+ * Обновляет атрибуты элементов с data-barba-update
+ */
+function initBarbaNavUpdate(data) {
+    try {
+        // Проверяем, что data и data.next существуют и data.next.html определен
+        if (!data || !data.next || !data.next.html) return;
+
+        const updateItems = $(data.next.html).find('[data-barba-update]');
+        
+        if (updateItems.length > 0) {
+            $('[data-barba-update]').each(function (index) {
+                if ($(updateItems[index]).length > 0) {
+                    const newLinkStatus = $(updateItems[index]).attr('data-link-status');
+                    $(this).attr('data-link-status', newLinkStatus);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error in initBarbaNavUpdate:', error);
+    }
+}
+
+/**
+ * Устанавливает CSS-переменную для мобильных устройств
+ */
+function initWindowInnerheight() {
+    try {
+        $(document).ready(() => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        });
+
+        // Обработка якорных ссылок теперь происходит в initLenis
+    } catch (error) {
+        console.error('Error in initWindowInnerheight:', error);
+    }
+}
+
+/**
+ * Swiper Slider
+ */
+function initSwiperSlider() {
+    try {
+        // Проверяем, существует ли Swiper
+        if (typeof Swiper === 'undefined') {
+            console.warn('Swiper не найден');
+            return;
+        }
+
+        // Инициализируем слайдеры только если соответствующие элементы существуют
+        if (document.querySelector(".typecard__slide")) {
+            var typecardSlide = new Swiper(".typecard__slide", {
+                slidesPerView: 1,
+                loop: true,
+                speed: 800,
+                navigation: {
+                    nextEl: ".btn-next",
+                    prevEl: ".btn-prev",
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: true
+                }
+            });
+        }
+
+        if (document.querySelector(".blog-slider")) {
+            var blogSingleSlide = new Swiper(".blog-slider", {
+                slidesPerView: 2,
+                loop: true,
+                spaceBetween: 20,
+                // lazy: true,
+                navigation: {
+                    nextEl: ".btn-next",
+                    prevEl: ".btn-prev",
+                },
+                breakpoints: {
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: true
+                }
+            });
+        }
+        
+        // Инициализируем Slick карусель с видео
+        initVideoCarousel();
+    } catch (error) {
+        console.error('Error in initSwiperSlider:', error);
+    }
+}
+
+/**
+ * Slick карусель с видео
+ */
+function initVideoCarousel() {
+    try {
+        // Проверяем наличие jQuery и Slick
+        if (typeof jQuery === 'undefined') {
+            console.warn('jQuery не найден, Slick карусель недоступна');
+            return;
+        }
+        
+        const $mySlider = jQuery('.reviews__slider');
+        
+        // Проверяем наличие элемента карусели
+        if ($mySlider.length === 0) {
+            return;
+        }
+        
+        // Проверяем, не инициализирован ли уже слайдер
+        if ($mySlider.hasClass('slick-initialized')) {
+            return;
+        }
+        
+        // Инициализируем Slick карусель
+        $mySlider.slick({
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            centerMode: true,
+            centerPadding: '0px',
+            speed: 500,
+            variableWidth: true,
+            cssEase: 'ease-in-out',
+            lazyLoad: 'ondemand',
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+        
+        // Функция для остановки всех видео
+        function pauseAllVideos() {
+            document.querySelectorAll('.review-video').forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        }
+        
+        // Остановка видео при смене слайда
+        $mySlider.on('beforeChange', () => {
+            pauseAllVideos();
+        });
+        
+        // Обработчики для кнопок воспроизведения
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', event => {
+                const parentSlide = button.closest('.slide');
+                
+                // Проверяем, активен ли слайд
+                if (!parentSlide.classList.contains('slick-active')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
+                
+                const video = parentSlide.querySelector('.review-video');
+                if (video) {
+                    pauseAllVideos();
+                    video.play().then(() => {
+                        button.style.display = 'none';
+                    }).catch(error => console.error('Ошибка воспроизведения:', error));
+                }
+            });
+        });
+        
+        // Обработчики для видео
+        document.querySelectorAll('.review-video').forEach(video => {
+            const button = video.closest('.slide').querySelector('.play-button');
+            
+            // При клике на видео
+            video.addEventListener('click', () => {
+                if (!video.closest('.slide').classList.contains('slick-active')) {
+                    return;
+                }
+                
+                if (video.paused) {
+                    pauseAllVideos();
+                    video.play().then(() => {
+                        button.style.display = 'none';
+                    }).catch(error => console.error('Ошибка воспроизведения:', error));
+                } else {
+                    video.pause();
+                }
+            });
+            
+            // При паузе видео
+            video.addEventListener('pause', () => {
+                button.style.display = 'block';
+            });
+            
+            // При воспроизведении видео
+            video.addEventListener('play', () => {
+                button.style.display = 'none';
+            });
+        });
+        
+        console.log('Video carousel initialized successfully');
+    } catch (error) {
+        console.error('Error in initVideoCarousel:', error);
     }
 }
 

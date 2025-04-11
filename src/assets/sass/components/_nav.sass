@@ -4,17 +4,10 @@
 		align-items: center
 		justify-content: space-between
 		grid-gap: 40px
+		+r(1200)
+			grid-gap: 25px
 		+r(991)
-			justify-content: flex-start
-		// li
-		// 	position: relative
-		// 	transition: background 0.15s linear
-		// 	background: transparent
-		// 	padding: 0 20px
-		// 	height: 44px
-		// 	&.current_page_item,
-		// 	&.current-menu-item
-		// 		background: $red
+			display: none
 		a
 			display: block
 			+reg
@@ -25,138 +18,112 @@
 			color: $gray
 			height: 100%
 			transition: color .25s ease
+			+r(1200)
+				font-size: 16px
 			&:hover
 				color: $red
 
-// .sub-menu
-// 	position: absolute
-// 	top: 44px
-// 	left: 0
-// 	background: $w
-// 	box-shadow: 0px 0px 0px 0px rgba(58, 61, 69, 0.15), 0px 1px 3px 0px rgba(58, 61, 69, 0.15), 0px 6px 6px 0px rgba(58, 61, 69, 0.13), 0px 13px 8px 0px rgba(58, 61, 69, 0.08), 0px 24px 10px 0px rgba(58, 61, 69, 0.02), 0px 37px 10px 0px rgba(58, 61, 69, 0.00)
-// 	min-width: 250px
-// 	visibility: hidden
-// 	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.1s
-// 	transform: translateY(-10px)
-// 	z-index: 100
-// 	&.is-open
-// 		+r(991)
-// 			height: auto
-// 			opacity: 1
-// 			pointer-events: auto
-// 	+r(991)
-// 		position: static
-// 		transform: translateY(0)
-// 		box-shadow: none
-// 		padding: 0
-// 		+br(0)
-// 		height: 0
-// 		opacity: 0
-// 		visibility: visible
-// 		pointer-events: none
-// 		transition: opacity .2s ease-in-out 0s, height .2s ease-in-out 0s
-// 	li
-// 		margin-bottom: 15px
-// 		+r(991)
-// 			margin-bottom: 0
-// 			margin-left: 20px
-// 		&:first-child
-// 			+r(991)
-// 				margin-top: 15px
-// 		+r(991)
-// 			margin-bottom: 15px
-// 		&:last-child
-// 			margin-bottom: 0
-// 			+r(991)
-// 				margin-bottom: 20px !important
-// 	a
-// 		display: flex
-// 		align-items: center
-// 		color: $gr
-// 		padding: 0
+	// .current_page_item,
+	// .current-menu-item
+	// 	color: $red
 
-// .sub-item
-// 	width: 100%
-// 	height: 100%
-// 	display: flex
-// 	align-items: center
-// 	a
-// 		white-space: nowrap
 
-// .nav__mobile
-// 	&--background
-// 		position: fixed
-// 		top: 0
-// 		left: 0
-// 		width: 100%
-// 		height: 100vh
-// 		z-index: 30
-// 		background: rgba($gd, 0.65)
-// 		visibility: hidden
-// 		transition: visibility 0.1s linear
-// 		&.is-open
-// 			visibility: visible
-// 	&--content
-// 		position: fixed
-// 		top: 85px
-// 		right: 10px
-// 		z-index: 31
-// 		width: 320px
-// 		background: $w
-// 		overflow-y: hidden
-// 		overflow-x: hidden
-// 		display: flex
-// 		flex-direction: column
-// 		visibility: hidden
-// 		height: 65vh
-// 		transition: visibility 0.1s linear
-// 		+br(4px)
-// 		+r(480)
-// 			width: 285px
-// 	&--header
-// 		padding: 20px
-// 		border-bottom: 1px solid $b3
-// 		img
-// 			+r(480)
-// 				width: 50%
-// 	&--menu
-// 		padding: 70px 20px
-// 		flex-direction: column
-// 		align-items: flex-start
-// 		li
-// 			width: 100%
-// 			margin-bottom: 15px
-// 			padding: 0
-// 			height: auto
-// 			&:hover
-// 				background: none
-// 			&.menu-item-has-children
-// 				+r(767)
-// 					margin-bottom: 0
-// 			&:last-child
-// 				margin-bottom: 0
-// 			&.menu-item-has-children > a
-// 				position: relative
-// 				top: 5px
-// 				user-select: none
-// 				touch-action: none
-// 				cursor: pointer
-// 				display: flex
-// 				align-items: center
-// 				justify-content: space-between
+// ==================================
+// Burger
+// ==================================
+.burger
+	display: block
+	width: 50px
+	height: 50px
+	border-radius: 50%
+	position: relative
+	cursor: pointer
+	border: none
+	outline: none
+    
+	span
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		width: 35px
+		height: 1px
+		background-color: $w
+        
+		&::before,
+		&::after
+			content: ''
+			position: absolute
+			width: 35px
+			height: 1px
+			background-color: $w
+			left: 0
+			transition: all 0.25s ease
+			transform: translateX(-5px)
+        
+		&::before
+			top: -11px
+        
+		&::after
+			top: 11px
+    
+	&.is-active
+		span
+			background-color: transparent
+            
+			&::before
+				transform: translate(-4px,7px) rotate(45deg)
+			&::after
+				transform: translate(-4px,-15px) rotate(-45deg)
+			
 
-// 	.current_page_item,
-// 	.current-menu-item
-// 		background: transparent !important
+// ==================================
+// Mobile menu
+// ==================================
+.mobile__menu
+	position: absolute
+	top: calc(115px + 10px)
+	left: 10px
+	right: 10px
+	z-index: 7777
 
-// .nav-mobile__toggle
-// 	display: flex
-// 	justify-content: flex-end
-// 	padding: 10px 0
-// 	margin-left: 10px
-// 	width: 100%
-// 	&.is-active
-// 		svg
-// 			transform: rotate(180deg)
-// 	svg
-// 		transition: transform .15s ease-in-out
+	&--inner
+		background: $red
+		+br(18px)
+		color: $w
+		padding: 45px 30px
+
+	&--title
+		color: rgba($w, 0.6)
+		font-size: 13px
+		margin-bottom: 10px
+		display: block
+
+	.header__nav
+		display: grid
+		grid-gap: 15px
+		margin-top: 30px !important
+		a
+			color: $w
+			font-size: 24px
+
+	&--footer
+		margin-top: 50px
+		display: grid
+		grid-gap: 20px
+
+		address
+			font-size: 14px
+			color: $w
+			font-style: normal
+			line-height: 140%
+
+	&--tel
+		+med
+		font-size: 24px
+		color: $w
+
+	&--mail
+		font-size: 20px
+		+semi
+		color: $w

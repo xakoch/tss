@@ -10,6 +10,9 @@
 	background-repeat: no-repeat
 	overflow: hidden
 	padding-top: 100px
+	+r(991)
+		flex-direction: column
+		grid-gap: 50px
 
 	&__img
 		position: absolute
@@ -17,6 +20,11 @@
 		right: 0
 		transform: translateY(-50%)
 		z-index: 2
+		+r(991)
+			display: none
+			position: static
+			top: 0
+			transform: none
 		&.after-none::after
 			display: none
 		&::after
@@ -31,6 +39,34 @@
 			background-repeat: no-repeat
 			background-size: contain
 			z-index: -1
+			+r(1440)
+				width: 700px
+				height: 700px
+				// bottom: -30%
+			+r(1200)
+				width: 600px
+				height: 600px
+				bottom: -60%
+				right: -30%
+		img
+			+r(1440)
+				width: 80%
+				margin-right: 0
+				margin-left: auto
+			+r(1200)
+				width: 60%
+
+	.hero__img--mobile
+		display: none
+		+r(991)
+			display: block
+		img
+			width: 100%
+			object-fit: contain
+		&::after
+			right: 50%
+			bottom: -50%
+			transform: translateX(50%)
 
 	&__title
 		display: inline-block
@@ -42,6 +78,8 @@
 			line-height: 110%
 			span
 				color: $red
+			+r(1440)
+				font-size: 50px
 
 	&__subtext
 		span
