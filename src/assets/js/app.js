@@ -903,7 +903,7 @@ function initSwiperSlider() {
 
         if (document.querySelector(".blog-slider")) {
             var blogSingleSlide = new Swiper(".blog-slider", {
-                slidesPerView: 2,
+                slidesPerView: 1.3,
                 loop: true,
                 spaceBetween: 20,
                 // lazy: true,
@@ -912,6 +912,12 @@ function initSwiperSlider() {
                     prevEl: ".btn-prev",
                 },
                 breakpoints: {
+                    560: {
+                        slidesPerView: 2,
+                    },
+                    991: {
+                        slidesPerView: 2.5,
+                    },
                     1200: {
                         slidesPerView: 3,
                     }

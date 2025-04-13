@@ -8,9 +8,18 @@
 		grid-template-columns: repeat(3, 1fr)
 		grid-gap: 50px 20px
 		margin: 60px 0 110px
+		+r(1200)
+			grid-template-columns: repeat(2, 1fr)
+			margin: 60px 0
+		+r(767)
+			grid-template-columns: repeat(1, 1fr)
+			margin: 40px 0
+			grid-gap: 30px
 
 	.pagination
 		margin-bottom: 150px
+		+r(1200)
+			margin-bottom: 50px
 
 	&-card
 		background: $w
@@ -26,9 +35,13 @@
 			width: 100%
 			object-fit: cover
 			object-position: center
+			+r(767)
+				height: 200px
 
 	&-card__content
 		padding: 40px
+		+r(1200)
+			padding: 30px
 
 		span
 			color: $gray2
@@ -71,6 +84,8 @@
 	&-single__head
 		max-width: 950px
 		margin-bottom: 80px
+		+r(767)
+			margin-bottom: 40px
 
 		h1
 			font-size: 40px
@@ -78,6 +93,8 @@
 			color: $b31
 			line-height: 120%
 			font-weight: normal
+			+r(767)
+				font-size: 32px
 
 		img
 			width: 100%
@@ -86,9 +103,14 @@
 			object-fit: cover
 			margin-top: 40px
 			+br(18px)
+			+r(767)
+				height: 300px
 
 	&-single__wysiwyg
 		margin-bottom: 150px
+		+r(767)
+			margin-bottom: 70px
+
 		h1,h2,h3,h4,h5,h6
 			margin: 20px 0 !important
 			color: $red
@@ -121,5 +143,9 @@
 	.btn-prev,
 	.btn-next
 		cursor: pointer
+		img
+			+r(767)
+				width: 35px
+				height: 35px
 	.btn-prev
 		transform: rotate(180deg)
