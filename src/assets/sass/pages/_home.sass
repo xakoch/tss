@@ -3,19 +3,31 @@
 // ========================================
 
 // ============================
-// Custom Hero
+// Home Hero
 // ============================
 .page-home
+	.hero
+		+r(767)
+			padding-top: 150px
+	.hero__content
+		+r(767)
+			display: flex
+			flex-direction: column
 	.hero__btn
 		display: flex
 		align-items: center
 		position: relative
+		+r(767)
+			order: 4
 		a
 			display: block
 			position: relative
 			z-index: 2
+			min-width: 230px
 			&:hover + span
 				transform: translateX(-60px)
+			+r(767)
+				text-align: center
 		.btn-secondary
 			background: $w
 			&:hover
@@ -29,11 +41,18 @@
 			+br(18px)
 			+trans(transform)
 			transform: translateX(-30px)
+			+r(767)
+				padding: 20px 24px 21px 60px
 	.hero__footer
 		display: flex
 		align-items: center
 		grid-gap: 30px
 		margin-top: 80px
+		+r(767)
+			order: 3
+			margin-top: 40px
+			margin-bottom: 40px
+			max-width: 90%
 		.arrow_down
 			display: inline-flex
 			align-items: center
@@ -43,6 +62,9 @@
 			background: $red
 			+br(50%)
 			animation: bounce 2.5s infinite
+			min-width: 50px
+			+r(991)
+				display: none
 
 /* Анимация подпрыгивания вниз и возврата */
 @keyframes bounce

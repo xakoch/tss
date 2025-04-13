@@ -234,6 +234,45 @@ function delay(n = 2000) {
 }
 
 /**
+ * Обновляет атрибуты элементов с data-barba-update
+ */
+function initBarbaNavUpdate(data) {
+    try {
+        // Проверяем, что data и data.next существуют и data.next.html определен
+        if (!data || !data.next || !data.next.html) return;
+
+        const updateItems = $(data.next.html).find('[data-barba-update]');
+        
+        if (updateItems.length > 0) {
+            $('[data-barba-update]').each(function (index) {
+                if ($(updateItems[index]).length > 0) {
+                    const newLinkStatus = $(updateItems[index]).attr('data-link-status');
+                    $(this).attr('data-link-status', newLinkStatus);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error in initBarbaNavUpdate:', error);
+    }
+}
+
+/**
+ * Устанавливает CSS-переменную для мобильных устройств
+ */
+function initWindowInnerheight() {
+    try {
+        $(document).ready(() => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        });
+
+        // Обработка якорных ссылок теперь происходит в initLenis
+    } catch (error) {
+        console.error('Error in initWindowInnerheight:', error);
+    }
+}
+
+/**
  * Запускает все скрипты на новой странице
  */
 function initScript() {
@@ -290,87 +329,69 @@ function initBtnMenuOpenClose() {
     const links = document.querySelectorAll('.mobile__menu .header__nav a');
     const langLinks = document.querySelectorAll('.language-chooser a');
 
-    // Установка начального состояния меню
-    gsap.set(menu, { 
+    // Установка начального состояния меню (скрыто)
+    gsap.set(menu, {
+        scale: 0.95,
         autoAlpha: 0,
-        clipPath: "circle(0% at top right)",
-        pointerEvents: "none"
+        rotation: -2,
+        transformOrigin: "top right",
+        filter: "blur(15px)"
     });
-
-    // Находим пункты меню заранее
-    const menuItems = document.querySelectorAll('.menu-item');
-
-    // Предустановка пунктов меню
-    if (menuItems.length > 0) {
-        gsap.set(menuItems, { 
-            autoAlpha: 0, 
-            x: 30, 
-            rotationY: 45 
-        });
-    }
 
     function toggleMobileMenu() {
         if (!burger.classList.contains('is-active')) {
-            // Открываем меню
+            // Открываем меню с плавной анимацией
             burger.classList.add('is-active');
             body.classList.add('overflow');
             
-            // Анимация открытия
-            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-            
-            // Радиальное раскрытие меню от правого верхнего угла
-            tl.to(menu, { 
-                autoAlpha: 1,
-                clipPath: "circle(150% at top right)", 
-                duration: 0.8,
-                pointerEvents: "auto"
+            // Создаем более плавную временную шкалу
+            const tl = gsap.timeline({ 
+                defaults: { 
+                    ease: "power2.out", 
+                    duration: 0.6 
+                }
             });
             
-            // Анимация пунктов меню
-            if (menuItems.length > 0) {
-                tl.to(menuItems, { 
-                    autoAlpha: 1, 
-                    x: 0, 
-                    rotationY: 0, 
-                    stagger: 0.05, 
-                    duration: 0.6,
-                    clearProps: "rotationY",
-                    ease: "back.out(1.5)"
-                }, "-=0.5");
-            }
+            // Разделяем анимацию на более простые шаги для плавности
+            tl.to(menu, { 
+                autoAlpha: 1, 
+                duration: 0.3 
+            })
+            .to(menu, { 
+                scale: 1, 
+                rotation: 0, 
+                duration: 0.5,
+                clearProps: "rotation" // Очищаем свойства для лучшей производительности
+            }, "-=0.2")
+            .to(menu, {
+                filter: "blur(0px)", 
+                duration: 0.4
+            }, "-=0.4");
             
         } else {
             // Закрываем меню
             burger.classList.remove('is-active');
             body.classList.remove('overflow');
             
-            // Анимация закрытия
+            // Более плавная обратная анимация
             const tl = gsap.timeline({ 
-                defaults: { ease: "power3.in" },
-                onComplete: () => {
-                    gsap.set(menu, { pointerEvents: "none" });
+                defaults: { 
+                    ease: "power2.inOut", 
+                    duration: 0.4 
                 }
             });
             
-            // Сначала скрываем пункты меню
-            if (menuItems.length > 0) {
-                tl.to(menuItems, { 
-                    autoAlpha: 0, 
-                    x: 30, 
-                    rotationY: -45, 
-                    stagger: 0.03, 
-                    duration: 0.4
-                });
-            }
-            
-            // Затем схлопываем меню
+            // Анимируем само меню
             tl.to(menu, { 
-                clipPath: "circle(0% at top right)", 
-                duration: 0.6
-            }, "-=0.3")
+                scale: 0.95, 
+                rotation: -2, 
+                filter: "blur(5px)", 
+                duration: 0.4,
+                force3D: true // Включаем аппаратное ускорение
+            })
             .to(menu, { 
                 autoAlpha: 0, 
-                duration: 0.2 
+                duration: 0.3 
             }, "-=0.2");
         }
     }
@@ -470,8 +491,8 @@ function animateCommonElements() {
         const header = document.querySelector('.header');
         if (header) {
             gsap.fromTo(header, 
-                { opacity: 0, y: -30 },
-                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+                { y: -30 },
+                { y: 0, duration: 0.8, ease: "power2.out" }
             );
         }
         
@@ -488,7 +509,7 @@ function animateCommonElements() {
         const footer = document.querySelector('.footer');
         if (footer) {
             // Первоначально скрываем футер
-            gsap.set(footer, { opacity: 0, y: 80 });
+            gsap.set(footer, { y: 80 });
             
             // Создаем обсервер для отслеживания видимости футера
             const footerObserver = new IntersectionObserver((entries) => {
@@ -496,7 +517,6 @@ function animateCommonElements() {
                     if (entry.isIntersecting && !footer.classList.contains('animated')) {
                         // Анимация появления снизу вверх с небольшой задержкой
                         gsap.to(footer, {
-                            opacity: 1, 
                             y: 0, 
                             duration: 0.8, 
                             ease: "power2.out"
@@ -831,45 +851,6 @@ function initHomePage() {
         }
     } catch (error) {
         console.error('Error in initHomePage:', error);
-    }
-}
-
-/**
- * Обновляет атрибуты элементов с data-barba-update
- */
-function initBarbaNavUpdate(data) {
-    try {
-        // Проверяем, что data и data.next существуют и data.next.html определен
-        if (!data || !data.next || !data.next.html) return;
-
-        const updateItems = $(data.next.html).find('[data-barba-update]');
-        
-        if (updateItems.length > 0) {
-            $('[data-barba-update]').each(function (index) {
-                if ($(updateItems[index]).length > 0) {
-                    const newLinkStatus = $(updateItems[index]).attr('data-link-status');
-                    $(this).attr('data-link-status', newLinkStatus);
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Error in initBarbaNavUpdate:', error);
-    }
-}
-
-/**
- * Устанавливает CSS-переменную для мобильных устройств
- */
-function initWindowInnerheight() {
-    try {
-        $(document).ready(() => {
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        });
-
-        // Обработка якорных ссылок теперь происходит в initLenis
-    } catch (error) {
-        console.error('Error in initWindowInnerheight:', error);
     }
 }
 

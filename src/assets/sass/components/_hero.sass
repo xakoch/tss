@@ -71,6 +71,8 @@
 	&__title
 		display: inline-block
 		margin: 26px 0 86px
+		+r(767)
+			margin: 20px 0 0
 		h1
 			+reg
 			font-weight: normal
@@ -84,6 +86,8 @@
 				font-size: 40px
 			+r(767)
 				font-size: 36px
+				br
+					display: none
 
 	&__subtext
 		span
@@ -101,6 +105,8 @@
 			+reg
 			opacity: 0.4
 			line-height: 160%
+			+r(767)
+				font-size: 14px
 
 	&__footer--line
 		padding-left: 35px

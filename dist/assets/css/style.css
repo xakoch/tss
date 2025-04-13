@@ -386,6 +386,12 @@ body.page-partners {
     }
 }
 
+@media only screen and (max-width: 767px) {
+    .header__inner {
+        padding: 15px 20px;
+    }
+}
+
 .header__left {
     display: flex;
     align-items: center;
@@ -776,7 +782,7 @@ body.page-partners {
 
 .mobile__menu {
     position: absolute;
-    top: 125px;
+    top: 100px;
     left: 10px;
     right: 10px;
     z-index: 7777;
@@ -787,19 +793,21 @@ body.page-partners {
     border-radius: 18px;
     color: #ffffff;
     padding: 45px 30px;
+    overflow-y: scroll;
+    height: calc(60vh + 20px);
 }
 
 .mobile__menu--title {
     color: rgba(255, 255, 255, 0.6);
     font-size: 13px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     display: block;
 }
 
 .mobile__menu .header__nav {
     display: grid;
     grid-gap: 15px;
-    margin-top: 30px !important;
+    margin-top: 20px !important;
 }
 
 .mobile__menu .header__nav a {
@@ -810,7 +818,7 @@ body.page-partners {
 .mobile__menu--footer {
     margin-top: 50px;
     display: grid;
-    grid-gap: 20px;
+    grid-gap: 25px;
 }
 
 .mobile__menu--footer address {
@@ -830,6 +838,19 @@ body.page-partners {
     font-size: 20px;
     font-family: Inter-SemiBold, sans-serif;
     color: #ffffff;
+}
+
+.mobile__menu .footer__socials {
+    grid-gap: 10px;
+}
+
+.mobile__menu .footer__socials a {
+    width: 40px;
+    height: 40px;
+}
+
+.mobile__menu .footer__socials svg {
+    fill: #8E1636;
 }
 
 .hero {
@@ -942,6 +963,12 @@ body.page-partners {
     margin: 26px 0 86px;
 }
 
+@media only screen and (max-width: 767px) {
+    .hero__title {
+        margin: 20px 0 0;
+    }
+}
+
 .hero__title h1 {
     font-family: Inter-Regular, sans-serif;
     font-weight: normal;
@@ -969,6 +996,10 @@ body.page-partners {
     .hero__title h1 {
         font-size: 36px;
     }
+
+    .hero__title h1 br {
+        display: none;
+    }
 }
 
 .hero__subtext span {
@@ -989,6 +1020,12 @@ body.page-partners {
     font-family: Inter-Regular, sans-serif;
     opacity: 0.4;
     line-height: 160%;
+}
+
+@media only screen and (max-width: 767px) {
+    .hero__footer p {
+        font-size: 14px;
+    }
 }
 
 .hero__footer--line {
@@ -1171,6 +1208,13 @@ form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .form__group--two {
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+    }
 }
 
 .form__group--four {
@@ -2838,20 +2882,46 @@ html.lenis, html.lenis body {
     color: black;
 }
 
+@media only screen and (max-width: 767px) {
+    .page-home .hero {
+        padding-top: 150px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .page-home .hero__content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .page-home .hero__btn {
     display: flex;
     align-items: center;
     position: relative;
 }
 
+@media only screen and (max-width: 767px) {
+    .page-home .hero__btn {
+        order: 4;
+    }
+}
+
 .page-home .hero__btn a {
     display: block;
     position: relative;
     z-index: 2;
+    min-width: 230px;
 }
 
 .page-home .hero__btn a:hover + span {
     transform: translateX(-60px);
+}
+
+@media only screen and (max-width: 767px) {
+    .page-home .hero__btn a {
+        text-align: center;
+    }
 }
 
 .page-home .hero__btn .btn-secondary {
@@ -2873,11 +2943,26 @@ html.lenis, html.lenis body {
     transform: translateX(-30px);
 }
 
+@media only screen and (max-width: 767px) {
+    .page-home .hero__btn span {
+        padding: 20px 24px 21px 60px;
+    }
+}
+
 .page-home .hero__footer {
     display: flex;
     align-items: center;
     grid-gap: 30px;
     margin-top: 80px;
+}
+
+@media only screen and (max-width: 767px) {
+    .page-home .hero__footer {
+        order: 3;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        max-width: 90%;
+    }
 }
 
 .page-home .hero__footer .arrow_down {
@@ -2889,6 +2974,13 @@ html.lenis, html.lenis body {
     background: #8E1636;
     border-radius: 50%;
     animation: bounce 2.5s infinite;
+    min-width: 50px;
+}
+
+@media only screen and (max-width: 991px) {
+    .page-home .hero__footer .arrow_down {
+        display: none;
+    }
 }
 
 /* Анимация подпрыгивания вниз и возврата */
@@ -5155,10 +5247,22 @@ html.lenis, html.lenis body {
     padding-bottom: 150px;
 }
 
+@media only screen and (max-width: 767px) {
+    .contacts {
+        padding-bottom: 80px;
+    }
+}
+
 .contact__wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 80px;
+}
+
+@media only screen and (max-width: 991px) {
+    .contact__wrap {
+        grid-template-columns: 1fr;
+    }
 }
 
 .contact__info h2 {
@@ -5168,9 +5272,21 @@ html.lenis, html.lenis body {
     line-height: 110%;
 }
 
+@media only screen and (max-width: 767px) {
+    .contact__info h2 {
+        font-size: 36px;
+    }
+}
+
 .contact__info p {
     margin: 35px 0 40px;
     opacity: 0.5;
+}
+
+@media only screen and (max-width: 767px) {
+    .contact__info p {
+        font-size: 1rem;
+    }
 }
 
 .contact__group {
@@ -5213,6 +5329,12 @@ html.lenis, html.lenis body {
     margin-top: 50px;
 }
 
+@media only screen and (max-width: 767px) {
+    .contact__socials {
+        margin-top: 30px;
+    }
+}
+
 .contact__socials a {
     width: 35px;
     height: 35px;
@@ -5237,6 +5359,12 @@ html.lenis, html.lenis body {
     border-radius: 18px;
     background: #ffffff;
     margin-top: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+    .contact__form--content {
+        padding: 25px 15px;
+    }
 }
 
 .contact__form--content input[type=submit] {

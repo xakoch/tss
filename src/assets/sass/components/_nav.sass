@@ -73,7 +73,6 @@
 	&.is-active
 		span
 			background-color: transparent
-            
 			&::before
 				transform: translate(-4px,7px) rotate(45deg)
 			&::after
@@ -85,7 +84,7 @@
 // ==================================
 .mobile__menu
 	position: absolute
-	top: calc(115px + 10px)
+	top: calc(80px + 20px)
 	left: 10px
 	right: 10px
 	z-index: 7777
@@ -95,17 +94,19 @@
 		+br(18px)
 		color: $w
 		padding: 45px 30px
+		overflow-y: scroll
+		height: calc(60vh + 20px)
 
 	&--title
 		color: rgba($w, 0.6)
 		font-size: 13px
-		margin-bottom: 10px
+		margin-bottom: 5px
 		display: block
 
 	.header__nav
 		display: grid
 		grid-gap: 15px
-		margin-top: 30px !important
+		margin-top: 20px !important
 		a
 			color: $w
 			font-size: 24px
@@ -113,7 +114,7 @@
 	&--footer
 		margin-top: 50px
 		display: grid
-		grid-gap: 20px
+		grid-gap: 25px
 
 		address
 			font-size: 14px
@@ -130,3 +131,11 @@
 		font-size: 20px
 		+semi
 		color: $w
+
+	.footer__socials
+		grid-gap: 10px
+		a
+			width: 40px
+			height: 40px
+		svg
+			fill: $red
