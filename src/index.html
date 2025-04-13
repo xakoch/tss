@@ -6,7 +6,83 @@ title: TSS - Preview page
         {{> header-static }}
 
         <style>
-        .devpage{border-top:1px solid #8e1636;padding-top:70px;margin-top:70px;}.devpages{display:grid;grid-template-columns:repeat(4,1fr);grid-gap:15px;margin-top:80px}@media only screen and (max-width:1024px){.devpages{grid-template-columns:repeat(1,1fr);grid-gap:30px}}.devpage h2{margin-bottom:20px!important}.devpage a{display:table;text-decoration:underline!important;margin-bottom:15px;position:relative}.devpage a::after{content:"";display:block;position:absolute;top:0;right:-30px}.devpage a.none{color:#b2b0bb;cursor:not-allowed}.devpage a.none::after{content:"🔒"}.devpage a.process{color:#ee9a6b}.devpage a.process::after{content:"⚔️"}.devpage a.done{color:#27c062}.devpage a.done::after{content:"✅"}
+            .devpage {
+                border-top: 1px solid #8e1636;
+                padding: 70px 0;
+                margin-top: 70px;
+            }
+
+            .devpages {
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                grid-gap: 15px;
+                margin-top: 80px;
+            }
+
+            @media only screen and (max-width:1024px) {
+                .devpage h1 {
+                    font-size: 40px;
+                }
+
+                .devpages {
+                    grid-template-columns: repeat(1,1fr);
+                    grid-gap: 30px;
+                }
+            }
+
+            .devpage h2 {
+                margin-bottom: 20px!important;
+            }
+
+            .devpage a {
+                display: table;
+                text-decoration: underline!important;
+                margin-bottom: 15px;
+                position: relative;
+            }
+
+            .devpage a::after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                right: -30px;
+            }
+
+            .devpage a.none {
+                color: #b2b0bb;
+                cursor: not-allowed;
+            }
+
+            .devpage a.none::after {
+                content: "🔒";
+            }
+
+            .devpage a.process {
+                color: #ee9a6b;
+            }
+
+            .devpage a.process::after {
+                content: "⚔️";
+            }
+
+            .devpage a.done {
+                color: #27c062;
+            }
+
+            .devpage a.full {
+                color: #27c062;
+                padding-right: 10px;
+            }
+
+            .devpage a.done::after {
+                content: "✅";
+            }
+
+            .devpage a.full::after {
+                content: "✅✅";
+                right: -40px;
+            }
         </style>
         
         <div class="container"> 
@@ -24,12 +100,12 @@ title: TSS - Preview page
                     <div class="dev__group">
                         <h2>About pages</h2>
                         <a class="done" href="about.html">About</a>
-                        <a class="done" href="contacts.html">Contacts</a>
+                        <a class="full" href="contacts.html">Contacts</a>
                     </div>
                     <div class="dev__group">
                         <h2>Blog pages</h2>
-                        <a class="done" href="blog.html">Blog</a>
-                        <a class="done" href="blog-single.html">Blog - Single</a>
+                        <a class="full" href="blog.html">Blog</a>
+                        <a class="full" href="blog-single.html">Blog - Single</a>
                     </div>
                     <div class="dev__group">
                         <h2>Other pages</h2>
