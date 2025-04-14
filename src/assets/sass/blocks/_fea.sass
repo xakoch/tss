@@ -2,6 +2,9 @@
 // hero - block
 // ========================================
 .fea
+	+r(991)
+		background: $w
+		+br(18px)
 
 	&__wrap
 		background: $w
@@ -10,11 +13,23 @@
 		align-items: flex-start
 		grid-gap: 80px
 		padding: 90px 80px
+		+r(1440)
+			padding: 60px 50px
+		+r(1200)
+			padding: 60px 30px
+		+r(991)
+			flex-direction: column-reverse
+			grid-gap: 60px
+			background: transparent
+			+br(0px)
+			padding: 60px 0
 
 	&__col
 		width: 50%
 		display: flex
 		flex-direction: column
+		+r(991)
+			width: 100%
 
 	&__items
 		grid-gap: 20px
@@ -27,6 +42,10 @@
 		+br(18px)
 		display: flex
 		grid-gap: 15px
+		position: relative
+		+r(767)
+			grid-gap: 30px
+			padding: 40px 30px 40px 30px
 
 		span
 			text-transform: uppercase
@@ -40,6 +59,8 @@
 			+med
 			line-height: 110%
 			font-weight: normal
+			+r(767)
+				font-size: 16px
 		p
 			margin-top: 25px
 			line-height: 150%
@@ -56,6 +77,8 @@
 	&__sticky
 		position: sticky
 		top: 40px
+		+r(991)
+			position: static
 		.section__title
 			margin-top: 30px
 		p
@@ -64,5 +87,7 @@
 			line-height: 150%
 			font-size: 15px
 			max-width: 800px
+			+r(991)
+				margin-top: 40px
 		a
 			margin-top: 45px

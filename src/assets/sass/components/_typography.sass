@@ -20,6 +20,8 @@
 		font-weight: normal
 		+r(767)
 			font-size: 32px
+		+r(560)
+			font-size: 28px
 		span
 			color: $red
 
@@ -27,6 +29,8 @@
 	display: flex
 	align-items: center
 	grid-gap: 50px
+	+r(767)
+		grid-gap: 30px
 	.section__subtext
 		margin-bottom: 0
 	&.--white
@@ -34,6 +38,8 @@
 			h5
 				color: $w
 				opacity: .7
+				+r(767)
+					font-size: 14px
 			&::before
 				background: $w
 				opacity: .5
@@ -45,6 +51,12 @@
 	display: flex
 	align-items: center
 	justify-content: space-between
+	+r(991)
+		flex-direction: column
+		align-items: flex-start
+		grid-gap: 30px
+		h2
+			font-size: 28px
 
 .section__head
 	display: flex
@@ -56,12 +68,21 @@
 	display: flex
 	align-items: center
 	grid-gap: 30px
+	+r(991)
+		flex-direction: column-reverse
+		align-items: flex-start
+		img
+			opacity: 0.5
 	p
 		font-size: 15px
 		color: $b
 		opacity: 0.4
 		line-height: 160%
 		text-align: right
+		+r(991)
+			text-align: left
+			br
+				display: none
 
 .section__num
 	color: $red

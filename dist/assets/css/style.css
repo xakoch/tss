@@ -273,18 +273,18 @@ body.page-partners {
 }
 
 .xs {
-    display: none;
+    display: none !important;
 }
 
 @media only screen and (max-width: 768px) {
     .xs {
-        display: block;
+        display: inline-block !important;
     }
 }
 
 @media only screen and (max-width: 768px) {
     .xs-hide {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -326,6 +326,10 @@ body.page-partners {
     100% {
         box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
     }
+}
+
+.policy {
+    color: inherit;
 }
 
 .header {
@@ -756,7 +760,7 @@ body.page-partners {
     height: 1px;
     background-color: #ffffff;
     left: 0;
-    transition: all 0.25s ease;
+    transition: all 0.15s ease;
     transform: translateX(-5px);
 }
 
@@ -788,13 +792,21 @@ body.page-partners {
     z-index: 7777;
 }
 
+@media only screen and (min-width: 767px) {
+    .mobile__menu {
+        top: 120px;
+        left: 25px;
+        right: 25px;
+    }
+}
+
 .mobile__menu--inner {
     background: #8E1636;
     border-radius: 18px;
     color: #ffffff;
     padding: 45px 30px;
     overflow-y: scroll;
-    height: calc(60vh + 20px);
+    height: 700px;
 }
 
 .mobile__menu--title {
@@ -1241,6 +1253,12 @@ form {
     width: 100%;
 }
 
+@media only screen and (max-width: 767px) {
+    .bread {
+        top: 130px;
+    }
+}
+
 .bread.static {
     display: inline-block;
     position: static;
@@ -1342,6 +1360,12 @@ form {
     }
 }
 
+@media only screen and (max-width: 560px) {
+    .section__title h2 {
+        font-size: 28px;
+    }
+}
+
 .section__title h2 span {
     color: #8E1636;
 }
@@ -1352,6 +1376,12 @@ form {
     grid-gap: 50px;
 }
 
+@media only screen and (max-width: 767px) {
+    .section__top {
+        grid-gap: 30px;
+    }
+}
+
 .section__top .section__subtext {
     margin-bottom: 0;
 }
@@ -1359,6 +1389,12 @@ form {
 .section__top.--white .section__subtext h5 {
     color: #ffffff;
     opacity: 0.7;
+}
+
+@media only screen and (max-width: 767px) {
+    .section__top.--white .section__subtext h5 {
+        font-size: 14px;
+    }
 }
 
 .section__top.--white .section__subtext::before {
@@ -1377,6 +1413,18 @@ form {
     justify-content: space-between;
 }
 
+@media only screen and (max-width: 991px) {
+    .section__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        grid-gap: 30px;
+    }
+
+    .section__bottom h2 {
+        font-size: 28px;
+    }
+}
+
 .section__head {
     display: flex;
     align-items: center;
@@ -1390,12 +1438,33 @@ form {
     grid-gap: 30px;
 }
 
+@media only screen and (max-width: 991px) {
+    .section__addblock {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .section__addblock img {
+        opacity: 0.5;
+    }
+}
+
 .section__addblock p {
     font-size: 15px;
     color: #000000;
     opacity: 0.4;
     line-height: 160%;
     text-align: right;
+}
+
+@media only screen and (max-width: 991px) {
+    .section__addblock p {
+        text-align: left;
+    }
+
+    .section__addblock p br {
+        display: none;
+    }
 }
 
 .section__num {
@@ -1793,6 +1862,13 @@ form {
     font-size: 14px;
 }
 
+@media only screen and (max-width: 991px) {
+    .fea {
+        background: #ffffff;
+        border-radius: 18px;
+    }
+}
+
 .fea__wrap {
     background: #ffffff;
     border-radius: 18px;
@@ -1802,10 +1878,38 @@ form {
     padding: 90px 80px;
 }
 
+@media only screen and (max-width: 1440px) {
+    .fea__wrap {
+        padding: 60px 50px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .fea__wrap {
+        padding: 60px 30px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .fea__wrap {
+        flex-direction: column-reverse;
+        grid-gap: 60px;
+        background: transparent;
+        border-radius: 0px;
+        padding: 60px 0;
+    }
+}
+
 .fea__col {
     width: 50%;
     display: flex;
     flex-direction: column;
+}
+
+@media only screen and (max-width: 991px) {
+    .fea__col {
+        width: 100%;
+    }
 }
 
 .fea__items {
@@ -1820,6 +1924,14 @@ form {
     border-radius: 18px;
     display: flex;
     grid-gap: 15px;
+    position: relative;
+}
+
+@media only screen and (max-width: 767px) {
+    .fea__item {
+        grid-gap: 30px;
+        padding: 40px 30px 40px 30px;
+    }
 }
 
 .fea__item span {
@@ -1836,6 +1948,12 @@ form {
     font-family: Inter-Medium, sans-serif;
     line-height: 110%;
     font-weight: normal;
+}
+
+@media only screen and (max-width: 767px) {
+    .fea__item h4 {
+        font-size: 16px;
+    }
 }
 
 .fea__item p {
@@ -1860,6 +1978,12 @@ form {
     top: 40px;
 }
 
+@media only screen and (max-width: 991px) {
+    .fea__sticky {
+        position: static;
+    }
+}
+
 .fea__sticky .section__title {
     margin-top: 30px;
 }
@@ -1870,6 +1994,12 @@ form {
     line-height: 150%;
     font-size: 15px;
     max-width: 800px;
+}
+
+@media only screen and (max-width: 991px) {
+    .fea__sticky p {
+        margin-top: 40px;
+    }
 }
 
 .fea__sticky a {
@@ -3012,6 +3142,21 @@ html.lenis, html.lenis body {
     padding: 120px 0;
 }
 
+@media only screen and (max-width: 1440px) {
+    .economy {
+        padding: 100px 0;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .economy .section__head {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 40px;
+        grid-gap: 50px;
+    }
+}
+
 .economy__blocks {
     display: flex;
     width: 100%;
@@ -3019,10 +3164,29 @@ html.lenis, html.lenis body {
     margin: 30px 0;
 }
 
+@media only screen and (max-width: 1440px) {
+    .economy__blocks {
+        grid-gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .economy__blocks {
+        flex-direction: column;
+        grid-gap: 20px;
+    }
+}
+
 .eco-box__content {
     position: relative;
     padding: 40px 30px;
     overflow-x: hidden;
+}
+
+@media only screen and (max-width: 767px) {
+    .eco-box__content {
+        padding: 40px 10px 40px 30px;
+    }
 }
 
 .eco-box {
@@ -3032,12 +3196,38 @@ html.lenis, html.lenis body {
     width: 50%;
 }
 
+@media only screen and (max-width: 1440px) {
+    .eco-box {
+        gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .eco-box {
+        width: 100%;
+        gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .eco-box {
+        flex-direction: column;
+    }
+}
+
 .eco-box__item {
     border-radius: 18px;
     overflow: hidden;
     width: 50%;
     border: solid 1px #8E1636;
     position: relative;
+}
+
+@media only screen and (max-width: 767px) {
+    .eco-box__item {
+        width: 100%;
+        display: flex;
+    }
 }
 
 .eco-box h4, .eco-box p {
@@ -3073,8 +3263,27 @@ html.lenis, html.lenis body {
     color: transparent;
 }
 
+@media only screen and (max-width: 1440px) {
+    .eco-box__num {
+        font-size: 40px;
+    }
+}
+
 .eco-box p {
     color: #8E1636;
+}
+
+@media only screen and (max-width: 1440px) {
+    .eco-box p {
+        font-size: 14px;
+        line-height: 130%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .eco-box p {
+        max-width: 60%;
+    }
 }
 
 .eco-box img {
@@ -3104,12 +3313,22 @@ html.lenis, html.lenis body {
     right: 30px;
 }
 
+@media only screen and (max-width: 767px) {
+    .slider-control {
+        top: auto;
+        left: 30px;
+        bottom: 20px;
+        right: auto;
+        align-self: flex-start;
+        justify-content: flex-start;
+    }
+}
+
 .slider-button {
     background-color: #ededed;
     color: #ffffff;
     font-size: 0;
     border: none;
-    padding: 5px 10px;
     cursor: pointer;
     width: 18px;
     height: 18px;
@@ -3123,6 +3342,13 @@ html.lenis, html.lenis body {
     background: #8E1636;
 }
 
+@media only screen and (max-width: 1440px) {
+    .slider-button {
+        width: 15px;
+        height: 15px;
+    }
+}
+
 .slider-track {
     display: flex;
     transition: transform 0.5s ease-in-out;
@@ -3130,6 +3356,29 @@ html.lenis, html.lenis body {
 
 .slider-slide {
     min-width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+    .slider-slide {
+        position: relative;
+        display: flex;
+        height: 250px;
+    }
+
+    .slider-slide img {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        width: 200px !important;
+        margin-left: auto;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .slider-slide img {
+        width: 150px !important;
+    }
 }
 
 .eco__item {
@@ -3147,6 +3396,18 @@ html.lenis, html.lenis body {
     flex-direction: column;
 }
 
+@media only screen and (max-width: 1440px) {
+    .eco__item {
+        padding: 40px 30px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .eco__item {
+        width: 100%;
+    }
+}
+
 .eco__item::before {
     content: "";
     width: 100%;
@@ -3157,6 +3418,7 @@ html.lenis, html.lenis body {
     right: 0;
     bottom: 0;
     background: url(../img/economy-block-pattern.png) no-repeat center center/cover;
+    z-index: -1;
 }
 
 .eco__item--number {
@@ -3166,6 +3428,18 @@ html.lenis, html.lenis body {
     letter-spacing: -4px;
     display: flex;
     align-items: center;
+}
+
+@media only screen and (max-width: 1440px) {
+    .eco__item--number {
+        font-size: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .eco__item--number {
+        font-size: 48px;
+    }
 }
 
 .eco__item--title {
@@ -3181,12 +3455,38 @@ html.lenis, html.lenis body {
     font-size: 18px;
 }
 
+@media only screen and (max-width: 1440px) {
+    .eco__item--title {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .eco__item--title {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .eco__item--title {
+        font-size: 12px;
+        padding: 10px 16px;
+    }
+}
+
 .eco__item--subtitle {
     margin: 50px 0 20px;
     font-size: 18px;
     line-height: 150%;
     font-family: Inter-SemiBold, sans-serif;
     max-width: 400px;
+}
+
+@media only screen and (max-width: 560px) {
+    .eco__item--subtitle {
+        font-size: 14px;
+        margin: 35px 0 15px;
+    }
 }
 
 .eco__item--text {
@@ -3196,15 +3496,54 @@ html.lenis, html.lenis body {
     line-height: 150%;
 }
 
+@media only screen and (max-width: 560px) {
+    .eco__item--text {
+        font-size: 14px;
+    }
+}
+
 .eco__item img {
     position: absolute;
     top: -10%;
     right: -15%;
 }
 
+@media only screen and (max-width: 1440px) {
+    .eco__item img {
+        top: -15%;
+        right: -30%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .eco__item img {
+        top: 0;
+        right: 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .eco__item img {
+        right: -20%;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .eco__item img {
+        top: -15%;
+        right: -65%;
+    }
+}
+
 .typecard {
     border-radius: 25px;
     color: #ffffff;
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard {
+        padding: 90px 0 40px;
+    }
 }
 
 .typecard::before {
@@ -3221,6 +3560,12 @@ html.lenis, html.lenis body {
     background-size: contain;
 }
 
+@media only screen and (max-width: 991px) {
+    .typecard::before {
+        display: none;
+    }
+}
+
 .typecard__wrap {
     margin-top: 30px;
     display: flex;
@@ -3228,9 +3573,27 @@ html.lenis, html.lenis body {
     flex-direction: row;
 }
 
+@media only screen and (max-width: 1200px) {
+    .typecard__wrap {
+        grid-gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .typecard__wrap {
+        flex-direction: column;
+    }
+}
+
 .typecard__col {
     width: 50%;
     overflow: hidden;
+}
+
+@media only screen and (max-width: 991px) {
+    .typecard__col {
+        width: 100%;
+    }
 }
 
 .typecard__info {
@@ -3251,6 +3614,13 @@ html.lenis, html.lenis body {
     animation: pulse-shadow 2.5s infinite;
 }
 
+@media only screen and (max-width: 767px) {
+    .typecard__info::before {
+        width: 200px;
+        height: 200px;
+    }
+}
+
 .typecard__nav {
     display: flex;
     align-items: center;
@@ -3258,8 +3628,27 @@ html.lenis, html.lenis body {
     margin: 30px 0;
 }
 
+@media only screen and (max-width: 767px) {
+    .typecard__nav {
+        grid-gap: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard__nav svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+
 .typecard .swiper {
     width: 100vw;
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard .swiper {
+        width: auto;
+    }
 }
 
 .typecard .swiper-wrapper {
@@ -3274,16 +3663,53 @@ html.lenis, html.lenis body {
     flex-shrink: 0 !important;
 }
 
+.typecard .swiper-slide img {
+    margin: 0 auto;
+}
+
 .typecard__right {
+    position: relative;
     background-color: rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(100px);
     -webkit-backdrop-filter: blur(100px);
     border-radius: 18px;
 }
 
+@media only screen and (max-width: 991px) {
+    .typecard__right {
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
+        background: none;
+    }
+}
+
+.typecard__right::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 99%;
+    height: 99%;
+    filter: blur(100px);
+    background: url(../img/typecard-bg-pattern.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -2;
+}
+
 .typecard__tabs {
     display: flex;
     padding: 20px 0 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard__tabs {
+        padding: 0;
+    }
 }
 
 .typecard__tab {
@@ -3294,6 +3720,12 @@ html.lenis, html.lenis body {
     position: relative;
     opacity: 0.7;
     transition: opacity 0.3s;
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard__tab {
+        font-size: 12px;
+    }
 }
 
 .typecard__tab_active {
@@ -3327,6 +3759,13 @@ html.lenis, html.lenis body {
     margin-right: 10px;
 }
 
+@media only screen and (max-width: 767px) {
+    .typecard__tab-circle {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 .typecard__tab_active .typecard__tab-circle {
     background-color: white;
     color: #333;
@@ -3340,6 +3779,12 @@ html.lenis, html.lenis body {
 .typecard__content {
     padding: 40px 40px 20px 60px;
     display: none;
+}
+
+@media only screen and (max-width: 991px) {
+    .typecard__content {
+        padding: 40px 25px 40px 25px;
+    }
 }
 
 .typecard__content_active {
@@ -3406,6 +3851,14 @@ html.lenis, html.lenis body {
     grid-gap: 40px;
 }
 
+@media only screen and (max-width: 767px) {
+    .typecard__actions {
+        flex-direction: column;
+        align-items: flex-start;
+        grid-gap: 35px;
+    }
+}
+
 .typecard__button {
     background-color: white;
     color: #333;
@@ -3445,6 +3898,12 @@ html.lenis, html.lenis body {
     margin-top: 80px;
 }
 
+@media only screen and (max-width: 991px) {
+    .typecard__footer {
+        margin-top: 45px;
+    }
+}
+
 .typecard__footer p {
     color: #ffffff;
     opacity: 0.8;
@@ -3459,11 +3918,51 @@ html.lenis, html.lenis body {
     padding: 200px 0;
 }
 
+@media only screen and (max-width: 991px) {
+    .why {
+        padding: 90px 0 40px;
+    }
+}
+
 .why__img {
     position: absolute;
     top: 50%;
     right: 0;
     transform: translate(10%, -50%);
+}
+
+@media only screen and (max-width: 991px) {
+    .why__img {
+        position: static;
+        transform: translate(0);
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .why__img img {
+        width: 80%;
+        margin-left: auto;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .why__img img {
+        width: 65%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .why__img img {
+        max-width: 80%;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .why__img img {
+        max-width: 100%;
+    }
 }
 
 .why .section__top {
@@ -3481,6 +3980,12 @@ html.lenis, html.lenis body {
     color: #8E1636;
 }
 
+@media only screen and (max-width: 767px) {
+    .why h2 {
+        font-size: 28px;
+    }
+}
+
 .why p {
     font-size: 17px;
     color: rgba(0, 0, 0, 0.4);
@@ -3490,9 +3995,30 @@ html.lenis, html.lenis body {
     max-width: 570px;
 }
 
+@media only screen and (max-width: 767px) {
+    .why p {
+        margin: 20px 0 40px;
+        font-size: 16px;
+    }
+}
+
 .why__btns {
     display: flex;
     grid-gap: 15px;
+}
+
+@media only screen and (max-width: 991px) {
+    .why__btns {
+        margin-bottom: 30px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .why__btns {
+        flex-direction: column;
+        text-align: center;
+        align-items: flex-start;
+    }
 }
 
 .home-map {
@@ -3502,8 +4028,13 @@ html.lenis, html.lenis body {
     background-position: right;
 }
 
+@media only screen and (max-width: 991px) {
+    .home-map {
+        padding: 80px 0 100px;
+    }
+}
+
 .home-map__iframe {
-    margin-top: 40px;
     border-radius: 18px;
     overflow: hidden;
 }
@@ -3513,13 +4044,63 @@ html.lenis, html.lenis body {
     display: none;
 }
 
+.map-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    aspect-ratio: 16/8;
+    background-image: url(https://ias.rsq.mybluehost.me/website_e4331c8e/wp-content/uploads/2025/03/map-ref-2.webp);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    margin: 50px auto 0;
+    overflow: hidden;
+    border-radius: 30px;
+}
+
+@media only screen and (max-width: 991px) {
+    .map-wrapper {
+        margin: 30px 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form {
+        padding: 60px 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form .container {
+        padding: 0;
+    }
+}
+
 .home-form .section__title {
     max-width: 473px;
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form .section__title {
+        max-width: 90%;
+    }
 }
 
 .home-form .section__title h2 {
     color: #ffffff;
     line-height: 120%;
+}
+
+@media only screen and (max-width: 991px) {
+    .home-form .section__title h2 {
+        font-size: 36px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form .section__title h2 {
+        font-size: 28px;
+    }
 }
 
 .home-form .section__title span {
@@ -3532,6 +4113,19 @@ html.lenis, html.lenis body {
     padding: 70px 80px;
     position: relative;
     overflow: hidden;
+    z-index: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+    .home-form__inner {
+        padding: 40px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form__inner {
+        padding: 60px 20px;
+    }
 }
 
 .home-form__inner::before, .home-form__inner::after {
@@ -3545,11 +4139,25 @@ html.lenis, html.lenis body {
     background-position: right;
     width: 100%;
     height: 100%;
+    z-index: -2;
+}
+
+@media only screen and (max-width: 991px) {
+    .home-form__inner::before, .home-form__inner::after {
+        right: 0;
+    }
 }
 
 .home-form__inner::after {
     right: 0;
     background-image: url(../img/form-bg-pattern.png);
+    z-index: -1;
+}
+
+@media only screen and (max-width: 991px) {
+    .home-form__inner::after {
+        background: rgba(142, 22, 54, 0.85);
+    }
 }
 
 .home-form .form {
@@ -3560,6 +4168,18 @@ html.lenis, html.lenis body {
     grid-gap: 10px;
     position: relative;
     z-index: 2;
+}
+
+.home-form .form .form__group {
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .home-form .form {
+        flex-direction: column;
+        align-items: flex-start;
+        grid-gap: 25px;
+    }
 }
 
 .home-form label {
@@ -3609,6 +4229,10 @@ html.lenis, html.lenis body {
     max-width: 485px;
     line-height: 140%;
     font-size: 13px;
+}
+
+.page-about .hero {
+    padding-top: 200px;
 }
 
 .about__list {
@@ -4946,6 +5570,31 @@ html.lenis, html.lenis body {
 
 .partners__hero {
     margin-top: 80px;
+    background-size: contain;
+    background-position: right;
+    background-size: 30%;
+}
+
+@media only screen and (max-width: 991px) {
+    .partners__hero {
+        margin-top: 110px;
+        padding-bottom: 100px;
+        background-position: 100% 130%;
+        background-size: 40%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .partners__hero {
+        background-position: 100% 110%;
+        background-size: 50%;
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .partners__hero {
+        background-size: 60%;
+    }
 }
 
 .partners__content {
@@ -4963,6 +5612,18 @@ html.lenis, html.lenis body {
 
 .partners__content h1 span {
     color: #8E1636;
+}
+
+@media only screen and (max-width: 767px) {
+    .partners__content h1 span {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .partners__content h1 {
+        font-size: 36px;
+    }
 }
 
 .partners__content p {
@@ -4990,6 +5651,13 @@ html.lenis, html.lenis body {
     align-items: flex-end;
 }
 
+@media only screen and (max-width: 991px) {
+    .partners__form form {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .partners__form label {
     color: #8E1636;
     font-size: 13px;
@@ -5007,6 +5675,14 @@ html.lenis, html.lenis body {
     border: 1px solid #8E1636;
 }
 
+@media only screen and (max-width: 991px) {
+    .partners__form input {
+        min-width: auto;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
 .partners__form input[type=submit] {
     background: linear-gradient(270deg, #8E1636, #660224);
     color: #ffffff;
@@ -5017,9 +5693,28 @@ html.lenis, html.lenis body {
     background: linear-gradient(0deg, #8E1636, #660224);
 }
 
+@media only screen and (max-width: 991px) {
+    .partners__form .form__group {
+        width: 100%;
+    }
+}
+
 .partners__footer {
     display: flex;
     grid-gap: 70px;
+}
+
+@media only screen and (max-width: 767px) {
+    .partners__footer {
+        flex-direction: column;
+        grid-gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .partners__footer a {
+        font-size: 24px;
+    }
 }
 
 .blog-list {
@@ -5106,10 +5801,22 @@ html.lenis, html.lenis body {
     color: #8E1636;
 }
 
+@media only screen and (max-width: 560px) {
+    .blog-card__content h3 {
+        font-size: 16px;
+    }
+}
+
 .blog-card__content p {
     font-size: 14px;
     color: #A8A8A8;
     line-height: 150%;
+}
+
+@media only screen and (max-width: 560px) {
+    .blog-card__content p {
+        font-size: 12px;
+    }
 }
 
 .blog-card--link {
@@ -5224,6 +5931,12 @@ html.lenis, html.lenis body {
     display: flex;
     align-items: center;
     grid-gap: 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .blog-similar .section__head--right {
+        grid-gap: 10px;
+    }
 }
 
 .blog-similar .btn-prev,

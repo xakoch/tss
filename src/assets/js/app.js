@@ -348,24 +348,24 @@ function initBtnMenuOpenClose() {
             const tl = gsap.timeline({ 
                 defaults: { 
                     ease: "power2.out", 
-                    duration: 0.6 
+                    duration: 0.3
                 }
             });
             
             // Разделяем анимацию на более простые шаги для плавности
             tl.to(menu, { 
                 autoAlpha: 1, 
-                duration: 0.3 
+                duration: 0.3
             })
             .to(menu, { 
                 scale: 1, 
                 rotation: 0, 
-                duration: 0.5,
+                duration: 0.3,
                 clearProps: "rotation" // Очищаем свойства для лучшей производительности
             }, "-=0.2")
             .to(menu, {
                 filter: "blur(0px)", 
-                duration: 0.4
+                duration: 0.3
             }, "-=0.4");
             
         } else {
@@ -377,7 +377,7 @@ function initBtnMenuOpenClose() {
             const tl = gsap.timeline({ 
                 defaults: { 
                     ease: "power2.inOut", 
-                    duration: 0.4 
+                    duration: 0.3
                 }
             });
             
@@ -385,8 +385,8 @@ function initBtnMenuOpenClose() {
             tl.to(menu, { 
                 scale: 0.95, 
                 rotation: -2, 
-                filter: "blur(5px)", 
-                duration: 0.4,
+                filter: "blur(15px)", 
+                duration: 0.3,
                 force3D: true // Включаем аппаратное ускорение
             })
             .to(menu, { 
@@ -884,7 +884,7 @@ function initSwiperSlider() {
 
         if (document.querySelector(".blog-slider")) {
             var blogSingleSlide = new Swiper(".blog-slider", {
-                slidesPerView: 1.3,
+                slidesPerView: 1.1,
                 loop: true,
                 spaceBetween: 20,
                 // lazy: true,
@@ -894,10 +894,10 @@ function initSwiperSlider() {
                 },
                 breakpoints: {
                     560: {
-                        slidesPerView: 2,
+                        slidesPerView: 1.5,
                     },
                     991: {
-                        slidesPerView: 2.5,
+                        slidesPerView: 2,
                     },
                     1200: {
                         slidesPerView: 3,

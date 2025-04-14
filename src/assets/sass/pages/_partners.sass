@@ -3,6 +3,19 @@
 // ========================================
 .partners__hero
 	margin-top: 80px
+	background-size: contain
+	background-position: right
+	background-size: 30%
+	+r(991)
+		margin-top: calc(80px + 30px)
+		padding-bottom: 100px
+		background-position: 100% 130%
+		background-size: 40%
+	+r(767)
+		background-position: 100% 110%
+		background-size: 50%
+	+r(560)
+		background-size: 60%
 
 .partners__content
 	display: flex
@@ -15,6 +28,10 @@
 		font-weight: normal
 		span
 			color: $red
+			+r(767)
+				display: block
+		+r(767)
+			font-size: 36px
 	p
 		max-width: 650px
 		line-height: 23px
@@ -34,6 +51,9 @@
 		display: flex
 		grid-gap: 20px
 		align-items: flex-end
+		+r(991)
+			flex-direction: column
+			align-items: center
 	label
 		color: $red
 		font-size: 13px
@@ -45,6 +65,10 @@
 		border: 1px solid transparent
 		&:hover, &:focus
 			border: 1px solid $red
+		+r(991)
+			min-width: auto
+			width: 100%
+			max-width: 100%
 	input[type="submit"]
 		background: linear-gradient(270deg,$red,$red3)
 		color: $w
@@ -52,6 +76,16 @@
 		&:hover
 			background: linear-gradient(0deg,$red,$red3)
 
+	.form__group
+		+r(991)
+			width: 100%
+
 .partners__footer
 	display: flex
 	grid-gap: 70px
+	+r(767)
+		flex-direction: column
+		grid-gap: 20px
+	a
+		+r(767)
+			font-size: 24px

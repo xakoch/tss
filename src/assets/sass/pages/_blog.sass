@@ -55,11 +55,15 @@
 			color: $b45
 			&:hover
 				color: $red
+			+r(560)
+				font-size: 16px
 
 		p
 			font-size: 14px
 			color: $gray3
 			line-height: 150%
+			+r(560)
+				font-size: 12px
 
 	&-card--link
 		display: block
@@ -140,6 +144,8 @@
 		display: flex
 		align-items: center
 		grid-gap: 20px
+		+r(767)
+			grid-gap: 10px
 	.btn-prev,
 	.btn-next
 		cursor: pointer
