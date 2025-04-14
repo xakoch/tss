@@ -1358,6 +1358,10 @@ form {
     .section__title h2 {
         font-size: 32px;
     }
+
+    .section__title h2 br {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 560px) {
@@ -3663,8 +3667,10 @@ html.lenis, html.lenis body {
     flex-shrink: 0 !important;
 }
 
-.typecard .swiper-slide img {
-    margin: 0 auto;
+@media only screen and (max-width: 767px) {
+    .typecard .swiper-slide img {
+        margin: 0 auto;
+    }
 }
 
 .typecard__right {
@@ -3839,9 +3845,22 @@ html.lenis, html.lenis body {
     color: #333;
 }
 
+@media only screen and (max-width: 767px) {
+    .typecard__feature-icon {
+        width: 17px;
+        height: 17px;
+    }
+}
+
 .typecard__feature-text {
     font-size: 16px;
     color: #ffffff;
+}
+
+@media only screen and (max-width: 767px) {
+    .typecard__feature-text {
+        font-size: 14px;
+    }
 }
 
 .typecard__actions {
@@ -3860,7 +3879,7 @@ html.lenis, html.lenis body {
 }
 
 .typecard__button {
-    background-color: white;
+    background-color: #ffffff;
     color: #333;
     border: none;
     border-radius: 18px;

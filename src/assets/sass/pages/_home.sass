@@ -439,7 +439,8 @@
 		width: auto
 		flex-shrink: 0 !important
 		img
-			margin: 0 auto
+			+r(767)
+				margin: 0 auto
 
 .typecard__right
 	position: relative
@@ -584,10 +585,15 @@
 	background-color: rgba($w, .7)
 	margin-right: 10px
 	color: #333
+	+r(767)
+		width: 17px
+		height: 17px
 
 .typecard__feature-text
 	font-size: 16px
 	color: $w
+	+r(767)
+		font-size: 14px
 
 .typecard__actions
 	display: flex
@@ -600,7 +606,7 @@
 		grid-gap: 35px
 
 .typecard__button
-	background-color: white
+	background-color: $w
 	color: #333
 	border: none
 	+br(18px)
@@ -612,12 +618,12 @@
 
 	&:hover
 		transform: translateY(-2px)
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+		box-shadow: 0 4px 12px rgba($b, 0.2)
 
 .typecard__more-info
 	display: flex
 	align-items: center
-	color: rgba(255, 255, 255, 0.7)
+	color: rgba($w, 0.7)
 	font-size: 15px
 	cursor: pointer
 	transition: color 0.2s
