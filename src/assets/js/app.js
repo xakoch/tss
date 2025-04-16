@@ -1055,6 +1055,7 @@ function initCalc() {
         const gallonsValue = document.getElementById('gallons-value');
         const gallonsTooltip = document.getElementById('gallons-tooltip');
         const savingsAmount = document.getElementById('savings-amount');
+        const savingsAmountSm = document.getElementById('savings-amount-sm'); // Второй блок для отображения результатов
         const numberButtons = document.querySelectorAll('.button-group__button');
         
         // Если элементы калькулятора отсутствуют, выходим из функции
@@ -1069,32 +1070,20 @@ function initCalc() {
         
         // Calculate savings
         function calculateSavings() {
-            // Based on the specific requirement:
-            // When fleet=1, fillUps=1, gallons=50, annual savings should be $25
-            // When fleet=1, fillUps=1, gallons=51, annual savings should be $25.5
-            // This means $0.5 per gallon per year with 1 fillup per week and 1 vehicle
-            
-            // Calculate the base savings
             const savingsPerGallon = 0.5; // $0.50 per gallon annually when fillups=1, fleet=1
             const baseSavings = gallons * savingsPerGallon;
-            
-            // Scale by number of vehicles and weekly fill-ups
             const annualSavings = baseSavings * fleet * fillUps;
-            
-            // Format with one decimal place if it's not a whole number
+
+            // Форматируем с одной десятичной точкой, если не целое число
             const formattedSavings = Number.isInteger(annualSavings) 
                 ? annualSavings 
                 : annualSavings.toFixed(1);
-            
+
             // Анимация числа с GSAP, если он доступен
-            if (typeof gsap !== 'undefined' && savingsAmount) {
-                // Получаем текущее значение
+            if (typeof gsap !== 'undefined') {
                 const currentValue = parseFloat(savingsAmount.textContent) || 0;
-                
-                // Создаем объект для анимации
                 const obj = { value: currentValue };
-                
-                // Анимируем с GSAP
+
                 gsap.to(obj, {
                     value: parseFloat(formattedSavings),
                     duration: 0.5,
@@ -1103,11 +1092,20 @@ function initCalc() {
                         const displayValue = Number.isInteger(obj.value) 
                             ? Math.floor(obj.value) 
                             : obj.value.toFixed(1);
+
+                        // Обновляем оба блока
                         savingsAmount.textContent = `${displayValue}`;
+                        if (savingsAmountSm) {
+                            savingsAmountSm.textContent = `${displayValue}`;
+                        }
                     }
                 });
             } else {
+                // Если GSAP не используется
                 savingsAmount.textContent = `${formattedSavings}`;
+                if (savingsAmountSm) {
+                    savingsAmountSm.textContent = `${formattedSavings}`;
+                }
             }
         }
         
@@ -1185,6 +1183,7 @@ function initCalc() {
         console.error('Error in initCalc:', error);
     }
 }
+
 
 /**
  * Universal Multi-Step Form with GSAP animations and step indicators

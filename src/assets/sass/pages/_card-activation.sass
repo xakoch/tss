@@ -19,6 +19,8 @@
 .ca__form
 	background: $w
 	padding: 100px 0
+	+r(767)
+		padding: 60px 0
 
 	label
 		color: $red
@@ -63,6 +65,8 @@
 		grid-column-gap: 20px
 		grid-row-gap: 0px
 		grid-gap: 20px
+		+r(767)
+			grid-template-columns: repeat(2, 1fr)
 		a:first-child
 			grid-area: 1 / 3 / 2 / 4
 		a:last-child,

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: TSS Card
-pagename: page-tsscard
+pagename: page-tss-card
 ---
 	
 		{{> header }}
@@ -28,7 +28,10 @@ pagename: page-tsscard
 					</div>
 				</div>
 
-			</div>			
+			</div>
+			<div class="hero__img hero__img--mobile">
+				<img src="assets/img/tsscard-hero-card.png" alt="hero card">
+			</div>	
 			<div class="hero__img after-none">
 				<img src="assets/img/tsscard-hero-card.png" alt="hero card">
 			</div>
@@ -50,7 +53,7 @@ pagename: page-tsscard
 			        	</div>
 			            <h2>Here's how much you <span>could be saving</span></h2>
 			            
-			            <div class="savings__info">
+			            <div class="savings__info sm-hide">
 			                <div class="savings__label">Annual Savings</div>
 			                <div class="savings__amount"><span class="savings__currency">$</span><span id="savings-amount">25</span></div>
 			            </div>
@@ -93,6 +96,13 @@ pagename: page-tsscard
 			            </div>
 			        </div>
 			        <!-- ./form -->
+
+    		    	<!-- total -->
+					<div class="savings__info sm">
+					    <div class="savings__label">Annual Savings</div>
+					    <div class="savings__amount"><span class="savings__currency">$</span><span id="savings-amount-sm">25</span></div>
+					</div>
+			        <!-- ./total -->
 
 			    </div>
 

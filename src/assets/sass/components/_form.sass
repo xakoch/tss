@@ -58,6 +58,12 @@ form
 	padding: 15px
 	bottom: 100px
 
+.form__step-header
+	+r(767)
+		flex-direction: column
+		grid-gap: 25px
+		align-items: flex-start
+
 .form__group
 	margin-bottom: 10px
 	&:last-child
@@ -73,6 +79,10 @@ form
 		display: grid
 		grid-template-columns: repeat(4, 1fr)
 		grid-gap: 20px
+		+r(991)
+			grid-template-columns: repeat(2, 1fr)
+		+r(560)
+			grid-template-columns: repeat(1, 1fr)
 	&--checked
 		display: flex
 		grid-gap: 10px

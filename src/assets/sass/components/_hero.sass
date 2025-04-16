@@ -13,12 +13,11 @@
 	+r(991)
 		flex-direction: column
 		grid-gap: 50px
-
 	&__img
 		position: absolute
 		top: 50%
 		right: 0
-		transform: translateY(-50%)
+		transform: translateY(-40%)
 		z-index: 2
 		+r(991)
 			display: none
@@ -39,6 +38,7 @@
 			background-repeat: no-repeat
 			background-size: contain
 			z-index: -1
+			display: none
 			+r(1440)
 				width: 700px
 				height: 700px
@@ -100,6 +100,8 @@
 	&__footer
 		position: relative
 		margin-top: 40px
+		+r(767)
+			margin-top: 30px
 		p
 			font-size: 16px
 			+reg
@@ -110,6 +112,8 @@
 
 	&__footer--line
 		padding-left: 35px
+		+r(767)
+			padding-left: 0
 		&:before
 			content: ''
 			height: 100%
@@ -119,6 +123,8 @@
 			position: absolute
 			top: 0
 			left: 0
+			+r(767)
+				display: none
 
 	&__form
 		background: $w
@@ -132,6 +138,10 @@
 		grid-gap: 15px
 		&.mb-40
 			margin-bottom: 40px
+		+r(767)
+			flex-direction: column
+			grid-gap: 20px
+			align-items: flex-start
 
 	// ref page
 

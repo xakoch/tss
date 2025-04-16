@@ -1,13 +1,33 @@
 // ========================================
 // tss-card page
 // ========================================
-.page-tsscard
+.page-tss-card
 	.hero
 		padding: 300px 0 200px 0
+		+r(991)
+			padding: 250px 0 0
+			min-height: auto
+	.hero__title
+		margin: 25px 0 60px
+		+r(991)
+			margin: 20px 0 0
+	.hero__content
+		+r(991)
+			display: flex
+			flex-direction: column
+	.hero__btns
+		+r(991)
+			order: 4
+			margin-top: 40px
+	.hero__img::after
+		+r(991)
+			display: none
 	.fea
 		padding: 100px 0
 	.why
 		padding: 300px 0 200px
+		+r(991)
+			padding: 100px 0
 	.fakemap
 		margin-top: 50px
 
@@ -20,6 +40,12 @@
 	background-image: url(../img/calc-bg.png)
 	background-repeat: no-repeat
 	background-size: cover
+	+r(991)
+		padding: 60px 0 0
+	+r(767)
+		background-image: none
+		background-color: $w
+		color: $red
 
 .calculator
 	display: grid
@@ -29,44 +55,88 @@
 	+br(18px)
 	align-items: center
 	padding-left: 60px
+	+r(1200)
+		grid-template-columns: 1fr
+		grid-gap: 30px
+		padding-left: 30px
+		padding: 30px
+	+r(991)
+		padding: 0
+		background: none
+	+r(767)
+		grid-gap: 60px
 
 .savings
 	color: $w
+	+r(767)
+		color: $b31
 
 	.section__subtext
 		&::before
 			background: $w
+			+r(767)
+				background: $red
 		h5
 			color: $w
 			opacity: 1
+			+r(767)
+				color: rgba($b31, .3)
 
 	h2
 		font-weight: normal
 		font-size: 36px
 		+reg
+		+r(767)
+			font-size: 28px
 		span
 			color: rgba($w,.7)
+			+r(767)
+				color: $b31
+				font-size: 28px
+				display: block
 
 	&__info
 		margin-top: 50px
+		+r(991)
+			text-align: left
+			margin-top: 0
+		+r(767)
+			margin-top: -30px
 
 	&__label
 		color: rgba($w,.7)
 		font-size: 14px
+		+r(767)
+			color: #545454
 
 	&__amount
 		font-size: 96px
 		+reg
+		color: $w
+		+r(767)
+			font-size: 64px
+			background: linear-gradient(to bottom, $red3 30%, $w 100%)
+			-webkit-background-clip: text
+			-webkit-text-fill-color: transparent
+			background-clip: text
+			color: transparent
 
 .controls
 	background: $w
 	+br(18px)
 	padding: 50px
+	+r(991)
+		padding: 30px
+	+r(767)
+		background: transparent
+		padding: 0
 
 	&__card
 		display: flex
 		flex-direction: column
 		grid-gap: 45px
+		+r(767)
+			grid-gap: 20px
 
 	label
 		display: block
@@ -83,6 +153,8 @@
 .button-group
 	display: flex
 	grid-gap: 15px
+	+r(767)
+		flex-wrap: wrap
 
 	&__button
 		width: 82px
@@ -92,70 +164,14 @@
 		+flex
 		cursor: pointer
 		+trans(all, .3s)
+		+r(767)
+			max-width: 80px
+			width: 100%
 
 	&__button--active
 		background: $red
 		border-color: $red
 		color: $w
-
-// ========================================
-// tss card - map
-// ========================================
-.tsscard-map
-	margin-top: 50px
-	svg
-		width: 100%
-		height: 100%
-
-.top-map, .left-map, .right-map, .bottom-map
-	fill: rgba(142, 22, 54, 0.35)
-	fill-opacity: 1
-	transition: .5s
-	cursor: pointer
-
-	&:hover
-		filL: $red
-
-// ========================================
-// programma
-// ========================================
-.programma
-	position: relative
-	z-index: 10
-	bottom: -100px
-
-.programma__list
-	display: grid
-	grid-template-columns: repeat(2, 1fr)
-	gap: 20px 30px
-	margin-top: 70px
-
-.programma__item
-	+br(30px)
-	background: $w
-	padding: 43px 38px
-	box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.05)
-	span
-		width: 57px
-		height: 57px
-		+br(50%)
-		background: $red
-		+flex
-		color: $w
-		+semi
-		font-size: 20px
-	h3
-		padding: 44px 0 20px
-		font-size: 20px
-		line-height: 120%
-		color: $b
-		font-weight: normal
-	p
-		color: rgba($b, .4)
-		font-size: 14px
-		line-height: 160%
-
-
 
 .range-input
 	margin-bottom: 40px
@@ -196,6 +212,10 @@
 		color: white
 		font-weight: bold
 		opacity: 0
+		+r(767)
+			width: 40px
+			height: 25px
+			+br(15px)
     
 	&::-moz-range-thumb
 		width: 60px
@@ -209,6 +229,9 @@
 		justify-content: center
 		color: white
 		font-weight: bold
+		+r(767)
+			width: 40px
+			height: 25px
 
 .range-input__value
 	display: none
@@ -231,3 +254,70 @@
 	pointer-events: none
 	/* Allows clicks to pass through */
 	transition: left 0.1s ease-out
+	+r(767)
+		+br(18px)
+
+// ========================================
+// tss card - map
+// ========================================
+.tsscard-map
+	margin-top: 50px
+	svg
+		width: 100%
+		height: 100%
+
+.top-map, .left-map, .right-map, .bottom-map
+	fill: rgba(142, 22, 54, 0.35)
+	fill-opacity: 1
+	transition: .5s
+	cursor: pointer
+
+	&:hover
+		filL: $red
+
+// ========================================
+// programma
+// ========================================
+.programma
+	position: relative
+	z-index: 10
+	bottom: -100px
+	+r(767)
+		bottom: 0
+
+.programma__list
+	display: grid
+	grid-template-columns: repeat(2, 1fr)
+	gap: 20px 30px
+	margin-top: 70px
+	+r(767)
+		grid-template-columns: repeat(1, 1fr)
+		margin-top: 40px
+		grid-gap: 20px
+
+.programma__item
+	+br(30px)
+	background: $w
+	padding: 43px 38px
+	box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.05)
+	+r(767)
+		padding: 40px 30px
+	span
+		width: 57px
+		height: 57px
+		+br(50%)
+		background: $red
+		+flex
+		color: $w
+		+semi
+		font-size: 20px
+	h3
+		padding: 44px 0 20px
+		font-size: 20px
+		line-height: 120%
+		color: $b
+		font-weight: normal
+	p
+		color: rgba($b, .4)
+		font-size: 14px
+		line-height: 160%

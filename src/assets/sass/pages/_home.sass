@@ -796,7 +796,8 @@
 			background-image: url(../img/form-bg-pattern.png)
 			z-index: -1
 			+r(991)
-				background: rgba($red,.85)
+				background-color: rgba($red,.85)
+				background-image: none !important
 	.form
 		margin-top: 40px
 		margin-bottom: 30px
@@ -840,3 +841,6 @@
 			max-width: 485px
 			line-height: 140%
 			font-size: 13px
+		a
+			color: inherit
+			text-decoration: underline !important

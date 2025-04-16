@@ -13,11 +13,11 @@
     <!-- style -->
     <link rel="stylesheet" media="all" href="assets/css/style.min.css" />
 </head>
-<body data-barba="wrapper" class="page-tsscard">
+<body data-barba="wrapper" class="page-tss-card">
 
     <!-- BEGIN content -->
     	
-    		<main data-barba="container" data-barba-namespace="page-tsscard">
+    		<main data-barba="container" data-barba-namespace="page-tss-card">
     		    <div class="main-wrap">
     		
     		    	<!-- header -->
@@ -26,8 +26,8 @@
     						<div class="header__inner">
     							<div class="header__left">
     								<a class="header__logo" href="home.html">
-    									<img class="desktop-logo" src="assets/img/logo.svg" alt="TSS - Fuel">
-    									<img class="mobile-logo" src="assets/img/mob-logo.png" alt="TSS - Fuel">
+    									<img src="assets/img/logo.svg" alt="TSS - Fuel">
+    									<!-- <img class="mobile-logo" src="assets/img/mob-logo.png" alt="TSS - Fuel"> -->
     								</a>
     								<ul class="header__menu">
     									<li class="current-menu-item"><a href="home.html">Home</a></li>
@@ -151,7 +151,10 @@
     					</div>
     				</div>
     
-    			</div>			
+    			</div>
+    			<div class="hero__img hero__img--mobile">
+    				<img src="assets/img/tsscard-hero-card.png" alt="hero card">
+    			</div>	
     			<div class="hero__img after-none">
     				<img src="assets/img/tsscard-hero-card.png" alt="hero card">
     			</div>
@@ -173,7 +176,7 @@
     			        	</div>
     			            <h2>Here's how much you <span>could be saving</span></h2>
     			            
-    			            <div class="savings__info">
+    			            <div class="savings__info sm-hide">
     			                <div class="savings__label">Annual Savings</div>
     			                <div class="savings__amount"><span class="savings__currency">$</span><span id="savings-amount">25</span></div>
     			            </div>
@@ -216,6 +219,13 @@
     			            </div>
     			        </div>
     			        <!-- ./form -->
+    
+        		    	<!-- total -->
+    					<div class="savings__info sm">
+    					    <div class="savings__label">Annual Savings</div>
+    					    <div class="savings__amount"><span class="savings__currency">$</span><span id="savings-amount-sm">25</span></div>
+    					</div>
+    			        <!-- ./total -->
     
     			    </div>
     
