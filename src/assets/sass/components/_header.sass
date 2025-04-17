@@ -45,21 +45,21 @@
 
 	&__logo
 		position: relative
-		&::before
-			content: ''
-			display: block
-			position: absolute
-			top: 0
-			left: 0
-			width: 8px
-			height: 8px
-			background: $w
-			z-index: 3
+		// &::before
+		// 	content: ''
+		// 	display: block
+		// 	position: absolute
+		// 	top: 0
+		// 	left: 0
+		// 	width: 8px
+		// 	height: 8px
+		// 	background: $w
+		// 	z-index: 3
 		img
 			max-width: 110px
 			position: relative
 			+r(991)
-				filter: brightness(100)
+				filter: grayscale(1) brightness(100)
 
 	.desktop-logo
 		+r(991)

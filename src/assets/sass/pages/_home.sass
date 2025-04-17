@@ -7,17 +7,20 @@
 // ============================
 .page-home
 	.hero
-		+r(767)
+		+r(991)
 			padding-top: 150px
 	.hero__content
-		+r(767)
+		+r(991)
 			display: flex
 			flex-direction: column
+	.hero__title
+		+r(991)
+			margin: 15px 0
 	.hero__btn
 		display: flex
 		align-items: center
 		position: relative
-		+r(767)
+		+r(991)
 			order: 4
 		a
 			display: block
@@ -26,7 +29,9 @@
 			min-width: 230px
 			&:hover + span
 				transform: translateX(-60px)
-			+r(767)
+				+r(991)
+					transform: translateX(-40px)
+			+r(991)
 				text-align: center
 		.btn-secondary
 			background: $w
@@ -41,18 +46,24 @@
 			+br(18px)
 			+trans(transform)
 			transform: translateX(-30px)
+			img
+				min-width: 24px
+			+r(991)
+				padding: 20px 20px 20px 45px
 			+r(767)
-				padding: 20px 24px 21px 60px
+				padding: 19px 20px 19px 50px
 	.hero__footer
 		display: flex
 		align-items: center
 		grid-gap: 30px
 		margin-top: 80px
-		+r(767)
+		+r(991)
 			order: 3
 			margin-top: 40px
 			margin-bottom: 40px
 			max-width: 90%
+		+r(767)
+			margin: 20px 0
 		.arrow_down
 			display: inline-flex
 			align-items: center
@@ -645,71 +656,6 @@
 		line-height: 150%
 		font-size: 14px
 
-// ============================
-// Why
-// ============================
-.why
-	background-image: url(../img/why-bg-pattern.png)
-	background-repeat: no-repeat
-	background-size: cover
-	padding: 200px 0
-	+r(991)
-		padding: 90px 0 40px
-
-	&__img
-		position: absolute
-		top: 50%
-		right: 0
-		transform: translate(10%, -50%)
-		+r(991)
-			position: static
-			transform: translate(0)
-		img
-			+r(1440)
-				width: 80%
-				margin-left: auto
-			+r(1200)
-				width: 65%
-			+r(991)
-				max-width: 80%
-				width: 100%
-				margin: 0 auto
-			+r(560)
-				max-width: 100%
-
-	.section__top
-		margin-bottom: 30px
-
-	h2
-		font-size: 40px
-		line-height: 120%
-		font-weight: normal
-		max-width: 530px
-		span
-			color: $red
-		+r(767)
-			font-size: 28px
-
-	p
-		font-size: 17px
-		color: rgba($b,.4)
-		line-height: 160%
-		+reg
-		margin: 20px 0 60px
-		max-width: 570px
-		+r(767)
-			margin: 20px 0 40px
-			font-size: 16px
-
-	&__btns
-		display: flex
-		grid-gap: 15px
-		+r(991)
-			margin-bottom: 30px
-		+r(767)
-			flex-direction: column
-			text-align: center
-			align-items: flex-start
 
 // ============================
 // Map
@@ -721,6 +667,10 @@
 	background-position: right
 	+r(991)
 		padding: 80px 0 100px
+	.btn
+		+r(767)
+			width: 100%
+			text-align: center
 
 .home-map__iframe
 	+br(18px)
@@ -826,6 +776,9 @@
 		color: $w
 		+med
 		font-size: 18px
+		+r(991)
+			min-width: auto
+			width: 100%
 		&::placeholder
 			+med
 			font-size: 18px

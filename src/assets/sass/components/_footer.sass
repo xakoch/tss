@@ -9,11 +9,14 @@
 
 	&__top
 		display: grid
-		grid-template-columns: repeat(4, 1fr)
+		grid-template-columns: 1.2fr 1fr 1fr 1fr
+		grid-gap: 15px
 		margin-bottom: 100px
 		+r(991)
 			grid-template-columns: repeat(2, 1fr)
 			grid-gap: 70px 30px
+		+r(767)
+			margin-bottom: 50px
 
 		h4
 			+med

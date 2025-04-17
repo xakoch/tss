@@ -1,0 +1,65 @@
+// ============================
+// Why
+// ============================
+.why
+	background-image: url(../img/why-bg-pattern.png)
+	background-repeat: no-repeat
+	background-size: cover
+	padding: 200px 0
+	+r(991)
+		padding: 90px 0 40px
+
+	&__img
+		position: absolute
+		top: 50%
+		right: 0
+		transform: translate(10%, -50%)
+		+r(991)
+			position: static
+			transform: translate(0)
+		img
+			+r(1440)
+				width: 80%
+				margin-left: auto
+			+r(1200)
+				width: 65%
+			+r(991)
+				max-width: 80%
+				width: 100%
+				margin: 0 auto
+			+r(560)
+				max-width: 100%
+
+	.section__top
+		margin-bottom: 30px
+
+	h2
+		font-size: 40px
+		line-height: 120%
+		font-weight: normal
+		max-width: 530px
+		span
+			color: $red
+		+r(767)
+			font-size: 28px
+
+	p
+		font-size: 17px
+		color: rgba($b,.4)
+		line-height: 160%
+		+reg
+		margin: 20px 0 60px
+		max-width: 570px
+		+r(767)
+			margin: 20px 0 40px
+			font-size: 16px
+
+	&__btns
+		display: flex
+		grid-gap: 15px
+		+r(991)
+			margin-bottom: 30px
+		+r(767)
+			flex-direction: column
+			text-align: center
+			align-items: flex-start

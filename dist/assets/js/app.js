@@ -290,7 +290,8 @@ function initScript() {
         if (isHomePage()) {
             initHomePage();
         }
-        
+
+        initModals();
         initCalc();
         initMultiStepForm();
 
@@ -312,6 +313,137 @@ function initScript() {
     } catch (error) {
         console.error('Error in initScript:', error);
     }
+}
+
+
+/**
+ * Modal Open/Close
+ */
+function initModals() {
+    // Инициализация Lenis для плавного скролла
+    const lenis = new Lenis({
+        autoRaf: true,
+        prevent: (node) => node.classList.contains("modal")
+    });
+    
+    // Переменная для отслеживания состояния модального окна
+    let isModalActive = false;
+    
+    // Функция для полной блокировки скролла страницы
+    function lockScroll() {
+        isModalActive = true;
+        lenis.stop();
+        
+        // Добавляем стиль, блокирующий скролл всей страницы
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${window.scrollY}px`;
+    }
+    
+    // Функция для разблокировки скролла страницы
+    function unlockScroll() {
+        if (isModalActive) {
+            isModalActive = false;
+            
+            // Сохраняем текущее положение скролла
+            const scrollY = document.body.style.top;
+            
+            // Убираем стили блокировки
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+            
+            // Возвращаем скролл в исходное положение
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            
+            // Запускаем Lenis обратно
+            lenis.start();
+        }
+    }
+    
+    // Получаем все кнопки открытия и модальные окна
+    const openButtons = document.querySelectorAll("[data-modal-open]");
+    const closeButtons = document.querySelectorAll("[data-modal-close]");
+    const modals = document.querySelectorAll(".modal");
+    
+    // Добавляем обработчик клика на все кнопки открытия
+    openButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            // Получаем ID целевого модального окна из атрибута данных
+            const modalId = button.getAttribute("data-modal-open");
+            const targetModal = document.getElementById(modalId);
+            
+            if (targetModal) {
+                targetModal.classList.add('is-active');
+                console.log(`Модальное окно ${modalId} открыто`);
+                lockScroll(); // Блокируем скролл
+            }
+        });
+    });
+    
+    // Добавляем обработчик клика на все кнопки закрытия
+    closeButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            // Находим родительское модальное окно для этой кнопки закрытия
+            const parentModal = button.closest('.modal');
+            
+            if (parentModal) {
+                parentModal.classList.remove('is-active');
+                console.log(`Модальное окно ${parentModal.id} закрыто`);
+                
+                // Проверяем, все ли модальные окна теперь неактивны
+                if (!document.querySelector('.modal.is-active')) {
+                    unlockScroll(); // Разблокируем скролл
+                }
+            }
+        });
+    });
+    
+    // Опционально: закрытие модального окна при клике вне области содержимого
+    modals.forEach(modal => {
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                e.preventDefault();
+                
+                modal.classList.remove('is-active');
+                console.log(`Модальное окно ${modal.id} закрыто кликом снаружи`);
+                
+                // Проверяем, все ли модальные окна теперь неактивны
+                if (!document.querySelector('.modal.is-active')) {
+                    unlockScroll(); // Разблокируем скролл
+                }
+            }
+        });
+    });
+    
+    // Добавляем обработчик колесика мыши для предотвращения скролла при активном модальном окне
+    window.addEventListener('wheel', (e) => {
+        if (isModalActive) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Добавляем обработчик клавиш для предотвращения скролла при активном модальном окне
+    window.addEventListener('keydown', (e) => {
+        // Блокируем клавиши стрелок, Page Up, Page Down, Space, Home, End
+        const scrollKeys = ['ArrowUp', 'ArrowDown', 'Space', 'PageUp', 'PageDown', 'Home', 'End'];
+        if (isModalActive && scrollKeys.includes(e.code)) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Добавляем обработчик касания для предотвращения скролла при активном модальном окне
+    window.addEventListener('touchmove', (e) => {
+        if (isModalActive) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 }
 
 
