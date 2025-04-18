@@ -8,10 +8,8 @@
 	height: 100%
 	z-index: 8888
 	display: none
-	// visibility: hidden
 	&.is-active
 		display: block
-		// visibility: visible
 	&__content
 		+flex
 		flex-direction: column
@@ -22,18 +20,10 @@
 		z-index: 9999
 		background: $w
 		+br(18px)
-		// padding: 120px 40px 80px 40px
-		max-width: 600px
+		max-width: 700px
 		width: 100%
-		+r(767)
-			// padding: 70px 20px 30px 20px
-		iframe
-			display: block
-			position: relative
-			width: 30vw
-			height: 80vh
-			+br(30px)
-			z-index: 9999
+		height: 90vh
+		
 		form,
 		.form__group,
 		input
@@ -49,6 +39,29 @@
 			background: $red
 			color: $w
 
+	&__reviews
+		.modal__content
+			background: transparent
+		.modal__close
+			width: 50px
+			height: 50px
+			+br(50%)
+			background: $w
+			right: -60px
+		iframe
+			position: relative
+			z-index: 9999
+			+br(30px)
+			height: 85vh !important
+			width: 100%
+
+	&__form
+		iframe
+			position: relative
+			height: 85vh !important
+			+br(30px)
+			z-index: 9999
+
 	&__overlay
 		position: absolute
 		top: 0
@@ -57,7 +70,7 @@
 		height: 100%
 		background: rgba($b, 0.6)
 		display: block
-		z-index: 8888
+		z-index: 6666
 
 	&__close
 		position: absolute

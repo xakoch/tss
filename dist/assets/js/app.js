@@ -285,6 +285,7 @@ function initScript() {
         
         // Анимируем стандартные элементы на всех страницах
         animateCommonElements();
+        // initYouTubeModals();
         
         // Проверяем, находимся ли мы на домашней странице перед вызовом initHomePage
         if (isHomePage()) {
@@ -320,130 +321,306 @@ function initScript() {
  * Modal Open/Close
  */
 function initModals() {
-    // Инициализация Lenis для плавного скролла
+    // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
         autoRaf: true,
         prevent: (node) => node.classList.contains("modal")
     });
-    
-    // Переменная для отслеживания состояния модального окна
-    let isModalActive = false;
-    
-    // Функция для полной блокировки скролла страницы
-    function lockScroll() {
-        isModalActive = true;
-        lenis.stop();
-        
-        // Добавляем стиль, блокирующий скролл всей страницы
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        document.body.style.top = `-${window.scrollY}px`;
-    }
-    
-    // Функция для разблокировки скролла страницы
-    function unlockScroll() {
-        if (isModalActive) {
-            isModalActive = false;
-            
-            // Сохраняем текущее положение скролла
-            const scrollY = document.body.style.top;
-            
-            // Убираем стили блокировки
-            document.body.style.overflow = '';
-            document.body.style.position = '';
-            document.body.style.width = '';
-            document.body.style.top = '';
-            
-            // Возвращаем скролл в исходное положение
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
-            
-            // Запускаем Lenis обратно
-            lenis.start();
-        }
-    }
-    
-    // Получаем все кнопки открытия и модальные окна
+
+    // Get all open buttons and modal elements
     const openButtons = document.querySelectorAll("[data-modal-open]");
     const closeButtons = document.querySelectorAll("[data-modal-close]");
     const modals = document.querySelectorAll(".modal");
-    
-    // Добавляем обработчик клика на все кнопки открытия
+
+    // Add click event to all open buttons
     openButtons.forEach(button => {
         button.addEventListener("click", (e) => {
-            e.preventDefault();
-            
-            // Получаем ID целевого модального окна из атрибута данных
+            e.preventDefault(); // Prevent default action
+
+            // Get target modal ID from data attribute
             const modalId = button.getAttribute("data-modal-open");
             const targetModal = document.getElementById(modalId);
-            
+
             if (targetModal) {
                 targetModal.classList.add('is-active');
-                console.log(`Модальное окно ${modalId} открыто`);
-                lockScroll(); // Блокируем скролл
+                console.log(`Modal ${modalId} opened`);
+                lenis.stop();
             }
         });
     });
-    
-    // Добавляем обработчик клика на все кнопки закрытия
+
+    // Add click event to all close buttons
     closeButtons.forEach(button => {
         button.addEventListener("click", (e) => {
-            e.preventDefault();
-            
-            // Находим родительское модальное окно для этой кнопки закрытия
+            e.preventDefault(); // Prevent default action
+
+            // Find the parent modal of this close button
             const parentModal = button.closest('.modal');
-            
+
             if (parentModal) {
                 parentModal.classList.remove('is-active');
-                console.log(`Модальное окно ${parentModal.id} закрыто`);
-                
-                // Проверяем, все ли модальные окна теперь неактивны
+                console.log(`Modal ${parentModal.id} closed`);
+
+                // Only restart Lenis if no other modals are active
                 if (!document.querySelector('.modal.is-active')) {
-                    unlockScroll(); // Разблокируем скролл
+                    lenis.start();
                 }
             }
         });
     });
-    
-    // Опционально: закрытие модального окна при клике вне области содержимого
+
+    // Optional: Close modal when clicking outside content area
     modals.forEach(modal => {
         modal.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent default action
+
             if (e.target === modal) {
-                e.preventDefault();
-                
                 modal.classList.remove('is-active');
-                console.log(`Модальное окно ${modal.id} закрыто кликом снаружи`);
-                
-                // Проверяем, все ли модальные окна теперь неактивны
+                console.log(`Modal ${modal.id} closed by outside click`);
+
+                // Only restart Lenis if no other modals are active
                 if (!document.querySelector('.modal.is-active')) {
-                    unlockScroll(); // Разблокируем скролл
+                    lenis.start();
                 }
             }
         });
     });
+}
+
+
+/**
+ * YouTube API и обработка видео в модальных окнах
+ */
+function initYouTubeModals() {
+    // Загружаем YouTube API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     
-    // Добавляем обработчик колесика мыши для предотвращения скролла при активном модальном окне
-    window.addEventListener('wheel', (e) => {
-        if (isModalActive) {
-            e.preventDefault();
-        }
-    }, { passive: false });
+    // Создаем глобальный объект для хранения плееров
+    window.youtubePlayerInstances = {};
     
-    // Добавляем обработчик клавиш для предотвращения скролла при активном модальном окне
-    window.addEventListener('keydown', (e) => {
-        // Блокируем клавиши стрелок, Page Up, Page Down, Space, Home, End
-        const scrollKeys = ['ArrowUp', 'ArrowDown', 'Space', 'PageUp', 'PageDown', 'Home', 'End'];
-        if (isModalActive && scrollKeys.includes(e.code)) {
-            e.preventDefault();
-        }
-    }, { passive: false });
+    // Добавляем стили только для YouTube модалок
+    addYouTubeModalStyles();
     
-    // Добавляем обработчик касания для предотвращения скролла при активном модальном окне
-    window.addEventListener('touchmove', (e) => {
-        if (isModalActive) {
-            e.preventDefault();
+    // После загрузки YouTube API, onYouTubeIframeAPIReady будет вызван автоматически
+}
+
+// Функция вызывается автоматически после загрузки YouTube API
+function onYouTubeIframeAPIReady() {
+    console.log('YouTube API готов');
+    
+    // Находим только модальные окна с YouTube
+    const youtubeModals = Array.from(document.querySelectorAll('.modal')).filter(modal => {
+        return modal.querySelector('iframe[src*="youtube.com"]');
+    });
+    
+    // Добавляем классы для идентификации
+    youtubeModals.forEach(modal => {
+        modal.classList.add('modal--youtube');
+    });
+    
+    // Заменяем iframe на API плееры только в модальных окнах с YouTube
+    youtubeModals.forEach(processYouTubeModal);
+    
+    // Добавляем обработчики событий для YouTube модалок
+    setupYouTubeModalListeners();
+}
+
+// Обрабатывает отдельное модальное окно с YouTube
+function processYouTubeModal(modal) {
+    const iframe = modal.querySelector('iframe[src*="youtube.com"]');
+    const modalId = modal.id;
+    
+    if (!iframe) return;
+    
+    // Получаем ID видео из src
+    const src = iframe.getAttribute('src');
+    const videoId = extractYouTubeVideoId(src);
+    
+    if (videoId) {
+        // Создаем уникальный ID для плеера
+        const playerId = `youtube-player-${modalId}`;
+        
+        // Создаем div для плеера
+        const playerDiv = document.createElement('div');
+        playerDiv.id = playerId;
+        playerDiv.classList.add('youtube-player-container');
+        
+        // Заменяем iframe на div
+        iframe.parentNode.replaceChild(playerDiv, iframe);
+        
+        // Создаем плеер через YouTube API
+        window.youtubePlayerInstances[modalId] = new YT.Player(playerId, {
+            videoId: videoId,
+            playerVars: {
+                'autoplay': 0,
+                'controls': 1, 
+                'rel': 0,
+                'showinfo': 0,
+                'modestbranding': 1,
+                'playsinline': 1
+            },
+            events: {
+                'onStateChange': event => handlePlayerStateChange(event, modalId),
+                'onReady': event => console.log(`Плеер для ${modalId} готов`)
+            }
+        });
+        
+        console.log(`YouTube плеер создан для модального окна ${modalId}`);
+    }
+}
+
+// Устанавливает слушатели событий для модальных окон с YouTube
+function setupYouTubeModalListeners() {
+    // Кнопки открытия модальных окон
+    const youtubeOpenButtons = Array.from(document.querySelectorAll('[data-modal-open]')).filter(button => {
+        const targetModalId = button.getAttribute('data-modal-open');
+        const targetModal = document.getElementById(targetModalId);
+        return targetModal && targetModal.classList.contains('modal--youtube');
+    });
+    
+    // Добавляем специальные обработчики для кнопок открытия YouTube модалок
+    youtubeOpenButtons.forEach(button => {
+        // Не заменяем, а дополняем существующие обработчики
+        button.addEventListener('click', handleYouTubeModalOpen);
+    });
+    
+    // Добавляем обработчики для кнопок закрытия в YouTube модалках
+    document.querySelectorAll('.modal--youtube [data-modal-close]').forEach(button => {
+        button.addEventListener('click', handleYouTubeModalClose);
+    });
+    
+    // Добавляем обработчики клика на оверлей в YouTube модалках
+    document.querySelectorAll('.modal--youtube').forEach(modal => {
+        modal.addEventListener('click', e => {
+            if (e.target === modal || e.target.classList.contains('modal__overlay')) {
+                handleYouTubeModalClose.call(modal, e);
+            }
+        });
+    });
+}
+
+// Обработчик открытия модального окна с YouTube
+function handleYouTubeModalOpen(e) {
+    const modalId = this.getAttribute('data-modal-open');
+    const player = window.youtubePlayerInstances[modalId];
+    
+    // Если есть плеер для этого модального окна, запускаем видео с небольшой задержкой
+    if (player) {
+        // Даем время для анимации открытия модалки
+        setTimeout(() => {
+            player.playVideo();
+        }, 500);
+    }
+}
+
+// Обработчик закрытия модального окна с YouTube
+function handleYouTubeModalClose(e) {
+    const modal = this.closest('.modal--youtube');
+    const modalId = modal.id;
+    const player = window.youtubePlayerInstances[modalId];
+    
+    // Если есть плеер для этого модального окна, останавливаем видео
+    if (player) {
+        player.pauseVideo();
+    }
+    
+    // Удаляем кнопку "Смотреть снова" если она есть
+    const replayButton = modal.querySelector('.youtube-replay-button');
+    if (replayButton) {
+        replayButton.remove();
+    }
+}
+
+// Обработчик изменения состояния плеера
+function handlePlayerStateChange(event, modalId) {
+    // Если видео закончилось
+    if (event.data === YT.PlayerState.ENDED) {
+        console.log(`Видео в модальном окне ${modalId} завершено`);
+        
+        // Показываем кнопку "Смотреть снова"
+        showReplayButton(event.target, modalId);
+    }
+}
+
+// Показывает кнопку "Смотреть снова"
+function showReplayButton(player, modalId) {
+    const modal = document.getElementById(modalId);
+    const modalContent = modal.querySelector('.modal__content');
+    
+    // Проверяем, существует ли уже кнопка
+    if (modalContent.querySelector('.youtube-replay-button')) return;
+    
+    // Создаем кнопку
+    const replayButton = document.createElement('button');
+    replayButton.className = 'youtube-replay-button';
+    replayButton.innerHTML = 'Смотреть снова';
+    
+    // Добавляем обработчик клика
+    replayButton.addEventListener('click', () => {
+        player.seekTo(0);
+        player.playVideo();
+        replayButton.remove();
+    });
+    
+    // Добавляем кнопку в модальное окно
+    modalContent.appendChild(replayButton);
+}
+
+// Извлекает ID видео из URL YouTube
+function extractYouTubeVideoId(url) {
+    if (!url) return null;
+    
+    const regExp = /(?:\?v=|\/embed\/|\/watch\?v=|\/\d\/|youtu\.be\/|\/v\/|\/e\/|watch\?v=|&v=)([^#\&\?\n<>]+)/;
+    const match = url.match(regExp);
+    
+    return (match && match[1]) ? match[1] : null;
+}
+
+// Добавляет стили только для YouTube модалок
+function addYouTubeModalStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .youtube-player-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+            overflow: hidden;
         }
-    }, { passive: false });
+        
+        .youtube-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .youtube-replay-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 12px 24px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .youtube-replay-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 
@@ -1075,7 +1252,7 @@ function initVideoCarousel() {
         // Инициализируем Slick карусель
         $mySlider.slick({
             dots: true,
-            infinite: true,
+            infinite: false,
             slidesToShow: 1,
             slidesToScroll: 1,
             centerMode: true,
@@ -1086,86 +1263,13 @@ function initVideoCarousel() {
             lazyLoad: 'ondemand',
             responsive: [
                 {
-                    breakpoint: 1024,
+                    breakpoint: 1200,
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1
                     }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
                 }
             ]
-        });
-        
-        // Функция для остановки всех видео
-        function pauseAllVideos() {
-            document.querySelectorAll('.review-video').forEach(video => {
-                video.pause();
-                video.currentTime = 0;
-            });
-        }
-        
-        // Остановка видео при смене слайда
-        $mySlider.on('beforeChange', () => {
-            pauseAllVideos();
-        });
-        
-        // Обработчики для кнопок воспроизведения
-        document.querySelectorAll('.play-button').forEach(button => {
-            button.addEventListener('click', event => {
-                const parentSlide = button.closest('.slide');
-                
-                // Проверяем, активен ли слайд
-                if (!parentSlide.classList.contains('slick-active')) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return;
-                }
-                
-                const video = parentSlide.querySelector('.review-video');
-                if (video) {
-                    pauseAllVideos();
-                    video.play().then(() => {
-                        button.style.display = 'none';
-                    }).catch(error => console.error('Ошибка воспроизведения:', error));
-                }
-            });
-        });
-        
-        // Обработчики для видео
-        document.querySelectorAll('.review-video').forEach(video => {
-            const button = video.closest('.slide').querySelector('.play-button');
-            
-            // При клике на видео
-            video.addEventListener('click', () => {
-                if (!video.closest('.slide').classList.contains('slick-active')) {
-                    return;
-                }
-                
-                if (video.paused) {
-                    pauseAllVideos();
-                    video.play().then(() => {
-                        button.style.display = 'none';
-                    }).catch(error => console.error('Ошибка воспроизведения:', error));
-                } else {
-                    video.pause();
-                }
-            });
-            
-            // При паузе видео
-            video.addEventListener('pause', () => {
-                button.style.display = 'block';
-            });
-            
-            // При воспроизведении видео
-            video.addEventListener('play', () => {
-                button.style.display = 'none';
-            });
         });
         
         console.log('Video carousel initialized successfully');

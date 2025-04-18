@@ -147,7 +147,7 @@
     		<!-- ./hero -->
     
     		<!-- economy -->
-    		<section class="section economy bg-white" id="economy">
+    		<section class="section economy bg-white" id="economy" none>
     			<div class="container">
     				<div class="section__top">
     					<div class="section__subtext">
@@ -252,7 +252,7 @@
     		<!-- ./economy -->
     
     		<!-- type-card -->
-    		<section class="section typecard padding-120 bg-dark-linear">
+    		<section class="section typecard padding-120 bg-dark-linear" none>
     			<div class="container">
     				<div class="section__top --white">
     					<div class="section__subtext">
@@ -389,7 +389,7 @@
     		<!-- ./type-card -->
     
     		<!--/ why -->
-    		<section class="section why">
+    		<section class="section why" none>
     			<div class="container">
     				<div class="why__wrap">
     					<div class="why__content">
@@ -413,7 +413,7 @@
     		</section>
     		<!-- ./ why -->
     		<!--/ fea -->
-    		<section class="section fea">
+    		<section class="section fea" none>
     			<div class="container">
     				<div class="fea__wrap">
     					<!-- left -->
@@ -477,8 +477,69 @@
     			</div>
     		</section>
     		<!-- ./ fea -->
+    		<!-- reviews -->
+    		<section class="section reviews bg-dark-linear">
+    			<div class="container">
+    				<div class="section__top --white">
+    					<div class="section__subtext">
+    						<h5>Reviews</h5>
+    					</div>
+    					<div class="section__num">/ 5 /</div>
+    				</div>
+    				<div class="section__head">
+    					<div class="section__title --white">
+    						<h2>Real Reviews from Our <br> Community</h2>
+    					</div>
+    					<div class="section__addblock">
+    						<p>With 2,000+ truck drivers and fleet owners across the US using <br> TSS Fuel Cards, our proven track record speaks for itself.</p>
+    						<img src="assets/img/reviews-play.svg" alt="">
+    					</div>
+    				</div>
+    				<div class="reviews__content">
+    					<div class="reviews__slider">
+    						<div class="slide" style="background-image: url('assets/img/reviews-1.webp');">
+    					        <a href="#" id="open2" data-modal-open="modal-reviews-1" class="play-button">
+    					            <svg width="42" height="53" viewBox="0 0 42 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+    					                <path d="M42 26.5L0.749998 52.9138L0.75 0.0862237L42 26.5Z" fill="white" />
+    					            </svg>
+    					        </a>
+    					        <div class="text-block">
+    					            <h3>Имя Фамилия</h3>
+    					            <p>Профессия</p>
+    					        </div>
+    						    <div class="overlay"></div>
+    						</div>
+    						<div class="slide" style="background-image: url('assets/img/reviews-2.webp');">
+    					        <a href="#" id="open2" data-modal-open="modal-reviews-2" class="play-button">
+    					            <svg width="42" height="53" viewBox="0 0 42 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+    					                <path d="M42 26.5L0.749998 52.9138L0.75 0.0862237L42 26.5Z" fill="white" />
+    					            </svg>
+    					        </a>
+    					        <div class="text-block">
+    					            <h3>Имя Фамилия</h3>
+    					            <p>Профессия</p>
+    					        </div>
+    						    <div class="overlay"></div>
+    						</div>
+    						<div class="slide" style="background-image: url('assets/img/reviews-3.webp');">
+    					        <a href="#" id="open2" data-modal-open="modal-reviews-3" class="play-button">
+    					            <svg width="42" height="53" viewBox="0 0 42 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+    					                <path d="M42 26.5L0.749998 52.9138L0.75 0.0862237L42 26.5Z" fill="white" />
+    					            </svg>
+    					        </a>
+    					        <div class="text-block">
+    					            <h3>Имя Фамилия</h3>
+    					            <p>Профессия</p>
+    					        </div>
+    						    <div class="overlay"></div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</section>
+    		<!-- ./reviews -->
     		<!--/ map -->
-    		<section class="section home-map padding-90-120">
+    		<section class="section home-map padding-90-120" none>
     			<div class="container">
     				<div class="section__subtext">
     					<h5>Vast Fuel Station Network</h5>
@@ -498,7 +559,7 @@
     		<!-- ./ map -->
     
     		<!-- blog similar -->
-    		<section class="section blog-similar">
+    		<section class="section blog-similar" none>
     			<div class="container">
     				<div class="section__head">
     					<div class="section__head--left">
@@ -599,7 +660,7 @@
     			</div>
     		</section>
     		<!--/ home cta form -->
-    		<section class="section home-form padding-120">
+    		<section class="section home-form padding-120" none>
     			<div class="container">
     				<div class="home-form__inner">
     					<div class="section__title">
@@ -703,12 +764,29 @@
     <!-- END content -->
 
     <!-- BEGIN modals -->
-<!--     <div class="modal modal__reviews" id="modal">
-        <div class="modal__inner">
+    <div class="modal modal__reviews" id="modal-reviews-1">
+        <div class="modal__content">
+            <button class="modal__close" data-modal-close>✕</button>
             <iframe src="https://www.youtube.com/embed/x-IiaM4M4dA?controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="modal__overlay"></div>
-    </div> -->
+    </div>
+
+    <div class="modal modal__reviews" id="modal-reviews-2">
+        <div class="modal__content">
+            <button class="modal__close" data-modal-close>✕</button>
+            <iframe src="https://www.youtube.com/embed/isi-TVa_NiI?controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal__overlay"></div>
+    </div>
+
+    <div class="modal modal__reviews" id="modal-reviews-3">
+        <div class="modal__content">
+            <button class="modal__close" data-modal-close>✕</button>
+            <iframe src="https://www.youtube.com/embed/5qxGC4RKcC8?controls=0&showinfo=0&modestbranding=1&rel=0&disablekb=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal__overlay"></div>
+    </div>
 
     <div class="modal modal__form" id="modal1">
         <div class="modal__content">
