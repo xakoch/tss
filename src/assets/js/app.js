@@ -81,6 +81,26 @@ function initPageTransitions() {
         barba.hooks.before(() => {
             window.scrollTo({ top: 0 });
         });
+
+        // Добавляем хук для запуска инициализаций после перехода страницы
+        barba.hooks.after(() => {
+            // Инициализируем анимацию чисел
+            initAnimNumbers();
+            
+            // Проверяем наличие слайдеров на любой странице
+            const sliderBlocks = document.querySelectorAll(".slider-block");
+            if (sliderBlocks.length > 0) {
+                // Если есть слайдеры, запускаем их инициализацию
+                initSliderBlocks(sliderBlocks);
+            }
+            
+            // Проверяем, находимся ли на странице с табами
+            const tabs = document.querySelectorAll('.typecard__tab');
+            const tabContents = document.querySelectorAll('.typecard__content');
+            if (tabs.length > 0 && tabContents.length > 0) {
+                initTypecardTabs(tabs, tabContents);
+            }
+        });
         
         barba.init({
             sync: false, // Better to disable sync for proper animations
@@ -201,6 +221,15 @@ function initPageTransitions() {
                             gsap.set(heroTitle, { opacity: 0, y: 50 });
                         }
                     }
+
+                    var cf_selector = 'div.wpcf7 > form';
+                    var cf_forms = $(next.container).find(cf_selector);
+                    if (cf_forms.length > 0) {
+                        $(cf_selector).each(function() {
+                            var $form = $(this);
+                            wpcf7.init($form[0]);
+                        });
+                    }
                     
                     initScript();
                 },
@@ -290,7 +319,19 @@ function initScript() {
             initDynamicVideoModal();
         }, 100);
         
-        // Проверяем, находимся ли мы на домашней странице перед вызовом initHomePage
+        // Проверяем наличие элементов на странице
+        const sliderBlocks = document.querySelectorAll(".slider-block");
+        if (sliderBlocks.length > 0) {
+            initSliderBlocks(sliderBlocks);
+        }
+        
+        const tabs = document.querySelectorAll('.typecard__tab');
+        const tabContents = document.querySelectorAll('.typecard__content');
+        if (tabs.length > 0 && tabContents.length > 0) {
+            initTypecardTabs(tabs, tabContents);
+        }
+        
+        // Проверяем, находимся ли мы на домашней странице
         if (isHomePage()) {
             initHomePage();
         }
@@ -298,6 +339,8 @@ function initScript() {
         initModals();
         initCalc();
         initMultiStepForm();
+        // Инициализируем анимацию чисел на ВСЕХ страницах
+        initAnimNumbers();
 
         if (document.querySelector('.login-page')) {
             initLoginPage();
@@ -593,7 +636,6 @@ function initModals() {
     });
 }
 
-
 /**
  * Hamburger Nav Open/Close
  */
@@ -787,12 +829,6 @@ function isHomePage() {
             return true;
         }
         
-        // Проверка на наличие элементов, характерных для домашней страницы
-        if (document.querySelector('.slider-block') || 
-            document.querySelector('.custom-count-number')) {
-            return true;
-        }
-        
         return false;
     } catch (error) {
         console.error('Error in isHomePage:', error);
@@ -800,282 +836,321 @@ function isHomePage() {
     }
 }
 
+// Функция для работы слайдеров - выделена из initHomePage для возможности использования отдельно
+function initSliderBlocks(sliderBlocks) {
+    sliderBlocks.forEach((block) => {
+        try {
+            const track = block.querySelector(".slider-track");
+            const slides = block.querySelectorAll(".slider-slide");
+            
+            // Проверяем наличие необходимых элементов
+            if (!track || slides.length === 0) {
+                console.warn('Missing slider elements in block', block);
+                return;
+            }
+            
+            // Если слайдер уже инициализирован, то пропускаем
+            if (block.dataset.initialized === 'true') {
+                return;
+            }
+            
+            let controlsContainer = block.querySelector(".slider-control");
+            if (!controlsContainer) {
+                controlsContainer = document.createElement("div");
+                controlsContainer.classList.add("slider-control");
+                block.prepend(controlsContainer);
+            } else {
+                controlsContainer.innerHTML = "";
+            }
+            
+            let currentIndex = 0;
+            let startX = 0;
+            let moveX = 0;
+            let isSwiping = false;
+            let autoplayInterval;
+            
+            const updateSlider = (index) => {
+                // Make sure index is within bounds
+                if (index >= slides.length) {
+                    index = 0;
+                } else if (index < 0) {
+                    index = slides.length - 1;
+                }
+                
+                const slideWidth = slides[0].offsetWidth;
+                
+                // Используем GSAP для анимации слайдера
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(track, {
+                        x: -index * slideWidth,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    });
+                } else {
+                    // Fallback если GSAP не доступен
+                    track.style.transform = `translateX(-${index * slideWidth}px)`;
+                }
+                
+                block.querySelectorAll(".slider-button").forEach((btn, idx) => {
+                    btn.classList.toggle("active", idx === index);
+                });
+                currentIndex = index;
+            };
+            
+            // Function to start autoplay
+            const startAutoplay = () => {
+                // Clear any existing interval first
+                stopAutoplay();
+                
+                autoplayInterval = setInterval(() => {
+                    updateSlider(currentIndex + 1);
+                }, 3500); // 3.5 seconds
+            };
+            
+            // Function to stop autoplay
+            const stopAutoplay = () => {
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    autoplayInterval = null;
+                }
+            };
+            
+            slides.forEach((_, index) => {
+                const button = document.createElement("button");
+                button.classList.add("slider-button");
+                button.textContent = index + 1;
+                button.addEventListener("click", () => {
+                    updateSlider(index);
+                    // Restart autoplay when user clicks a button
+                    startAutoplay();
+                });
+                controlsContainer.appendChild(button);
+            });
+            
+            // Добавляем класс active первой кнопке только если она существует
+            const firstButton = controlsContainer.querySelector(".slider-button");
+            if (firstButton) {
+                firstButton.classList.add("active");
+            }
+            
+            // Swipe events
+            track.addEventListener("touchstart", (e) => {
+                startX = e.touches[0].clientX;
+                isSwiping = true;
+                // Stop autoplay while user is interacting
+                stopAutoplay();
+            });
+            
+            track.addEventListener("touchmove", (e) => {
+                if (!isSwiping) return;
+                moveX = e.touches[0].clientX;
+            });
+            
+            track.addEventListener("touchend", () => {
+                if (!isSwiping) return;
+                let diff = startX - moveX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0 && currentIndex < slides.length - 1) {
+                        updateSlider(currentIndex + 1);
+                    } else if (diff < 0 && currentIndex > 0) {
+                        updateSlider(currentIndex - 1);
+                    }
+                }
+                isSwiping = false;
+                // Restart autoplay after user finishes interacting
+                startAutoplay();
+            });
+            
+            // Pause autoplay when user hovers over slider
+            block.addEventListener("mouseenter", stopAutoplay);
+            block.addEventListener("mouseleave", startAutoplay);
+            
+            window.addEventListener("resize", () => {
+                updateSlider(currentIndex);
+            });
+            
+            // Start autoplay when page loads
+            startAutoplay();
+            
+            // Помечаем слайдер как инициализированный
+            block.dataset.initialized = 'true';
+            
+        } catch (error) {
+            console.error('Error in slider block processing:', error);
+        }
+    });
+}
+
+// Функция для работы с табами - выделена из initHomePage для возможности использования отдельно
+function initTypecardTabs(tabs, tabContents) {
+    tabs.forEach(tab => {
+        // Если обработчик уже установлен, пропускаем
+        if (tab.dataset.handlerAttached === 'true') {
+            return;
+        }
+        
+        tab.addEventListener('click', function() {
+            try {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('typecard__tab_active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('typecard__tab_active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                if (!tabId) return;
+                
+                // Get current active content
+                const currentActive = document.querySelector('.typecard__content_active');
+                
+                // Get new content to activate
+                const newActive = document.getElementById(tabId + '-content');
+                
+                if (!newActive || !currentActive) return;
+                
+                // Если GSAP доступен, используем его для анимации
+                if (typeof gsap !== 'undefined') {
+                    // Скрываем текущий активный контент
+                    gsap.to(currentActive, {
+                        opacity: 0,
+                        duration: 0.3,
+                        onComplete: function() {
+                            currentActive.classList.remove('typecard__content_active');
+                            
+                            // Показываем новый контент
+                            newActive.classList.add('typecard__content_active');
+                            newActive.style.opacity = 0;
+                            
+                            gsap.to(newActive, {
+                                opacity: 1,
+                                duration: 0.3
+                            });
+                        }
+                    });
+                } else if (typeof jQuery !== 'undefined') {
+                    // Fallback на jQuery, если GSAP не доступен
+                    jQuery('.typecard__content_active').fadeOut(300, function() {
+                        jQuery(this).removeClass('typecard__content_active');
+                        jQuery(newActive).css('display', 'none').addClass('typecard__content_active').fadeIn(300);
+                    });
+                } else {
+                    // Fallback на обычное переключение, если ни GSAP, ни jQuery не доступны
+                    tabContents.forEach(content => content.classList.remove('typecard__content_active'));
+                    newActive.classList.add('typecard__content_active');
+                }
+            } catch (error) {
+                console.error('Error in tab click handling:', error);
+            }
+        });
+        
+        // Помечаем таб как инициализированный
+        tab.dataset.handlerAttached = 'true';
+    });
+}
+
 /**
- * Home page
+ * Home page функционал
  */
 function initHomePage() {
     try {
-        // ===================================
-        // Economy block slider
-        // ===================================
+        // Инициализируем слайдеры, если они есть
         const sliderBlocks = document.querySelectorAll(".slider-block");
-        
         if (sliderBlocks.length > 0) {
-            sliderBlocks.forEach((block) => {
-                try {
-                    const track = block.querySelector(".slider-track");
-                    const slides = block.querySelectorAll(".slider-slide");
-                    
-                    // Проверяем наличие необходимых элементов
-                    if (!track || slides.length === 0) {
-                        console.warn('Missing slider elements in block', block);
-                        return;
-                    }
-                    
-                    let controlsContainer = block.querySelector(".slider-control");
-                    if (!controlsContainer) {
-                        controlsContainer = document.createElement("div");
-                        controlsContainer.classList.add("slider-control");
-                        block.prepend(controlsContainer);
-                    } else {
-                        controlsContainer.innerHTML = "";
-                    }
-                    
-                    let currentIndex = 0;
-                    let startX = 0;
-                    let moveX = 0;
-                    let isSwiping = false;
-                    let autoplayInterval;
-                    
-                    const updateSlider = (index) => {
-                        // Make sure index is within bounds
-                        if (index >= slides.length) {
-                            index = 0;
-                        } else if (index < 0) {
-                            index = slides.length - 1;
-                        }
-                        
-                        const slideWidth = slides[0].offsetWidth;
-                        
-                        // Используем GSAP для анимации слайдера
-                        if (typeof gsap !== 'undefined') {
-                            gsap.to(track, {
-                                x: -index * slideWidth,
-                                duration: 0.6,
-                                ease: "power2.out"
-                            });
-                        } else {
-                            // Fallback если GSAP не доступен
-                            track.style.transform = `translateX(-${index * slideWidth}px)`;
-                        }
-                        
-                        block.querySelectorAll(".slider-button").forEach((btn, idx) => {
-                            btn.classList.toggle("active", idx === index);
-                        });
-                        currentIndex = index;
-                    };
-                    
-                    // Function to start autoplay
-                    const startAutoplay = () => {
-                        // Clear any existing interval first
-                        stopAutoplay();
-                        
-                        autoplayInterval = setInterval(() => {
-                            updateSlider(currentIndex + 1);
-                        }, 3500); // 3.5 seconds
-                    };
-                    
-                    // Function to stop autoplay
-                    const stopAutoplay = () => {
-                        if (autoplayInterval) {
-                            clearInterval(autoplayInterval);
-                            autoplayInterval = null;
-                        }
-                    };
-                    
-                    slides.forEach((_, index) => {
-                        const button = document.createElement("button");
-                        button.classList.add("slider-button");
-                        button.textContent = index + 1;
-                        button.addEventListener("click", () => {
-                            updateSlider(index);
-                            // Restart autoplay when user clicks a button
-                            startAutoplay();
-                        });
-                        controlsContainer.appendChild(button);
-                    });
-                    
-                    // Добавляем класс active первой кнопке только если она существует
-                    const firstButton = controlsContainer.querySelector(".slider-button");
-                    if (firstButton) {
-                        firstButton.classList.add("active");
-                    }
-                    
-                    // Swipe events
-                    track.addEventListener("touchstart", (e) => {
-                        startX = e.touches[0].clientX;
-                        isSwiping = true;
-                        // Stop autoplay while user is interacting
-                        stopAutoplay();
-                    });
-                    
-                    track.addEventListener("touchmove", (e) => {
-                        if (!isSwiping) return;
-                        moveX = e.touches[0].clientX;
-                    });
-                    
-                    track.addEventListener("touchend", () => {
-                        if (!isSwiping) return;
-                        let diff = startX - moveX;
-                        if (Math.abs(diff) > 50) {
-                            if (diff > 0 && currentIndex < slides.length - 1) {
-                                updateSlider(currentIndex + 1);
-                            } else if (diff < 0 && currentIndex > 0) {
-                                updateSlider(currentIndex - 1);
-                            }
-                        }
-                        isSwiping = false;
-                        // Restart autoplay after user finishes interacting
-                        startAutoplay();
-                    });
-                    
-                    // Pause autoplay when user hovers over slider
-                    block.addEventListener("mouseenter", stopAutoplay);
-                    block.addEventListener("mouseleave", startAutoplay);
-                    
-                    window.addEventListener("resize", () => {
-                        updateSlider(currentIndex);
-                    });
-                    
-                    // Start autoplay when page loads
-                    startAutoplay();
-                } catch (error) {
-                    console.error('Error in slider block processing:', error);
-                }
-            });
+            initSliderBlocks(sliderBlocks);
         }
 
-        // ===================================
-        // Economy Number Animation с использованием GSAP
-        // ===================================
-        const numberElements = document.querySelectorAll(".custom-count-number");
-
-        if (numberElements.length > 0 && typeof gsap !== 'undefined') {
-            const parseNumberAndSymbol = (text) => {
-                if (!text) return null;
-                
-                const match = text.trim().match(/^([\d,]+)(\s*[<%]?)$/);
-                if (!match) return null;
-
-                return {
-                    number: parseInt(match[1].replace(/,/g, ""), 10),
-                    suffix: match[2] || "",
-                };
-            };
-
-            const animateNumber = (element, finalNumber, suffix) => {
-                // Создаем объект для анимации
-                const obj = { value: 0 };
-                
-                // Устанавливаем начальное значение
-                element.style.opacity = "1";
-                
-                // Анимируем с GSAP
-                gsap.to(obj, {
-                    value: finalNumber,
-                    duration: 2,
-                    ease: "power1.out",
-                    onUpdate: function() {
-                        element.textContent = `${Math.floor(obj.value).toLocaleString("en-US")}${suffix}`;
-                    }
-                });
-            };
-
-            // Создаем обсервер для отслеживания видимости элементов
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.dataset.animated) {
-                        try {
-                            const data = parseNumberAndSymbol(entry.target.textContent);
-                            if (!data) return;
-
-                            const { number, suffix } = data;
-                            entry.target.dataset.animated = "true";
-                            animateNumber(entry.target, number, suffix);
-                        } catch (error) {
-                            console.error('Error in number animation:', error);
-                        }
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: "0px 0px -25% 0px"
-            });
-            
-            // Наблюдаем за всеми элементами
-            numberElements.forEach(element => {
-                observer.observe(element);
-            });
-        }
-
-        // ===================================
-        // Typecard Tabs с использованием GSAP
-        // ===================================
+        // Инициализируем табы, если они есть
         const tabs = document.querySelectorAll('.typecard__tab');
         const tabContents = document.querySelectorAll('.typecard__content');
-
         if (tabs.length > 0 && tabContents.length > 0) {
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    try {
-                        // Remove active class from all tabs
-                        tabs.forEach(t => t.classList.remove('typecard__tab_active'));
-                        
-                        // Add active class to clicked tab
-                        this.classList.add('typecard__tab_active');
-                        
-                        // Show corresponding content
-                        const tabId = this.getAttribute('data-tab');
-                        if (!tabId) return;
-                        
-                        // Get current active content
-                        const currentActive = document.querySelector('.typecard__content_active');
-                        
-                        // Get new content to activate
-                        const newActive = document.getElementById(tabId + '-content');
-                        
-                        if (!newActive || !currentActive) return;
-                        
-                        // Если GSAP доступен, используем его для анимации
-                        if (typeof gsap !== 'undefined') {
-                            // Скрываем текущий активный контент
-                            gsap.to(currentActive, {
-                                opacity: 0,
-                                duration: 0.3,
-                                onComplete: function() {
-                                    currentActive.classList.remove('typecard__content_active');
-                                    
-                                    // Показываем новый контент
-                                    newActive.classList.add('typecard__content_active');
-                                    newActive.style.opacity = 0;
-                                    
-                                    gsap.to(newActive, {
-                                        opacity: 1,
-                                        duration: 0.3
-                                    });
-                                }
-                            });
-                        } else if (typeof jQuery !== 'undefined') {
-                            // Fallback на jQuery, если GSAP не доступен
-                            jQuery('.typecard__content_active').fadeOut(300, function() {
-                                jQuery(this).removeClass('typecard__content_active');
-                                jQuery(newActive).css('display', 'none').addClass('typecard__content_active').fadeIn(300);
-                            });
-                        } else {
-                            // Fallback на обычное переключение, если ни GSAP, ни jQuery не доступны
-                            tabContents.forEach(content => content.classList.remove('typecard__content_active'));
-                            newActive.classList.add('typecard__content_active');
-                        }
-                    } catch (error) {
-                        console.error('Error in tab click handling:', error);
-                    }
-                });
-            });
+            initTypecardTabs(tabs, tabContents);
         }
     } catch (error) {
         console.error('Error in initHomePage:', error);
     }
 }
+
+
+function initAnimNumbers() {
+    // Находим все элементы для анимации
+    const numberElements = document.querySelectorAll(".anime-number");
+    
+    if (numberElements.length === 0 || typeof gsap === 'undefined') return;
+    
+    // Ключ для хранения даты последнего обновления
+    const LAST_UPDATE_KEY = 'last_random_update_date';
+    
+    // Проверяем, нужно ли обновить случайное число сегодня
+    function shouldUpdateRandomToday() {
+        const today = new Date().toDateString();
+        const lastUpdate = localStorage.getItem(LAST_UPDATE_KEY);
+        
+        if (lastUpdate !== today) {
+            localStorage.setItem(LAST_UPDATE_KEY, today);
+            return true;
+        }
+        return false;
+    }
+    
+    // Обрабатываем каждый элемент
+    numberElements.forEach(element => {
+        // Получаем текст элемента
+        const originalText = element.textContent;
+        
+        // Используем улучшенное регулярное выражение для поиска числа с точкой и запятой
+        const match = originalText.match(/^(.*?)(\d[\d,.]+)(.*)$/);
+        if (!match) return;
+        
+        // Извлекаем части
+        const prefix = match[1] || '';
+        const numText = match[2];
+        const suffix = match[3] || '';
+        
+        // Преобразуем строку в число, удаляя запятые
+        let targetNumber = parseFloat(numText.replace(/,/g, ''));
+        
+        // Для элементов с классом random-number увеличиваем число
+        if (element.classList.contains('random-number') && shouldUpdateRandomToday()) {
+            const randomIncrement = Math.floor(Math.random() * 20) + 1;
+            targetNumber += randomIncrement;
+        }
+        
+        // Определяем, имеет ли число десятичную часть
+        const hasDecimal = numText.includes('.');
+        const decimalPlaces = hasDecimal ? numText.split('.')[1].length : 0;
+        
+        // Запускаем анимацию от 0 до целевого числа
+        const obj = { value: 0 };
+        
+        gsap.to(obj, {
+            value: targetNumber,
+            duration: 2,
+            ease: "power1.out",
+            onUpdate: function() {
+                // Форматируем текущее значение с учетом десятичных знаков
+                let currentValue;
+                
+                if (hasDecimal) {
+                    currentValue = obj.value.toFixed(decimalPlaces);
+                } else {
+                    currentValue = Math.floor(obj.value);
+                }
+                
+                // Добавляем запятые, если они были в оригинальном тексте
+                if (numText.includes(',')) {
+                    const parts = currentValue.toString().split('.');
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    currentValue = parts.join('.');
+                }
+                
+                // Обновляем текст элемента
+                element.textContent = prefix + currentValue + suffix;
+            }
+        });
+    });
+}
+
 
 /**
  * Swiper Slider

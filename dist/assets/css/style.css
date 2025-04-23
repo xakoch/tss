@@ -4479,12 +4479,11 @@ html.lenis, html.lenis body {
     padding-left: 60px;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1366px) {
     .calculator {
         grid-template-columns: 1fr;
         grid-gap: 30px;
-        padding-left: 30px;
-        padding: 30px;
+        padding: 60px;
     }
 }
 
