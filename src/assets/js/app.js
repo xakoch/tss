@@ -1071,27 +1071,14 @@ function initHomePage() {
     }
 }
 
-
+/**
+ * Anime Numbers
+ */
 function initAnimNumbers() {
     // Находим все элементы для анимации
     const numberElements = document.querySelectorAll(".anime-number");
     
     if (numberElements.length === 0 || typeof gsap === 'undefined') return;
-    
-    // Ключ для хранения даты последнего обновления
-    const LAST_UPDATE_KEY = 'last_random_update_date';
-    
-    // Проверяем, нужно ли обновить случайное число сегодня
-    function shouldUpdateRandomToday() {
-        const today = new Date().toDateString();
-        const lastUpdate = localStorage.getItem(LAST_UPDATE_KEY);
-        
-        if (lastUpdate !== today) {
-            localStorage.setItem(LAST_UPDATE_KEY, today);
-            return true;
-        }
-        return false;
-    }
     
     // Обрабатываем каждый элемент
     numberElements.forEach(element => {
@@ -1109,12 +1096,6 @@ function initAnimNumbers() {
         
         // Преобразуем строку в число, удаляя запятые
         let targetNumber = parseFloat(numText.replace(/,/g, ''));
-        
-        // Для элементов с классом random-number увеличиваем число
-        if (element.classList.contains('random-number') && shouldUpdateRandomToday()) {
-            const randomIncrement = Math.floor(Math.random() * 20) + 1;
-            targetNumber += randomIncrement;
-        }
         
         // Определяем, имеет ли число десятичную часть
         const hasDecimal = numText.includes('.');
@@ -1150,7 +1131,6 @@ function initAnimNumbers() {
         });
     });
 }
-
 
 /**
  * Swiper Slider
