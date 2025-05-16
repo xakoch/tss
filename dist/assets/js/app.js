@@ -86,6 +86,8 @@ function initPageTransitions() {
         barba.hooks.after(() => {
             // Инициализируем анимацию чисел
             initAnimNumbers();
+
+            initFileUpload();
             
             // Проверяем наличие слайдеров на любой странице
             const sliderBlocks = document.querySelectorAll(".slider-block");
@@ -231,6 +233,7 @@ function initPageTransitions() {
                         });
                     }
                     
+                    initFileUpload();
                     initScript();
                 },
             }]
@@ -341,6 +344,7 @@ function initScript() {
         initMultiStepForm();
         // Инициализируем анимацию чисел на ВСЕХ страницах
         initAnimNumbers();
+        initVerificationForm();
 
         if (document.querySelector('.login-page')) {
             initLoginPage();
@@ -361,6 +365,222 @@ function initScript() {
         console.error('Error in initScript:', error);
     }
 }
+
+function initFileUpload() {
+    console.log('Initializing file upload handlers');
+    
+    const forms = document.querySelectorAll('form[enctype="multipart/form-data"]');
+    if (forms.length === 0) {
+        console.log('No file upload forms found');
+        return;
+    }
+    
+    console.log(`Found ${forms.length} file upload forms`);
+    
+    forms.forEach((form, index) => {
+        console.log(`Setting up form ${index+1}`);
+        
+        // Удаляем старый обработчик, если был
+        form.removeEventListener('submit', handleFileUpload);
+        
+        // Добавляем новый обработчик
+        form.addEventListener('submit', handleFileUpload);
+    });
+}
+
+function handleFileUpload(e) {
+    // Отменяем обработку barba.js при отправке формы с файлами
+    e.preventDefault();
+    e.stopPropagation();
+    
+    console.log('Form submission intercepted');
+    
+    const form = this;
+    const formData = new FormData(form);
+    const actionUrl = form.getAttribute('action') || window.location.href;
+    
+    // Показываем индикатор загрузки
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'upload-loading';
+    loadingIndicator.innerHTML = '<div class="loading-spinner"></div><div>Загрузка...</div>';
+    loadingIndicator.style.position = 'fixed';
+    loadingIndicator.style.top = '0';
+    loadingIndicator.style.left = '0';
+    loadingIndicator.style.width = '100%';
+    loadingIndicator.style.height = '100%';
+    loadingIndicator.style.backgroundColor = 'rgba(255,255,255,0.8)';
+    loadingIndicator.style.display = 'flex';
+    loadingIndicator.style.flexDirection = 'column';
+    loadingIndicator.style.alignItems = 'center';
+    loadingIndicator.style.justifyContent = 'center';
+    loadingIndicator.style.zIndex = '9999';
+    document.body.appendChild(loadingIndicator);
+    
+    console.log('Sending form data to:', actionUrl);
+    
+    fetch(actionUrl, {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        console.log('Response received', response);
+        return response.text();
+    })
+    .then(html => {
+        console.log('Parsing response HTML');
+        
+        // Обновляем содержимое страницы
+        const parser = new DOMParser();
+        const newDoc = parser.parseFromString(html, 'text/html');
+        
+        // Находим целевой контейнер
+        const newContent = newDoc.querySelector('.verification-container');
+        const currentContainer = document.querySelector('.verification-container');
+        
+        if (newContent && currentContainer) {
+            console.log('Updating verification container');
+            currentContainer.innerHTML = newContent.innerHTML;
+            
+            // Переинициализируем обработчики
+            setTimeout(() => {
+                initFileUpload();
+            }, 100);
+        } else {
+            console.log('Container not found, refreshing page');
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка при отправке формы:', error);
+        alert('Произошла ошибка при загрузке файлов. Пожалуйста, попробуйте еще раз.');
+    })
+    .finally(() => {
+        // Удаляем индикатор загрузки
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+        }
+    });
+}
+
+function initVerificationForm() {
+    // Находим форму верификации
+    const form = document.querySelector('.verification-container form');
+    if (!form) return;
+    
+    // Показываем выбранные файлы пользователю
+    const fileInputs = form.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+        // Создаем элемент для показа имени файла
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'file-info';
+        input.after(fileInfo);
+        
+        // Обработчик изменения файла
+        input.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileInfo.textContent = this.files[0].name;
+                fileInfo.classList.add('has-file');
+            } else {
+                fileInfo.textContent = '';
+                fileInfo.classList.remove('has-file');
+            }
+        });
+    });
+    
+    // ВАЖНО! НЕ БЛОКИРУЕМ ОТПРАВКУ ФОРМЫ, даем ей работать обычным способом!
+    // То есть сюда НЕ добавляем обработчик submit с e.preventDefault()
+}
+
+// function initVerificationForm() {
+//     const form = document.querySelector('.verification-container form');
+//     if (!form) return;
+    
+//     // Создаем заглушку/прелоадер
+//     const preloader = document.createElement('div');
+//     preloader.className = 'verification-preloader';
+//     preloader.innerHTML = `
+//         <div class="preloader-spinner"></div>
+//         <p>Загрузка файлов...</p>
+//     `;
+//     preloader.style.display = 'none';
+//     form.after(preloader);
+    
+//     // Обработчик отправки формы
+//     form.addEventListener('submit', function(e) {
+//         e.preventDefault();
+        
+//         // Проверяем, что в форме есть хотя бы один загруженный файл
+//         let hasFiles = false;
+//         const inputs = form.querySelectorAll('input[type="file"]');
+//         inputs.forEach(input => {
+//             if (input.files && input.files.length > 0) {
+//                 hasFiles = true;
+//             }
+//         });
+        
+//         if (!hasFiles) {
+//             alert('Пожалуйста, выберите хотя бы один файл для загрузки.');
+//             return;
+//         }
+        
+//         // Показываем прелоадер
+//         form.style.display = 'none';
+//         preloader.style.display = 'block';
+        
+//         // Отправляем форму через AJAX
+//         const formData = new FormData(form);
+        
+//         fetch(window.location.href, {
+//             method: 'POST',
+//             body: formData,
+//             credentials: 'same-origin'
+//         })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error! Status: ${response.status}`);
+//             }
+//             return response.text();
+//         })
+//         .then(html => {
+//             try {
+//                 // Вытаскиваем содержимое контейнера из ответа
+//                 const parser = new DOMParser();
+//                 const newDoc = parser.parseFromString(html, 'text/html');
+//                 const newContent = newDoc.querySelector('.verification-container');
+                
+//                 if (newContent) {
+//                     // Заменяем весь контейнер новым содержимым
+//                     const container = document.querySelector('.verification-container');
+//                     if (container) {
+//                         container.innerHTML = newContent.innerHTML;
+//                         // Переинициализируем форму
+//                         setTimeout(() => {
+//                             initVerificationForm();
+//                         }, 100);
+//                     } else {
+//                         console.error('Контейнер верификации не найден');
+//                         window.location.reload();
+//                     }
+//                 } else {
+//                     console.error('Новый контент не найден в ответе');
+//                     window.location.reload();
+//                 }
+//             } catch (error) {
+//                 console.error('Ошибка при обработке ответа:', error);
+//                 window.location.reload();
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Ошибка при отправке формы:', error);
+//             alert('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+            
+//             // Скрываем прелоадер и показываем форму
+//             preloader.style.display = 'none';
+//             form.style.display = 'block';
+//         });
+//     });
+// }
 
 /**
  * Система динамического создания модального окна с видео
@@ -649,6 +869,18 @@ function initBtnMenuOpenClose() {
     const menu = document.querySelectorAll('.mobile__menu');
     const links = document.querySelectorAll('.mobile__menu .header__nav a');
     const langLinks = document.querySelectorAll('.language-chooser a');
+
+    // ДОБАВИТЬ ЭТУ ПРОВЕРКУ
+    if (!burger) {
+        console.log('Burger menu not found on this page');
+        return; // Выходим если бургера нет
+    }
+    
+    const menu = document.querySelectorAll('.mobile__menu');
+    if (menu.length === 0) {
+        console.log('Mobile menu not found');
+        return;
+    }
 
     // Установка начального состояния меню (скрыто)
     gsap.set(menu, {

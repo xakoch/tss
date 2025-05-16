@@ -442,6 +442,14 @@ body.page-partners {
 .header__right {
     display: flex;
     grid-gap: 12px;
+    align-items: center;
+    grid-gap: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+    .header__right {
+        grid-gap: 20px;
+    }
 }
 
 .header__lang {
@@ -495,6 +503,41 @@ body.page-partners {
 @media only screen and (max-width: 991px) {
     .header__cta {
         display: none;
+    }
+}
+
+.header__login {
+    display: block;
+    font-family: Inter-Regular, sans-serif;
+    text-align: center;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    color: #545454;
+    height: 100%;
+    transition: color 0.25s ease;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header__login {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .header__login {
+        color: #ffffff;
+        font-size: 14px;
+    }
+}
+
+.header__login:hover {
+    color: #8E1636;
+}
+
+@media only screen and (max-width: 767px) {
+    .header__login:hover {
+        color: #545454;
     }
 }
 

@@ -72,6 +72,10 @@
 	&__right
 		display: flex
 		grid-gap: 12px
+		align-items: center
+		grid-gap: 30px
+		+r(767)
+			grid-gap: 20px
 
 	&__lang
 		border-radius: 18px
@@ -105,6 +109,26 @@
 			font-size: 16px
 		+r(991)
 			display: none
+
+	&__login
+		display: block
+		+reg
+		text-align: center
+		font-size: 17px
+		font-style: normal
+		font-weight: 400
+		color: $gray
+		height: 100%
+		transition: color .25s ease
+		+r(1200)
+			font-size: 16px
+		+r(767)
+			color: $w
+			font-size: 14px
+		&:hover
+			color: $red
+			+r(767)
+				color: $gray
 
 
 // ===========================
