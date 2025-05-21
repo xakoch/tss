@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof barba !== 'undefined') {
         initPageTransitions();
     } else {
-        console.warn('Barba.js не найден');
+        console.warn('Barba.js not found');
         // Инициализируем скрипты напрямую, если Barba не доступен
         initScript();
     }
@@ -16,7 +16,7 @@ let lenis;
 function initLenis() {
     try {
         if (typeof Lenis === 'undefined') {
-            console.warn('Lenis не найден');
+            console.warn('Lenis not found');
             return;
         }
         
@@ -265,6 +265,179 @@ function delay(n = 2000) {
     return new Promise(done => setTimeout(done, n));
 }
 
+
+/**
+ * Функция задержки
+ */
+// --- Функции инициализации для ваших секций ---
+function initVerificationEmptyDashboard(container) {
+    // `container` - это DOM-элемент, который Barba только что загрузил (data.next.container)
+    // Если container не передан (например, при первой загрузке без Barba), используем document
+    const currentView = container || document;
+
+    const contactSupportBtn = currentView.querySelector('.contact-support-btn');
+    if (contactSupportBtn) {
+        // Удаляем старый обработчик, если он мог остаться от предыдущей инициализации
+        // (хотя при смене innerHTML контейнера Barba старые элементы удаляются)
+        // Для большей надежности можно использовать AbortController или именованные функции.
+        // Здесь предполагаем, что элементы всегда новые после Barba-перехода.
+        contactSupportBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const needAssistanceSection = document.querySelector('.need-assistance'); // Может быть вне контейнера Barba
+            if (needAssistanceSection) {
+                needAssistanceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    const actionCards = currentView.querySelectorAll('.action-card');
+    actionCards.forEach(function(card) {
+        const icon = card.querySelector('.action-icon');
+        if (icon) {
+            card.addEventListener('mouseenter', function() {
+                icon.style.transform = 'scale(1.1)';
+            });
+            card.addEventListener('mouseleave', function() {
+                icon.style.transform = 'scale(1)';
+            });
+        }
+    });
+    console.log('Verification Empty Dashboard Initialized');
+}
+
+function initVerificationForm(container) {
+    const currentView = container || document;
+
+    // Close alerts
+    const alertElements = currentView.querySelectorAll('.alert');
+    alertElements.forEach(function(alertEl) {
+        const closeButton = alertEl.querySelector('.close-alert');
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                alertEl.classList.add('fade-out'); // У вас должен быть CSS для .fade-out
+                setTimeout(() => {
+                    if (alertEl.parentNode) { // Убедимся, что элемент еще в DOM
+                        alertEl.style.display = 'none';
+                        alertEl.classList.remove('fade-out');
+                    }
+                }, 300);
+            });
+        }
+    });
+
+    const fileInputs = currentView.querySelectorAll('.verification-file-input');
+    fileInputs.forEach(function(input) {
+        const uploadArea = input.closest('.document-upload-area');
+        if (!uploadArea) return;
+
+        const preview = uploadArea.querySelector('.file-preview');
+        const uploadIcon = uploadArea.querySelector('.upload-icon');
+        const dragText = uploadArea.querySelector('.drag-text');
+        const fileHint = uploadArea.querySelector('.file-hint');
+        const uploadLabel = uploadArea.querySelector('.upload-label');
+
+        if (input.disabled) {
+            if (uploadLabel) uploadLabel.classList.add('disabled-label');
+            uploadArea.style.cursor = 'not-allowed';
+            return;
+        }
+
+        const handleFileChange = function() {
+            const file = input.files[0];
+            if (preview && uploadIcon && dragText && fileHint) { // Проверяем наличие всех элементов
+                if (file) {
+                    uploadIcon.style.display = 'none';
+                    dragText.textContent = file.name;
+                    dragText.style.display = 'block';
+                    fileHint.textContent = 'Click to change file';
+
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.innerHTML = '<img src="' + e.target.result + '" alt="File preview">';
+                            preview.style.display = 'block';
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        let iconClass = 'fa-file';
+                        if (file.type === 'application/pdf') iconClass = 'fa-file-pdf';
+                        else if (file.type.startsWith('image/')) iconClass = 'fa-file-image';
+                        preview.innerHTML = '<i class="fas ' + iconClass + '" style="font-size: 48px; color: #0056b3;"></i>';
+                        preview.style.display = 'block';
+                    }
+                } else { // Файл не выбран
+                    uploadIcon.style.display = 'block';
+                    dragText.textContent = 'Drag file here or click to upload';
+                    dragText.style.display = 'block';
+                    fileHint.textContent = 'JPG, PNG or PDF (Max 10MB)';
+                    fileHint.style.display = 'block';
+                    preview.innerHTML = '';
+                    preview.style.display = 'none';
+                }
+            }
+            // Вызываем функцию обновления кнопки, передавая текущий контейнер (view)
+            updateUploadButtonStateForView(currentView);
+        };
+        input.addEventListener('change', handleFileChange);
+
+
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            if (!input.disabled) this.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            this.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            this.classList.remove('dragover');
+            if (!input.disabled && e.dataTransfer && e.dataTransfer.files.length) {
+                input.files = e.dataTransfer.files;
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    });
+
+    const verificationForm = currentView.querySelector('#verification-form');
+    if (verificationForm) {
+        const handleSubmit = function(e) { // Именованная функция для возможного удаления
+            const uploadButton = verificationForm.querySelector('#upload-button');
+            let filesSelected = false;
+            verificationForm.querySelectorAll('.verification-file-input:not(:disabled)').forEach(function(inputEl) {
+                if (inputEl.files.length > 0) filesSelected = true;
+            });
+
+            if (!filesSelected) {
+                e.preventDefault();
+                alert('Please select at least one file to upload.');
+                return;
+            }
+            if (uploadButton) {
+                uploadButton.disabled = true;
+                uploadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            }
+        };
+        // Сохраняем ссылку на обработчик для возможного удаления
+        verificationForm._handleSubmit = handleSubmit;
+        verificationForm.addEventListener('submit', handleSubmit);
+    }
+
+    // Функция обновления кнопки, специфичная для текущего view/контейнера
+    function updateUploadButtonStateForView(view) {
+        const uploadButton = view.querySelector('#upload-button');
+        if (!uploadButton) return;
+        let canUpload = false;
+        view.querySelectorAll('.verification-file-input:not(:disabled)').forEach(function(inputEl) {
+            if (inputEl.files.length > 0) canUpload = true;
+        });
+        uploadButton.disabled = !canUpload;
+    }
+    updateUploadButtonStateForView(currentView); // Первоначальная проверка для загруженного view
+
+    console.log('Verification Form Initialized');
+}
+
 /**
  * Обновляет атрибуты элементов с data-barba-update
  */
@@ -402,7 +575,7 @@ function handleFileUpload(e) {
     // Показываем индикатор загрузки
     const loadingIndicator = document.createElement('div');
     loadingIndicator.className = 'upload-loading';
-    loadingIndicator.innerHTML = '<div class="loading-spinner"></div><div>Загрузка...</div>';
+    loadingIndicator.innerHTML = '<div class="loading-spinner"></div><div>Loading...</div>';
     loadingIndicator.style.position = 'fixed';
     loadingIndicator.style.top = '0';
     loadingIndicator.style.left = '0';
@@ -452,8 +625,8 @@ function handleFileUpload(e) {
         }
     })
     .catch(error => {
-        console.error('Ошибка при отправке формы:', error);
-        alert('Произошла ошибка при загрузке файлов. Пожалуйста, попробуйте еще раз.');
+        console.error('Error sending form:', error);
+        alert('An error occurred while uploading files. Please try again.');
     })
     .finally(() => {
         // Удаляем индикатор загрузки
@@ -501,7 +674,7 @@ function initVerificationForm() {
 //     preloader.className = 'verification-preloader';
 //     preloader.innerHTML = `
 //         <div class="preloader-spinner"></div>
-//         <p>Загрузка файлов...</p>
+//         <p>Loading files...</p>
 //     `;
 //     preloader.style.display = 'none';
 //     form.after(preloader);
@@ -520,7 +693,7 @@ function initVerificationForm() {
 //         });
         
 //         if (!hasFiles) {
-//             alert('Пожалуйста, выберите хотя бы один файл для загрузки.');
+//             alert('Please select at least one file to upload.');
 //             return;
 //         }
         
@@ -559,21 +732,21 @@ function initVerificationForm() {
 //                             initVerificationForm();
 //                         }, 100);
 //                     } else {
-//                         console.error('Контейнер верификации не найден');
+//                         console.error('Verification container not found');
 //                         window.location.reload();
 //                     }
 //                 } else {
-//                     console.error('Новый контент не найден в ответе');
+//                     console.error('New content not found in response');
 //                     window.location.reload();
 //                 }
 //             } catch (error) {
-//                 console.error('Ошибка при обработке ответа:', error);
+//                 console.error('Error processing response:', error);
 //                 window.location.reload();
 //             }
 //         })
 //         .catch(error => {
-//             console.error('Ошибка при отправке формы:', error);
-//             alert('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+//             console.error('Error sending form:', error);
+//             alert('An error occurred. Please try again.');
             
 //             // Скрываем прелоадер и показываем форму
 //             preloader.style.display = 'none';
@@ -594,7 +767,7 @@ function initDynamicVideoModal() {
                     <button class="modal__close" data-modal-close>✕</button>
                     <div class="video-container">
                         <div class="video-placeholder">
-                            <div class="loader">Загрузка...</div>
+                            <div class="loader">Loading...</div>
                         </div>
                     </div>
                 </div>
@@ -713,14 +886,14 @@ function initDynamicVideoModal() {
                         placeholder.style.display = 'none';
                     },
                     'onError': function(event) {
-                        console.error(`Ошибка загрузки видео ${videoId}`);
-                        placeholder.innerHTML = 'Ошибка загрузки видео';
+                        console.error(`Error loading video ${videoId}`);
+                        placeholder.innerHTML = 'Error loading video';
                     }
                 }
             });
         }).catch(error => {
-            console.error('Ошибка при загрузке YouTube API', error);
-            placeholder.innerHTML = 'Ошибка загрузки YouTube API';
+            console.error('Error loading YouTube API', error);
+            placeholder.innerHTML = 'Error loading YouTube API';
         });
     }
     
@@ -731,7 +904,7 @@ function initDynamicVideoModal() {
                 currentPlayer.stopVideo();
                 currentPlayer.destroy();
             } catch (e) {
-                console.warn('Ошибка при удалении плеера', e);
+                console.warn('Error removing player', e);
             }
             currentPlayer = null;
         }
@@ -756,7 +929,7 @@ function initDynamicVideoModal() {
             const videoId = getVideoId(button);
             
             if (!videoId) {
-                console.error('ID видео не найден');
+                console.error('Video ID not found');
                 return;
             }
             
@@ -866,10 +1039,7 @@ function initBtnMenuOpenClose() {
     **************************************************************/
     const body = document.querySelector('body');
     const burger = document.querySelector('.burger');
-    const menu = document.querySelectorAll('.mobile__menu');
-    const links = document.querySelectorAll('.mobile__menu .header__nav a');
-    const langLinks = document.querySelectorAll('.language-chooser a');
-
+    
     // ДОБАВИТЬ ЭТУ ПРОВЕРКУ
     if (!burger) {
         console.log('Burger menu not found on this page');
@@ -881,6 +1051,9 @@ function initBtnMenuOpenClose() {
         console.log('Mobile menu not found');
         return;
     }
+    
+    const links = document.querySelectorAll('.mobile__menu .header__nav a');
+    const langLinks = document.querySelectorAll('.language-chooser a');
 
     // Установка начального состояния меню (скрыто)
     gsap.set(menu, {
@@ -980,7 +1153,7 @@ function initBtnMenuOpenClose() {
 function animateCommonElements() {
     try {
         if (typeof gsap === 'undefined') {
-            console.warn('GSAP не найден, анимации элементов недоступны');
+            console.warn('GSAP not found, element animations unavailable');
             return;
         }
         
@@ -1371,7 +1544,7 @@ function initSwiperSlider() {
     try {
         // Проверяем, существует ли Swiper
         if (typeof Swiper === 'undefined') {
-            console.warn('Swiper не найден');
+            console.warn('Swiper not found');
             return;
         }
 
@@ -1434,7 +1607,7 @@ function initVideoCarousel() {
     try {
         // Проверяем наличие jQuery и Slick
         if (typeof jQuery === 'undefined') {
-            console.warn('jQuery не найден, Slick карусель недоступна');
+            console.warn('jQuery not found, Slick carousel unavailable');
             return;
         }
         
@@ -2045,7 +2218,7 @@ function initLoginPage() {
     
     // Если элементы для переключения форм существуют
     if (showRecoveryBtn && showLoginBtn && loginContainer && recoveryContainer) {
-        // Кнопка "Проблемы с авторизацией?"
+        // Кнопка "Authorization problems?"
         showRecoveryBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -2070,7 +2243,7 @@ function initLoginPage() {
             });
         });
         
-        // Кнопка "Войти в кабинет" (возврат к форме входа)
+        // Кнопка "Sign in to account" (возврат к форме входа)
         showLoginBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
@@ -2096,7 +2269,7 @@ function initLoginPage() {
         });
     }
     
-    // Обработчики для попапа "Свяжитесь с нами"
+    // Обработчики для попапа "Contact us"
     if (showContactBtn && contactPopup && closePopupBtn) {
         // Открытие попапа
         showContactBtn.addEventListener('click', function(e) {
@@ -2156,7 +2329,7 @@ function initLoginPage() {
                     ease: "power2.out"
                 });
                 
-                alert('Пожалуйста, заполните все поля');
+                alert('Please fill in all fields');
             }
         });
     }
@@ -2177,7 +2350,7 @@ function initLoginPage() {
                     ease: "power2.out"
                 });
                 
-                alert('Пожалуйста, введите email или логин');
+                alert('Please enter email or username');
             }
         });
     }
@@ -2189,7 +2362,7 @@ function initLoginPage() {
             e.preventDefault();
             
             // Здесь можно добавить отправку формы через AJAX
-            alert('Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.');
+            alert('Your message has been sent. We will contact you shortly.');
             
             // Закрываем попап
             gsap.to(contactPopup, {
@@ -2208,7 +2381,7 @@ function initLoginPage() {
     // Обработка ошибок авторизации
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('login') && urlParams.get('login') === 'failed') {
-        alert('Неверный логин или пароль. Пожалуйста, попробуйте снова.');
+        alert('Incorrect login or password. Please try again.');
     }
 }
 
