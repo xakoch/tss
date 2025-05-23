@@ -579,12 +579,12 @@ function initClientVerificationForm(verificationFormContainer) {
 
     const fileInputs = verificationFormContainer.querySelectorAll('.client-verification-file-input');
     fileInputs.forEach(input => {
-        if (input.dataset.ajaxListenerAttached === 'true') return; // Предотвращаем повторное навешивание
+        if (input.dataset.ajaxListenerAttached === 'true') return;
         input.dataset.ajaxListenerAttached = 'true';
 
-        const uploadArea = input.closest('.document-upload-area-client'); // Убедитесь, что этот класс есть в вашей новой разметке
+        const uploadArea = input.closest('.document-upload-area-client');
         if (!uploadArea) {
-            // console.warn('Upload area not found for input:', input);
+            console.warn('Upload area not found for input:', input); // Добавлено для отладки
             return;
         }
 
@@ -599,14 +599,40 @@ function initClientVerificationForm(verificationFormContainer) {
         const uploadIconElement = uploadArea.querySelector('.upload-icon-client'); // Иконка для загрузки
         const uploadTextElement = uploadArea.querySelector('.upload-text-client'); // Текст типа "Click or drag"
 
+        const label = uploadArea.querySelector('label[for="' + input.id + '"]');
+        if (label) { // Или if (clickableArea)
+            if (!label.dataset.customFileClickListener) { // Используем флаг на label
+                label.addEventListener('click', function(event) {
+                    // Если клик произошел НЕ по самому input (который может быть дочерним элементом label)
+                    // и input не отключен.
+                    if (event.target !== input && !input.disabled) {
+                        // Если label имеет атрибут 'for', то браузер должен сам открыть диалог.
+                        // Программный input.click() здесь может быть избыточен или вызывать конфликт.
+                        // Попробуем сначала БЕЗ него.
+                        // Если это не работает, то раскомментируйте input.click() и, возможно, event.preventDefault().
 
-        const label = uploadArea.querySelector('label');
-        if (label) {
-            label.addEventListener('click', (e) => {
-                if (e.target.tagName !== 'INPUT') {
-                     input.click();
-                }
-            });
+                        // event.preventDefault(); // Может предотвратить стандартное действие label и избежать двойного открытия
+                        // input.click();      // Программный вызов, если стандартное поведение не срабатывает
+
+                        // Если стандартное поведение label (через 'for') работает,
+                        // то этот обработчик может быть даже не нужен, либо он должен только
+                        // делать stopPropagation, если есть другие конфликтующие глобальные слушатели.
+                    }
+                });
+                label.dataset.customFileClickListener = 'true';
+            }
+        }
+        // Если вы используете всю uploadArea как кликабельную зону:
+        else if (uploadArea && uploadArea.contains(input)) {
+            if (!uploadArea.dataset.customFileClickListener) {
+                uploadArea.addEventListener('click', function(event) {
+                    if (event.target !== input && !input.disabled) {
+                        // event.preventDefault(); // Экспериментируйте
+                        input.click();
+                    }
+                });
+                uploadArea.dataset.customFileClickListener = 'true';
+            }
         }
 
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
