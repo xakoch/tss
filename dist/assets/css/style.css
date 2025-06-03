@@ -6322,6 +6322,18 @@ html.lenis, html.lenis body {
     overflow: hidden;
 }
 
+@media only screen and (max-width: 1024px) {
+    .maxcontent {
+        width: 80vw;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .maxcontent {
+        width: 100vw;
+    }
+}
+
 .car-container {
     margin: 60px 0;
 }
@@ -6361,9 +6373,27 @@ h1 {
     margin: 0;
 }
 
+@media only screen and (max-width: 991px) {
+    h1 {
+        font-size: 3em;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    h1 {
+        font-size: 2em;
+    }
+}
+
 p {
     font-size: 1.5em;
     margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    p {
+        font-size: 1.2em;
+    }
 }
 
 .reviews {
