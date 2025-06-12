@@ -2929,9 +2929,26 @@ html.lenis, html.lenis body {
     color: black;
 }
 
+.page-home .hero {
+    padding: 150px 0 0;
+}
+
 @media only screen and (max-width: 991px) {
     .page-home .hero {
         padding-top: 150px;
+    }
+}
+
+.page-home .hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .page-home .hero .container {
+        grid-template-columns: 1fr;
+        grid-gap: 50px;
     }
 }
 

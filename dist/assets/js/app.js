@@ -341,6 +341,7 @@ function initScript() {
         initMultiStepForm();
         // Инициализируем анимацию чисел на ВСЕХ страницах
         initAnimNumbers();
+        initZohoForms();
 
         if (document.querySelector('.login-page')) {
             initLoginPage();
@@ -1246,6 +1247,139 @@ function initVideoCarousel() {
         console.error('Error in initVideoCarousel:', error);
     }
 }
+
+
+/**
+ * Инициализация форм Zoho на основе data-атрибутов.
+ * АВТОМАТИЧЕСКИ СОБИРАЕТ UTM-МЕТКИ ИЗ COOKIE.
+ * Не требует правок при добавлении новых форм.
+ */
+function initZohoForms() {
+    /**
+     * Вспомогательная функция для получения cookie по имени.
+     * (Интегрирована из твоего старого кода)
+     */
+    const getCookie = (name) => {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    };
+
+    /**
+     * Внутренняя, универсальная функция для создания iframe формы.
+     * Принимает ID контейнера и ID самой Zoho формы.
+     */
+    const loadZohoForm = (targetDivId, zohoFormId) => {
+        const targetDiv = document.getElementById(targetDivId);
+        // Выходим, если div не найден, нет ID формы, или в нем уже есть iframe
+        if (!targetDiv || !zohoFormId || targetDiv.querySelector('iframe')) {
+            return;
+        }
+
+        // === НАЧАЛО: Интеграция UTM-меток из твоего старого кода ===
+        const utmParams = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+        const collectedUtm = [];
+
+        utmParams.forEach(key => {
+            const val = getCookie(key);
+            if (val) {
+                collectedUtm.push(`${key}=${encodeURIComponent(val)}`);
+            }
+        });
+
+        const utmString = collectedUtm.join('&');
+        // === КОНЕЦ: Интеграция UTM-меток ===
+
+
+        const iframe = document.createElement("iframe");
+        
+        // Собираем финальный URL с учетом UTM-меток
+        const baseSrc = `https://forms.zohopublic.com/tsstechnology/form/TSST/formperma/${zohoFormId}`;
+        const finalSrc = `${baseSrc}?zf_rszfm=1${utmString ? `&${utmString}` : ''}`;
+        
+        iframe.src = finalSrc;
+        iframe.style.border = "none";
+        iframe.style.height = "800px"; // Использую высоту из твоего примера, можешь поменять
+        iframe.style.width = "100%";
+        iframe.setAttribute("aria-label", "TSST Form");
+        
+        targetDiv.appendChild(iframe);
+    };
+
+    /**
+     * Глобальный обработчик для изменения высоты фрейма от Zoho.
+     * Устанавливается только один раз.
+     */
+    if (!window.zohoResizeListenerAttached) {
+        window.addEventListener("message", function(event) {
+            try {
+                if (event.data && typeof event.data === 'string') {
+                    const parts = event.data.split("|");
+                    if (parts.length >= 2) {
+                        const formId = parts[0];
+                        const newHeight = parseInt(parts[1], 10) + 15 + "px";
+                        const iframes = document.getElementsByTagName("iframe");
+                        for (let i = 0; i < iframes.length; i++) {
+                            if (iframes[i].src.includes(formId)) {
+                                if (iframes[i].style.height !== newHeight) {
+                                    iframes[i].style.height = newHeight;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (e) { /* Игнорируем ошибки */ }
+        }, false);
+        window.zohoResizeListenerAttached = true;
+    }
+
+    // --- Логика автоматического сканирования страницы (остается без изменений) ---
+
+    // 1. Находим все триггеры (кнопки) для загрузки по клику
+    const triggers = document.querySelectorAll('[data-zoho-trigger-for]');
+    triggers.forEach(trigger => {
+        if (trigger.dataset.zohoListener) {
+            return;
+        }
+        
+        const targetContainerId = trigger.dataset.zohoTriggerFor;
+        const targetContainer = document.getElementById(targetContainerId);
+
+        if (targetContainer) {
+            const zohoFormId = targetContainer.dataset.zohoForm;
+            if (zohoFormId) {
+                trigger.addEventListener('click', () => {
+                    loadZohoForm(targetContainerId, zohoFormId);
+                });
+                trigger.dataset.zohoListener = 'true';
+            }
+        }
+    });
+
+    // 2. Находим все формы для немедленной загрузки
+    const immediateLoadForms = document.querySelectorAll('[data-zoho-form]');
+    immediateLoadForms.forEach(formContainer => {
+        if (formContainer.id) {
+            const hasTrigger = document.querySelector(`[data-zoho-trigger-for="${formContainer.id}"]`);
+            if (hasTrigger) {
+                return;
+            }
+        }
+        
+        const zohoFormId = formContainer.dataset.zohoForm;
+        if (!formContainer.id) {
+            formContainer.id = `zoho-auto-id-${Math.random().toString(36).substr(2, 9)}`;
+        }
+        loadZohoForm(formContainer.id, zohoFormId);
+    });
+}
+
 
 /**
  * Calculation
