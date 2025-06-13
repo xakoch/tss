@@ -146,7 +146,6 @@
 			align-items: flex-start
 
 	// ref page
-
 	&__banner
 		height: 380px
 		display: flex
@@ -155,7 +154,8 @@
 		+br(30px)
 		overflow: hidden
 		padding: 25px
-
+		background-size: cover
+		background-repeat: no-repeat
 		&-icon
 			width: 70px
 			height: 70px
@@ -168,6 +168,12 @@
 		justify-content: space-between
 		align-items: center
 		grid-gap: 20px
+		+r(991)
+			flex-direction: column
+			align-items: flex-start
+			justify-content: unset
+			margin-bottom: 40px
+			grid-gap: 30px
 
 	&__top-right
 		li
@@ -175,6 +181,8 @@
 			display: block
 			margin-bottom: 10px
 			padding-left: 30px
+			+r(767)
+				padding-left: 15px
 			&:last-child
 				margin-bottom: 0
 			&::before
@@ -188,5 +196,12 @@
 				top: 50%
 				left: 0
 				transform: translateY(-50%)
+				+r(767)
+					width: 5px
+					height: 5px
 		p
 			color: rgba($b,.4)
+			+r(1400)
+				font-size: 1em
+			+r(767)
+				font-size: 14px
