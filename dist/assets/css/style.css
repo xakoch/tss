@@ -5077,7 +5077,6 @@ html.lenis, html.lenis body {
 @media only screen and (max-width: 991px) {
     .impact__col {
         padding: 40px 30px;
-        border: 1px solid red;
         min-height: unset;
     }
 }
